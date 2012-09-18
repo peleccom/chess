@@ -30,10 +30,12 @@ namespace mychess
                     btn.Parent = ctrl;
                     btn.Height = 50;
                     btn.Width = 50;
+                    btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+                    btn.BackgroundImageLayout = ImageLayout.Center;
                     btn.FlatStyle = FlatStyle.Flat;
                     btn.FlatAppearance.BorderSize = 0;
                     if ((i + j) % 2 == 0)
-                        btn.BackColor = Color.Yellow;
+                        btn.BackColor = Color.Gray;
                     else
                         btn.BackColor = Color.White;
                     btn.Left = 50 * i;
@@ -54,16 +56,24 @@ namespace mychess
                 for (int j = 0; j < 8; j++)
                 {
                     //btn.Enabled = false;
-
-
+                    
                     btn = buttons[i, j];
                     btn.FlatStyle = FlatStyle.Flat;
                     btn.FlatAppearance.BorderSize = 0;
                     figure = game.Field.GetFigureAt(new Position(i+1, j+1));
                     if (figure != null)
                     {
-                        btn.Text = figure.GetImage();
-
+                        switch (figure.GetFigureType())
+                        {
+                            case FigureTypes.Pawn: btn.Text = "♟";break;
+                            case FigureTypes.Knight: btn.Text = "♞"; break;
+                            case FigureTypes.Bishop: btn.Text = "♝"; break;
+                            case FigureTypes.Rook: btn.Text = "♜"; break;
+                            case FigureTypes.Queen: btn.Text = "♛"; break;
+                            case FigureTypes.King: btn.Text = "♚"; break;
+                        };
+                        if (figure.Side == Side.Black) btn.ForeColor = Color.Black;
+                        else btn.ForeColor = Color.SaddleBrown;
                     }
                     else
                         btn.Text = "";
@@ -84,14 +94,14 @@ namespace mychess
                     {
                         foreach (Position move in moves)
                         {
-                            buttons[move.GetX() - 1, move.GetY() - 1].FlatAppearance.BorderSize = 5;
-                            buttons[move.GetX() - 1, move.GetY() - 1].FlatAppearance.BorderColor = Color.Green;
+                            buttons[move.GetX() - 1, move.GetY() - 1].FlatAppearance.BorderSize = 4;
+                            buttons[move.GetX() - 1, move.GetY() - 1].FlatAppearance.BorderColor = Color.LightGreen;
                         }
-                        buttons[pos.GetX() - 1, pos.GetY() - 1].FlatAppearance.BorderSize = 5;
-                        buttons[pos.GetX() - 1, pos.GetY() - 1].FlatAppearance.BorderColor = Color.Green;
+                        buttons[pos.GetX() - 1, pos.GetY() - 1].FlatAppearance.BorderSize = 4;
+                        buttons[pos.GetX() - 1, pos.GetY() - 1].FlatAppearance.BorderColor = Color.LightGreen;
                         foreach (Position move in attacks)
                         {
-                            buttons[move.GetX() - 1, move.GetY() - 1].FlatAppearance.BorderSize = 5;
+                            buttons[move.GetX() - 1, move.GetY() - 1].FlatAppearance.BorderSize = 4;
                             buttons[move.GetX() - 1, move.GetY() - 1].FlatAppearance.BorderColor = Color.Red;
                         }
                     }
