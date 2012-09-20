@@ -32,7 +32,7 @@ namespace mychess
                             if (cf.GetFigureAt(new Position(i, pos.GetY())) != null)
                                 break;
                         }
-                        //--
+                        // --
                         for (int i = pos.GetX() - 1; i > 0; i--)
                         {
                             l.Add(new Position( i, pos.GetY()));
