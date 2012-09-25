@@ -43,7 +43,8 @@ namespace mychess
                     buttons[i, j] = btn;
                     btn.Click += new System.EventHandler(Cell_Click);
                     btn.Tag = (Object)(new Position(i + 1, j + 1));
-                }
+
+            }
 
             DrawField();
         }
@@ -77,11 +78,9 @@ namespace mychess
                     }
                     else
                         btn.Text = "";
-
-
-
                 }
         }
+
         private void Cell_Click(object sender, EventArgs e)
         {
             List<Position> moves , attacks;
@@ -127,7 +126,9 @@ namespace mychess
                         }
                     
             }
-            MessageBox.Show(game.GetState());
+            
+            //if (game.GetState() == Side.Black)
+            //else 
         }
         public void PositionChanged(Figure fig, Position newposition)
         {

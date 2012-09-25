@@ -50,24 +50,17 @@ namespace mychess
             }
         }
 
-        public string GetState()
+        public Side GetState()
         {
-            string s = "";
+            Side s = Side.Black;
             switch (state)
             {
-                case GameState.HighlightedBlack:
-                    s =  "Подсвечен черный";
-                    break;
-                case GameState.HighlightedWhite:
-                    s = "Подсвечен белый";
-                    break;
                 case GameState.WaitBlack:
-                    s = "Ход черных";
+                    s = Side.Black;
                     break;
                 case GameState.WaitWhite:
-                    s = "Ход белых";
+                    s = Side.White;
                     break;
-
             }
             return s;
         }
