@@ -12,8 +12,15 @@
   </Class>
   <Class Name="mychess.Figure">
     <Position X="6" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="mychess.Figure.MoveEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Figure.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAEAIAAAAAgQAgAIQAAIAUAAAAAgAAAAQCAAAAAAA=</HashCode>
+      <HashCode>AAAAEAIAAAAAgQAgAISAAIAUAAAAAgAAAAQCAAAgAAA=</HashCode>
       <FileName>Figure.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>

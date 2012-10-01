@@ -5,6 +5,18 @@ using System.Text;
 
 namespace mychess
 {
+    public class MoveEventArgs : EventArgs
+    {
+        public Position oldpos, newpos;
+        public MoveEventArgs(Position oldpos, Position newpos){
+            this.oldpos = oldpos;
+            this. newpos = newpos;
+    }
+
+    }
+
+
+    
     public abstract class Figure
     {
         private Side side;
@@ -55,7 +67,9 @@ namespace mychess
         /// <remarks>Возвращает позицию дополненную по y</remarks>
         public void SetPosition(Position pos)
         {
+            Position oldpos = Position;
             Position = pos;
+            OnMoveEvent(oldpos, pos);
             //chessfield.PositionChanged(this, pos);
         }
 
@@ -81,6 +95,19 @@ namespace mychess
         virtual public string GetImage()
         {
             throw new System.NotImplementedException();
+        }
+
+        // Move Event
+        public event MoveEventHandler MoveEvent;
+        public delegate void MoveEventHandler(object source, MoveEventArgs args);
+        public void OnMoveEvent(Position oldpos,Position newpos)
+        {
+            MoveEventArgs arg = new MoveEventArgs(oldpos, newpos);
+            if (MoveEvent != null)
+            {
+
+                MoveEvent(this, arg);
+            }
         }
     }
 }
