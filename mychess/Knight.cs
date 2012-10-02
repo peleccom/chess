@@ -16,12 +16,10 @@ namespace mychess
         }
         public override string GetImage()
         {
-            string s;
             if (Side == Side.Black)
-                s = "ч";
+                return "♞";
             else
-                s = "б";
-            return "Конь " + s;
+                return "♘";
         }
     }
 }

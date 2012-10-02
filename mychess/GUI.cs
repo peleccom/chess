@@ -30,7 +30,7 @@ namespace mychess
                     btn.Parent = ctrl;
                     btn.Height = 50;
                     btn.Width = 50;
-                    btn.Font = new System.Drawing.Font("Microsoft Sans MS", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+                    btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
                     btn.BackgroundImageLayout = ImageLayout.Center;
                     btn.FlatStyle = FlatStyle.Flat;
                     btn.FlatAppearance.BorderSize = 0;
@@ -43,7 +43,8 @@ namespace mychess
                     buttons[i, j] = btn;
                     btn.Click += new System.EventHandler(Cell_Click);
                     btn.Tag = (Object)(new Position(i + 1, j + 1));
-                }
+                    
+            }
 
             DrawField();
         }
@@ -62,26 +63,12 @@ namespace mychess
                     btn.FlatAppearance.BorderSize = 0;
                     figure = game.Field.GetFigureAt(new Position(i+1, j+1));
                     if (figure != null)
-                    {
-                        switch (figure.GetFigureType())
-                        {
-                            case FigureTypes.Pawn: btn.Text = "♟"; break;
-                            case FigureTypes.Knight: btn.Text = "♞"; break;
-                            case FigureTypes.Bishop: btn.Text = "♝"; break;
-                            case FigureTypes.Rook: btn.Text = "♜"; break;
-                            case FigureTypes.Queen: btn.Text = "♛"; break;
-                            case FigureTypes.King: btn.Text = "♚"; break;
-                        };
-                        if (figure.Side == Side.Black) btn.ForeColor = Color.Black;
-                        else btn.ForeColor = Color.SaddleBrown;
-                    }
+                        btn.Text = figure.GetImage();
                     else
                         btn.Text = "";
-
-
-
                 }
         }
+
         private void Cell_Click(object sender, EventArgs e)
         {
             List<Position> moves , attacks;
@@ -127,6 +114,9 @@ namespace mychess
                         }
                     
             }
+            
+            //if (game.GetState() == Side.Black)
+            //else 
         }
         public void PositionChanged(Figure fig, Position newposition)
         {
