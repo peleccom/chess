@@ -190,6 +190,7 @@
             this.gbChessField.TabIndex = 17;
             this.gbChessField.TabStop = false;
             this.gbChessField.Visible = false;
+            this.gbChessField.Enter += new System.EventHandler(this.gbChessField_Enter);
             // 
             // rtbLog
             // 

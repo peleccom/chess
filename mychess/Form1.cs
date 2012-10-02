@@ -45,5 +45,10 @@ namespace mychess
 
             gui.NewGame(p1, p2, cf, gm);
         }
+
+        private void gbChessField_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }
