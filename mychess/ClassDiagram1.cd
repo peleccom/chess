@@ -12,15 +12,8 @@
   </Class>
   <Class Name="mychess.Figure">
     <Position X="6" Y="0.5" Width="1.5" />
-    <NestedTypes>
-      <Delegate Name="mychess.Figure.MoveEventHandler" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Figure.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Delegate>
-    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAEAIAAAAAgQAgAISAAIAUAAAAAgAAAAQCAAAgAAA=</HashCode>
+      <HashCode>AAAAEAIAAEAAgQAgAISAAIAUAAAAAgAAAgQCAAAgAAA=</HashCode>
       <FileName>Figure.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -89,7 +82,7 @@
   <Class Name="mychess.Player">
     <Position X="0.5" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgQAQAAAAEAAwEIAAMAAAAQAAAAEAAAAIAgAQIAQAAA=</HashCode>
+      <HashCode>AgQAQAAAAUAAwEIAAMAAAAQAAAAEAAAAAAgAQIAAAAA=</HashCode>
       <FileName>Player.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -107,7 +100,7 @@
   <Class Name="mychess.ChessField">
     <Position X="6.5" Y="6.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACAAAgAAAAAQAAgAAAAACAAAAQBAAAIAAAERIAAAAg=</HashCode>
+      <HashCode>AACAAAgAAAAAQAAgAAAAACAAAAYBAAAIAAAERAAAAAg=</HashCode>
       <FileName>ChessField.cs</FileName>
     </TypeIdentifier>
   </Class>

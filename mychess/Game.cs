@@ -161,8 +161,11 @@ namespace mychess
                 return false;
 
             if (moves.Contains(pos) || attacks.Contains(pos))
-                Field.PositionChanged(highlightedfigurepos,
-                                        pos);
+            {
+
+                Figure fig = Field.GetFigureAt(highlightedfigurepos);
+                fig.SetPosition(pos);
+            }
 
             switch (state)
             {

@@ -50,22 +50,19 @@ namespace mychess
             // король с ферзем ставяться зеркально
                 Position pos = SidePosition(3, 0); // отображаем координату y если надо
                 alivefigures.Add(new King(new Position(4+1, pos.GetY()), side, chessfield));
-                alivefigures.Add(new Queen(new Position(3+1, pos.GetY()), side, chessfield));        
+                alivefigures.Add(new Queen(new Position(3+1, pos.GetY()), side, chessfield));
+
+                foreach (Figure figure in alivefigures)
+                {
+                    // устанавливаем обработчики
+                    figure.MoveEvent += chessfield.MoveFigureHandler;
+                    figure.KillEvent += KillFigureHandler;
+                }
         }
-        
 
-        public void MoveFigure(Figure fig, Position newpos)
-    {
-            int index;
-            if (alivefigures.Contains(fig))
-            {
-                index = alivefigures.IndexOf(fig);
-                alivefigures[index].SetPosition(newpos);
-            }
-    }
-
-        public void KillFigure(Figure fig)
+        public void KillFigureHandler(object source, EventArgs args)
         {
+            Figure fig = (Figure)source; 
             if (alivefigures.Contains(fig))
             {
                 alivefigures.Remove(fig);

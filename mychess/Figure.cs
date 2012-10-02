@@ -5,6 +5,8 @@ using System.Text;
 
 namespace mychess
 {
+    public delegate void KillEventHandler(object source, EventArgs args);
+    public delegate void MoveEventHandler(object source, MoveEventArgs args);
     public class MoveEventArgs : EventArgs
     {
         public Position oldpos, newpos;
@@ -73,6 +75,11 @@ namespace mychess
             //chessfield.PositionChanged(this, pos);
         }
 
+        public void Kill()
+        {
+            OnKillEvent();
+        }
+
         public virtual List<Position> GetAttacks()
         {
             return GetMoves();
@@ -99,8 +106,7 @@ namespace mychess
 
         // Move Event
         public event MoveEventHandler MoveEvent;
-        public delegate void MoveEventHandler(object source, MoveEventArgs args);
-        public void OnMoveEvent(Position oldpos,Position newpos)
+        public void OnMoveEvent(Position oldpos,Position newpos) // событие при перемещении фигуры
         {
             MoveEventArgs arg = new MoveEventArgs(oldpos, newpos);
             if (MoveEvent != null)
@@ -109,5 +115,18 @@ namespace mychess
                 MoveEvent(this, arg);
             }
         }
+
+
+        public event KillEventHandler KillEvent;
+        public void OnKillEvent() // событие при уничтожении фигуры
+        {
+            if (MoveEvent != null)
+            {
+
+                KillEvent(this, new EventArgs());
+            }
+        }
+
+
     }
 }

@@ -60,9 +60,14 @@ namespace mychess
             pl2 = p2;
 
             foreach (Figure fig in p1.alivefigures)
+            {
                 field[fig.Position.GetX() - 1, fig.Position.GetY() - 1] = fig;
+            }
             foreach (Figure fig in p2.alivefigures)
+            {
+
                 field[fig.Position.GetX() - 1, fig.Position.GetY() - 1] = fig;
+            }
 
         }
 
@@ -76,32 +81,25 @@ namespace mychess
                 return null;
             }
         }
-
-        public void MoveFigureAt(Position pos1, Position pos2)
-        {
-            Figure fig = GetFigureAt(pos1);
-            Figure victim = GetFigureAt(pos2);
-            if (victim != null)
-            {
-                pl1.KillFigure(victim);
-                pl2.KillFigure(victim);
-                field[pos2.GetX() - 1, pos2.GetY() - 1] = null;
-            }
-            pl1.MoveFigure(fig,pos2);
-            pl2.MoveFigure(fig,pos2);
-
-            
-
-
-        }
+      
         public void PositionChanged(Position from, Position newposition)
         {
-            MoveFigureAt(from, newposition);
-            Figure fig = field[from.GetX() - 1, from.GetY() - 1];
-            field[from.GetX() - 1, from.GetY() - 1] = null;
-            field[newposition.GetX() - 1, newposition.GetY() - 1] = fig;
 
         }
 
+        public void MoveFigureHandler(object source, MoveEventArgs args)
+        {
+            Figure fig = GetFigureAt(args.newpos);
+            if (fig != null)
+            {
+                // бъет другую фигуру
+                fig.Kill();
+            }
+            // устанавивает новую позицию
+            field[args.oldpos.GetX() - 1, args.oldpos.GetY() - 1] = null;
+            field[args.newpos.GetX() - 1, args.newpos.GetY() - 1] = (Figure)source;
+
+
+        }
     }
 }
