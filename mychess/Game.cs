@@ -81,7 +81,8 @@ namespace mychess
                     lattacks = fig.GetAttacks();
                     lmoves = fig.GetMoves();
                     foreach (Position attack in lattacks) //для всех направлений удара проверям есть ли там фигура
-                        if (Field.GetFigureAt(attack) != null && Field.GetFigureAt(attack).Side != fig.Side)
+                        if (Field.GetFigureAt(attack) != null && Field.GetFigureAt(attack).Side != fig.Side 
+                                && Field.GetFigureAt(attack).GetFigureType() != FigureTypes.King)
                             attacks.Add(attack);
                     foreach (Position move in lmoves)
                         if (!attacks.Contains(move) && Field.GetFigureAt(move) == null)
