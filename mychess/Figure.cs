@@ -123,7 +123,7 @@ namespace mychess
             if (MoveEvent != null)
             {
 
-                KillEvent(this, new EventArgs());
+                KillEvent(this, EventArgs.Empty);
             }
         }
 
