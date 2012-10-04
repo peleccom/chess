@@ -231,6 +231,7 @@
             this.Controls.Add(this.gbChessField);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.pictureBox2);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Power Chess";
