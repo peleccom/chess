@@ -162,5 +162,13 @@ namespace mychess
                _count--;
            }
        }
+       public void AddRange(IEnumerable<T> collection)
+       {
+           foreach (T value in collection)
+               Add(value);
+
+       }
     }
+
+
 }
