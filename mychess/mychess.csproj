@@ -71,6 +71,8 @@
     <Compile Include="Knight.cs" />
     <Compile Include="KnightMovePolitics.cs" />
     <Compile Include="MovePolitics.cs" />
+    <Compile Include="MyEnum.cs" />
+    <Compile Include="MyList.cs" />
     <Compile Include="Pawn.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="VerticalMovePolitic.cs" />
