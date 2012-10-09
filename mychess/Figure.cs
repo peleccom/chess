@@ -58,9 +58,9 @@ namespace mychess
             }
         }
 
-        public List<Position> GetMoves()
+        public MyList<Position> GetMoves()
         {
-            List<Position> l = new List<Position>();
+            MyList<Position> l = new MyList<Position>();
             foreach (MovePolitics mv in movepolitics)
                 l.AddRange(mv.GetMoves(this,chessfield));
             return l;
@@ -80,7 +80,7 @@ namespace mychess
             OnKillEvent();
         }
 
-        public virtual List<Position> GetAttacks()
+        public virtual MyList<Position> GetAttacks()
         {
             return GetMoves();
         }

@@ -71,7 +71,7 @@ namespace mychess
 
         private void Cell_Click(object sender, EventArgs e)
         {
-            List<Position> moves , attacks;
+            MyList<Position> moves , attacks;
             Button btn = (Button)sender;
             Position pos = (Position)btn.Tag;
             Figure fig = game.Field.GetFigureAt(pos);
@@ -105,7 +105,7 @@ namespace mychess
                         // снять выделение
                         if (game.isHighlightedFigure(pos))
                         {
-                            List<Position> needunhighlight = game.Escape();
+                            MyList<Position> needunhighlight = game.Escape();
                             foreach (Position unhpos in needunhighlight)
                             {
                                 buttons[unhpos.GetX() - 1, unhpos.GetY() - 1].FlatAppearance.BorderSize = 0;

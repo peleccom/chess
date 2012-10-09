@@ -16,9 +16,9 @@ namespace mychess
             
         }
     
-        public override List<Position> GetAttacks()
+        public override MyList<Position> GetAttacks()
         {
-            List<Position> l = new List<Position>();
+            MyList<Position> l = new MyList<Position>();
             foreach (MovePolitics mp in attackpolitics)
                     l.AddRange(mp.GetMoves(this, chessfield));
             return l;

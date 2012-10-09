@@ -8,11 +8,11 @@ namespace mychess
     public class VerticalMovePolitic : MovePolitics
     {
 
-        public List<Position> GetMoves(Figure figure, ChessField cf)
+        public MyList<Position> GetMoves(Figure figure, ChessField cf)
         {
             Position pos = figure.Position;
             Position tmppos;
-            List<Position> l = new List<Position>();
+            MyList<Position> l = new MyList<Position>();
             switch (figure.GetFigureType())
             {
                 case FigureTypes.Pawn:

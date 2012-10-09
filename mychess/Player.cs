@@ -10,8 +10,8 @@ namespace mychess
         string name;
         Side side;
         private int win, lose;
-        public List<Figure> alivefigures = new List<Figure>();
-        public List<Figure> deadfigures = new List<Figure>();
+        public MyList<Figure> alivefigures = new MyList<Figure>();
+        public MyList<Figure> deadfigures = new MyList<Figure>();
         
 
         public Player(string name, Side side)

@@ -11,7 +11,7 @@ namespace mychess
         private Player player2;
         private GameState state;
         private ChessField field;
-        private List<Position> moves, attacks;
+        private MyList<Position> moves, attacks;
         Position highlightedfigurepos;
 
         public Game(Player player1, Player player2)
@@ -64,11 +64,11 @@ namespace mychess
             }
             return s;
         }
-        public bool Hightlight(Position pos, out List<Position> moves, out List<Position> attacks)
+        public bool Hightlight(Position pos, out MyList<Position> moves, out MyList<Position> attacks)
         {
-            List<Position> lattacks, lmoves;
-            moves = new List<Position>();
-            attacks = new List<Position>();
+            MyList<Position> lattacks, lmoves;
+            moves = new MyList<Position>();
+            attacks = new MyList<Position>();
             if (state != GameState.WaitWhite && state!= GameState.WaitBlack)
                 return false;
             Figure fig = Field.GetFigureAt(pos);
@@ -106,7 +106,7 @@ namespace mychess
 
 
         }
-        public List<Position> Escape()
+        public MyList<Position> Escape()
         {
 
             if (state == GameState.HighlightedBlack)
@@ -115,7 +115,7 @@ namespace mychess
             }
             if (state == GameState.HighlightedWhite)
                 state = GameState.WaitWhite;
-            List<Position> movs = new List<Position>();
+            MyList<Position> movs = new MyList<Position>();
             movs.AddRange(moves);
             movs.AddRange(attacks);
             movs.Add(highlightedfigurepos);

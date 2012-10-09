@@ -44,6 +44,42 @@ namespace mychess
             GUI gui = new GUI(gbChessField);
 
             gui.NewGame(p1, p2, cf, gm);
+
+            // DEBUG
+/*
+            MyList<int> l = new MyList<int>();
+            l.Add(4);
+            l.Add(5);
+            l.Add(6);
+            foreach(int j in l)
+            MessageBox.Show(j.ToString());
+
+            l.Remove(5);
+            foreach (int j in l)
+                MessageBox.Show(j.ToString());
+
+            l.Remove(34);
+            foreach (int j in l)
+                MessageBox.Show(j.ToString());
+            l.RemoveAt(0);
+            foreach (int j in l)
+                MessageBox.Show(j.ToString());
+
+            MessageBox.Show(l.Count.ToString());
+
+            MyList<int> l2 = new MyList<int>();
+            l2.Add(12);
+            l2.Add(13);
+            l2.Add(14);
+            l.AddRange(l2);
+            foreach (int j in l)
+                MessageBox.Show(j.ToString());
+            MessageBox.Show(l.Count.ToString());
+            l.Clear();
+            MessageBox.Show(l.Count.ToString());
+            for (int i = 0; i < 10000; i++)
+                l.Add(i * 4);
+            MessageBox.Show(l.Count.ToString());*/
         }
 
         private void gbChessField_Enter(object sender, EventArgs e)

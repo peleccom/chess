@@ -7,10 +7,10 @@ namespace mychess
 {
     public class DiagMovePolitics : MovePolitics
     {
-        public List<Position> GetMoves(Figure figure, ChessField cf)
+        public MyList<Position> GetMoves(Figure figure, ChessField cf)
         {
             Position pos = figure.Position, tmppos;
-            List<Position> l = new List<Position>();
+            MyList<Position> l = new MyList<Position>();
             switch (figure.GetFigureType())
             {
                 case FigureTypes.Pawn:
