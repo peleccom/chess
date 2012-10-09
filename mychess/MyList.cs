@@ -68,7 +68,7 @@ namespace mychess
         public void Clear()
         {
             _count = 0;
-            _contents = null;
+            _contents = new T[8];
         }
         
 
@@ -90,7 +90,7 @@ namespace mychess
         public void CopyTo(T[] array, int index)
         {
             int j = index;
-            for (int i = 0; i < Count; i++)
+            for (int i = 0; i < _count; i++)
             {
                 array.SetValue(_contents[i], j);
                 j++;
@@ -103,7 +103,9 @@ namespace mychess
             // implementing an enumerator.
 
             // Fix it
-            return new MyEnum<T>(_contents);
+            T []list = new T[_count];
+            CopyTo(list, 0);
+            return new MyEnum<T>(list);
         }
 
          IEnumerator IEnumerable.GetEnumerator()
