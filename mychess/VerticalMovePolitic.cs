@@ -22,8 +22,14 @@ namespace mychess
                             pos = figure.Reverse(pos);
                         if (pos.GetY() == 2)
                         { 
-                            tmppos = new Position(pos.GetX(), pos.GetY() + 2);
-                            l.Add(figure.Side == Side.White ? tmppos : figure.Reverse(tmppos));
+                           
+                            Position middlepos = new Position(pos.GetX(), pos.GetY()+1);
+                            middlepos = figure.Side == Side.White ? middlepos : figure.Reverse(middlepos);
+                            if (cf.GetFigureAt(middlepos) == null)
+                            {
+                                tmppos = new Position(pos.GetX(), pos.GetY() + 2);
+                                l.Add(figure.Side == Side.White ? tmppos : figure.Reverse(tmppos));
+                            }
                         }
                         
                         int y = pos.GetY();

@@ -58,7 +58,7 @@ namespace mychess
             }
         }
 
-        public MyList<Position> GetMoves()
+        public virtual MyList<Position> GetMoves()
         {
             MyList<Position> l = new MyList<Position>();
             foreach (MovePolitics mv in movepolitics)

@@ -17,6 +17,18 @@ namespace mychess
                                         chessfield.DiagMovePolitics};
         }
 
+        public override MyList<Position> GetMoves()
+        {
+           MyList<Position> moves= base.GetMoves();
+           MyList<Position> newmoves = new MyList<Position>();
+            Side oppositeside  = (this.Side == Side.Black)? Side.White:Side.Black;
+            foreach (Position pos in moves)
+                //if (!chessfield.isDangerPosition(oppositeside, pos))
+                // Fix situation of cyclic checking of two kings 
+                    newmoves.Add(pos);
+            return newmoves;
+        }
+
         public override string GetImage()
         {
             if (Side == Side.Black)

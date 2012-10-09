@@ -81,12 +81,28 @@ namespace mychess
                 return null;
             }
         }
-      
-        public void PositionChanged(Position from, Position newposition)
+
+        public bool isDangerPosition(Side enemyside, Position pos)
         {
+            bool danger = false;
+            Player[] players = { pl1, pl2 };
+            // To do
+            foreach (Player pl in players)
+            {
+                if (pl.Side == enemyside)
+                    // iterate over alive figures
+                    foreach (Figure fig in pl.alivefigures)
+                        // to do
+                        if (fig.GetAttacks().Contains(pos))
+                        {
+                            danger = true;
+                            break;
+                        }
+            }
 
+
+            return danger;
         }
-
         public void MoveFigureHandler(object source, MoveEventArgs args)
         {
             Figure fig = GetFigureAt(args.newpos);
