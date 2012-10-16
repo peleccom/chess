@@ -85,22 +85,26 @@ namespace mychess
         public bool isDangerPosition(Side enemyside, Position pos)
         {
             bool danger = false;
-            Player[] players = { pl1, pl2 };
+            Player pl = (pl1.Side == enemyside) ? pl1 : pl2;
             // To do
-            foreach (Player pl in players)
-            {
-                if (pl.Side == enemyside)
-                    // iterate over alive figures
-                    foreach (Figure fig in pl.alivefigures)
-                        // to do
-                        if (fig.GetAttacks().Contains(pos))
-                        {
-                            danger = true;
-                            break;
-                        }
-            }
-
-
+            // iterate over alive figures
+            foreach (Figure fig in pl.alivefigures)
+                if (fig.GetFigureType() == FigureTypes.King)
+                {
+                    if (((King)fig).GetMovesWiwhOutChecks().Contains(pos))
+                    {
+                        danger = true;
+                        break;
+                    }
+                }
+                else
+                { 
+                    if (fig.GetAttacks().Contains(pos))
+                    {
+                        danger = true;
+                        break;
+                    }
+                }
             return danger;
         }
         public void MoveFigureHandler(object source, MoveEventArgs args)
