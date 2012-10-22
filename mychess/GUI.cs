@@ -23,7 +23,10 @@ namespace mychess
     
         public void NewGame(Player p1, Player p2, ChessField cf, Game g)
         {
+
+            form.SuspendLayout();
             game = g;
+            Font font = new System.Drawing.Font("Arial Unicode MS", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             for (int i = 0; i < 8; i++)
                 for (int j = 0; j < 8; j++)
                 {
@@ -31,7 +34,7 @@ namespace mychess
                     btn.Parent = ctrl;
                     btn.Height = 50;
                     btn.Width = 50;
-                    btn.Font = new System.Drawing.Font("Arial Unicode MS", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+                    btn.Font = font;
                     btn.BackgroundImageLayout = ImageLayout.Center;
                     btn.FlatStyle = FlatStyle.Flat;
                     btn.FlatAppearance.BorderSize = 0;
@@ -42,13 +45,16 @@ namespace mychess
                     btn.Left = 50 * i;
                     btn.Top = 50 * (7 - j);
                     buttons[i, j] = btn;
-                    btn.Click += new System.EventHandler(Cell_Click);
+                    btn.Click += Cell_Click;
                     btn.Tag = (Object)(new Position(i + 1, j + 1));
 
                     
             }
-
+            cf.SetPawnSuperiousListener(PawnSuperiorityHandler);
+            cf.SetKingShahHandler(KingShahHandler);
+            cf.SetKingStalemateHandler(KingStalemateHandler);
             DrawField();
+            form.ResumeLayout(false);
         }
         
         private void DrawField()
@@ -123,6 +129,25 @@ namespace mychess
         public void PositionChanged(Figure fig, Position newposition)
         {
             throw new System.NotImplementedException();
+        }
+
+        public void PawnSuperiorityHandler(object obj, EventArgs args){
+            Figure fig = (Figure) obj;
+            MessageBox.Show(fig.Position.ToString()+"\nМеняем пешку на что-нибудь\n Тут надо бы диалог вставить выбора новой фигуры");
+
+        }
+
+        public void KingShahHandler(object source, EventArgs args)
+        {
+            Figure fig = (Figure)source;
+            MessageBox.Show("Король цвета "+fig.Side+" под шахом. У вас проблемы");
+
+        }
+        public void KingStalemateHandler(object source, EventArgs args)
+        {
+            Figure fig = (Figure)source;
+            MessageBox.Show(fig.Side + " Проиграли");
+
         }
     }
 }

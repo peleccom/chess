@@ -7,6 +7,9 @@ namespace mychess
 {
     public delegate void KillEventHandler(object source, EventArgs args);
     public delegate void MoveEventHandler(object source, MoveEventArgs args);
+    public delegate void PawnSuperiorityHandler(object source, EventArgs args);
+    public delegate void KingShahHandler(object source, EventArgs args);
+    public delegate void KingStalemateHandler(object source, EventArgs args);
     public class MoveEventArgs : EventArgs
     {
         public Position oldpos, newpos;
@@ -73,11 +76,29 @@ namespace mychess
             Position = pos;
             OnMoveEvent(oldpos, pos);
             //chessfield.PositionChanged(this, pos);
+            if (this.GetFigureType() == FigureTypes.Pawn)
+            {
+                Position midpos = pos;
+                if (Side == Side.Black)
+                    midpos = Reverse(midpos);
+                if (midpos.GetY() == 8)
+                    OnPawnSuperiorityEvent();
+            }
         }
 
         public void Kill()
         {
             OnKillEvent();
+        }
+
+        public void Shah()
+        {
+            OnKingShahEvent();
+        }
+
+        public void Stalemate()
+        {
+            OnKingStalemateEvent(); 
         }
 
         // 
@@ -116,7 +137,15 @@ namespace mychess
                 MoveEvent(this, arg);
             }
         }
+        public event PawnSuperiorityHandler PawnSuperiorityEvent;
+        public void OnPawnSuperiorityEvent() // событие при пересении пешкой поля
+        {
+           if (PawnSuperiorityEvent != null)
+            {
 
+                PawnSuperiorityEvent(this, EventArgs.Empty);
+            }
+        }
 
         public event KillEventHandler KillEvent;
         public void OnKillEvent() // событие при уничтожении фигуры
@@ -126,6 +155,36 @@ namespace mychess
 
                 KillEvent(this, EventArgs.Empty);
             }
+        }
+        public event KingShahHandler KingShahEvent;
+        public void OnKingShahEvent() // событие при уничтожении шахе
+        {
+            if (MoveEvent != null)
+            {
+
+                KingShahEvent(this, EventArgs.Empty);
+            }
+        }
+
+        public event KingStalemateHandler KingStalemateEvent;
+        public void OnKingStalemateEvent() // событие при уничтожении шахе
+        {
+            if (KingStalemateEvent != null)
+            {
+
+                KingStalemateEvent(this, EventArgs.Empty);
+            }
+        }
+        public Side GetEnemySide(Side me)
+        {
+            if (me == Side.White)
+                return Side.Black;
+            else return Side.White;
+        }
+        public Side GetEnemySide()
+        {
+            return GetEnemySide(this.Side);
+
         }
 
 

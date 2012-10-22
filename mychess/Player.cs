@@ -9,6 +9,8 @@ namespace mychess
     {
         string name;
         Side side;
+        private bool shahsituation;
+        private King king;
         private int win, lose;
         public MyList<Figure> alivefigures = new MyList<Figure>();
         public MyList<Figure> deadfigures = new MyList<Figure>();
@@ -49,7 +51,8 @@ namespace mychess
                 alivefigures.Add(new Bishop(SidePosition(5, 0), side, chessfield));
             // король с ферзем ставяться зеркально
                 Position pos = SidePosition(3, 0); // отображаем координату y если надо
-                alivefigures.Add(new King(new Position(4+1, pos.GetY()), side, chessfield));
+                king = new King(new Position(4 + 1, pos.GetY()), side, chessfield);
+                alivefigures.Add(king);
                 alivefigures.Add(new Queen(new Position(3+1, pos.GetY()), side, chessfield));
 
                 foreach (Figure figure in alivefigures)
@@ -58,6 +61,7 @@ namespace mychess
                     figure.MoveEvent += chessfield.MoveFigureHandler;
                     figure.KillEvent += KillFigureHandler;
                 }
+                shahsituation = false;
         }
 
         public void KillFigureHandler(object source, EventArgs args)
@@ -71,7 +75,18 @@ namespace mychess
             }
         }
 
-
+        public void ShahAlert()
+        {
+            // шах же
+            if (!shahsituation)
+            {
+                shahsituation = true;
+                King.Shah();
+            }
+            else
+                // а вот это уже мат
+                King.Stalemate();
+        }
         public int GetCount()
         {
             return alivefigures.Count;
@@ -101,6 +116,16 @@ namespace mychess
             }
         }
 
+
+        public King King
+        {
+            get
+            {
+                return king;
+            }
+        }
+
+
         public void Lose()
         {
             lose++;
@@ -118,6 +143,12 @@ namespace mychess
         public int GetWin()
         {
             return win;
+        }
+
+        public void ResetShahSituation()
+        {
+            // reset shah 
+            shahsituation = false;
         }
 
     }

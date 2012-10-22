@@ -91,7 +91,7 @@ namespace mychess
             foreach (Figure fig in pl.alivefigures)
                 if (fig.GetFigureType() == FigureTypes.King)
                 {
-                    if (((King)fig).GetMovesWiwhOutChecks().Contains(pos))
+                    if (((King)fig).GetMovesWithOutChecks().Contains(pos))
                     {
                         danger = true;
                         break;
@@ -109,16 +109,28 @@ namespace mychess
         }
         public void MoveFigureHandler(object source, MoveEventArgs args)
         {
-            Figure fig = GetFigureAt(args.newpos);
-            if (fig != null)
+            Figure target = GetFigureAt(args.newpos);
+            if (target != null)
             {
                 // бъет другую фигуру
-                fig.Kill();
+                target.Kill();
             }
             // устанавивает новую позицию
+            Figure fig = (Figure) source;
             field[args.oldpos.GetX() - 1, args.oldpos.GetY() - 1] = null;
-            field[args.newpos.GetX() - 1, args.newpos.GetY() - 1] = (Figure)source;
+            field[args.newpos.GetX() - 1, args.newpos.GetY() - 1] = fig;
+            // шах
+            if (isShahedKing(fig.GetEnemySide()))
+                SideToPlayer(fig.GetEnemySide()).ShahAlert();
 
+            else
+            {
+                SideToPlayer(fig.GetEnemySide()).ResetShahSituation();
+                if (isShahedKing(fig.Side))
+                    SideToPlayer(fig.Side).ShahAlert();
+                else
+                    SideToPlayer(fig.Side).ResetShahSituation();
+            }
 
         }
 
@@ -136,6 +148,39 @@ namespace mychess
                 fig.KillEvent += handler;
             foreach (Figure fig in pl2.alivefigures)
                 fig.KillEvent+= handler;
+        }
+
+        public void SetPawnSuperiousListener(PawnSuperiorityHandler handler)
+        {
+            foreach (Figure fig in pl1.alivefigures)
+                if (fig.GetFigureType() == FigureTypes.Pawn)
+                    fig.PawnSuperiorityEvent += handler;
+            foreach (Figure fig in pl2.alivefigures)
+                if (fig.GetFigureType() == FigureTypes.Pawn)
+                    fig.PawnSuperiorityEvent += handler;
+        }
+
+        public void SetKingShahHandler(KingShahHandler handler)
+        {
+            pl1.King.KingShahEvent += handler;
+            pl2.King.KingShahEvent += handler;
+        }
+
+        public void SetKingStalemateHandler(KingStalemateHandler handler)
+        {
+            pl1.King.KingStalemateEvent += handler;
+            pl2.King.KingStalemateEvent += handler;
+        }
+        // Возвращает игрока заданного цвета
+        public Player SideToPlayer(Side side)
+        {
+            return (side == pl1.Side) ? pl1 : pl2;
+        }
+
+
+        public bool isShahedKing(Side side)
+        {
+            return isDangerPosition(SideToPlayer(side).King.GetEnemySide(), SideToPlayer(side).King.Position);
         }
     }
 }

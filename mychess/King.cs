@@ -29,7 +29,7 @@ namespace mychess
             return newmoves;
         }
 
-        public  MyList<Position> GetMovesWiwhOutChecks()
+        public  MyList<Position> GetMovesWithOutChecks()
         {
             return base.GetMoves();
         }
