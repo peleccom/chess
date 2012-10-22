@@ -11,18 +11,19 @@ namespace mychess
     {
         private Button[,] buttons;
         private Control ctrl;
+        private Form form;
         Game game;
 
-        public GUI(Control ctrl)
+        public GUI(Control ctrl, Form form)
         {
             this.ctrl = ctrl;
+            this.form = form;
             buttons = new Button[8, 8];
         }
     
         public void NewGame(Player p1, Player p2, ChessField cf, Game g)
         {
             game = g;
-
             for (int i = 0; i < 8; i++)
                 for (int j = 0; j < 8; j++)
                 {
@@ -43,6 +44,7 @@ namespace mychess
                     buttons[i, j] = btn;
                     btn.Click += new System.EventHandler(Cell_Click);
                     btn.Tag = (Object)(new Position(i + 1, j + 1));
+
                     
             }
 

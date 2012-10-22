@@ -201,6 +201,7 @@
             this.rtbLog.TabIndex = 18;
             this.rtbLog.Text = "";
             this.rtbLog.Visible = false;
+            this.rtbLog.TextChanged += new System.EventHandler(this.rtbLog_TextChanged);
             // 
             // pictureBox1
             // 

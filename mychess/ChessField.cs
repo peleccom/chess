@@ -121,5 +121,21 @@ namespace mychess
 
 
         }
+
+        public void SetFiguresMoveListener(MoveEventHandler handler)
+        {
+            foreach (Figure fig in pl1.alivefigures)
+                fig.MoveEvent += handler;
+            foreach (Figure fig in pl2.alivefigures)
+                fig.MoveEvent += handler;
+        }
+
+        public void SetFiguresKillListener(KillEventHandler handler)
+        {
+            foreach (Figure fig in pl1.alivefigures)
+                fig.KillEvent += handler;
+            foreach (Figure fig in pl2.alivefigures)
+                fig.KillEvent+= handler;
+        }
     }
 }

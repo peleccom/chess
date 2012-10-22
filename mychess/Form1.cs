@@ -41,7 +41,7 @@ namespace mychess
             p2 = new Player("Player2", Side.Black);
             Game gm = new Game(p1, p2);
             ChessField cf = gm.Field;
-            GUI gui = new GUI(gbChessField);
+            GUI gui = new GUI(gbChessField, this);
 
             gui.NewGame(p1, p2, cf, gm);
 
@@ -83,6 +83,11 @@ namespace mychess
         }
 
         private void gbChessField_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rtbLog_TextChanged(object sender, EventArgs e)
         {
 
         }
