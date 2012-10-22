@@ -45,12 +45,15 @@ namespace mychess
 
         public static bool operator ==(Position pos1, Position pos2)
         {
+            if (ReferenceEquals(pos1, null) || ReferenceEquals(pos2, null))
+                return ReferenceEquals(pos1, pos2);
             return pos1.Equals(pos2);
         }
 
         public static bool operator !=(Position pos1, Position pos2)
         {
-            return !pos1.Equals(pos2);
+
+            return !(pos1 == pos2);
         }
 
         public override int GetHashCode()
@@ -60,6 +63,7 @@ namespace mychess
 
         public override bool Equals(object obj)
         {
+
             if (this.GetX() == ((Position)obj).GetX() && this.GetY() == ((Position)obj).GetY())
                 return true;
             else

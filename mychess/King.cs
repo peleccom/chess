@@ -23,7 +23,7 @@ namespace mychess
            MyList<Position> newmoves = new MyList<Position>();
            Side oppositeside  = (this.Side == Side.Black)? Side.White:Side.Black;
             foreach (Position pos in moves)
-                if (!chessfield.isDangerPosition(oppositeside, pos))
+                if (!chessfield.isDangerPosition(oppositeside, pos,Position))
                 // Fix situation of cyclic checking of two kings 
                 newmoves.Add(pos);
             return newmoves;

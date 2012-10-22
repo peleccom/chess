@@ -50,6 +50,10 @@ namespace mychess
             }
         }
 
+        /// <summary>
+        /// Получить текущее состояние игры
+        /// </summary>
+        /// <returns></returns>
         public Side GetState()
         {
             Side s = Side.Black;
@@ -64,6 +68,14 @@ namespace mychess
             }
             return s;
         }
+
+        /// <summary>
+        /// Подсветка хода
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="moves"></param>
+        /// <param name="attacks"></param>
+        /// <returns></returns>
         public bool Hightlight(Position pos, out MyList<Position> moves, out MyList<Position> attacks)
         {
             MyList<Position> lattacks, lmoves;
@@ -106,6 +118,11 @@ namespace mychess
 
 
         }
+
+        /// <summary>
+        /// Отмена подсветки хода
+        /// </summary>
+        /// <returns></returns>
         public MyList<Position> Escape()
         {
 
@@ -124,7 +141,11 @@ namespace mychess
             return movs;
             
         }
-        // находимся в состоянии выделения
+
+        /// <summary>
+        ///  Находимся в состоянии выделения?
+        /// </summary>
+        /// <returns></returns>
         public bool isHighlighted()
         {
             if (state == GameState.HighlightedBlack || state == GameState.HighlightedWhite)
@@ -132,7 +153,12 @@ namespace mychess
             else
                 return false;
         }
-        // эта клетка была выделена?
+
+        /// <summary>
+        /// Эта клетка была выделена?
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
         public bool isCorrectMove(Position pos)
         {
             if (!isHighlighted())
@@ -142,7 +168,12 @@ namespace mychess
             else
                 return false;
         }
-        // является ли фигура той которая инициировала выделение?
+
+        /// <summary>
+        /// Является ли фигура той которая инициировала выделение?
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
         public bool isHighlightedFigure(Position pos)
         {
             if (!isHighlighted())

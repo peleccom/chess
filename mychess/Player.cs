@@ -75,6 +75,9 @@ namespace mychess
             }
         }
 
+        /// <summary>
+        /// Вызывается при шахе
+        /// </summary>
         public void ShahAlert()
         {
             // шах же
@@ -87,11 +90,20 @@ namespace mychess
                 // а вот это уже мат
                 King.Stalemate();
         }
+
+        /// <summary>
+        /// Вернет число "живых" фигур
+        /// </summary>
+        /// <returns></returns>
+ 
         public int GetCount()
         {
             return alivefigures.Count;
         }
 
+        /// <summary>
+        /// Имя игрока
+        /// </summary>
         public string Name
         {
             get
@@ -104,6 +116,9 @@ namespace mychess
             }
         }
 
+        /// <summary>
+        ///  Цвет игрока
+        /// </summary>
         public Side Side
         {
             get
@@ -116,7 +131,9 @@ namespace mychess
             }
         }
 
-
+        /// <summary>
+        /// Вернет указатель на короля данного игрока
+        /// </summary>
         public King King
         {
             get
@@ -125,29 +142,45 @@ namespace mychess
             }
         }
 
-
+        /// <summary>
+        ///  Инкремент внутреннего счетчика поражений
+        /// </summary>
         public void Lose()
         {
             lose++;
         }
 
+        /// <summary>
+        /// Инкремент внутреннего счетчика побед
+        /// </summary>
         public void Win()
         {
             win++;
         }
+
+        /// <summary>
+        ///  Возвращает число поражений
+        /// </summary>
+        /// <returns></returns>
         public int GetLose()
         {
             return lose;
         }
 
+        /// <summary>
+        ///  Возвращает число побед
+        /// </summary>
+        /// <returns></returns>
         public int GetWin()
         {
             return win;
         }
 
+        /// <summary>
+        /// Вызывается если король ушел из-под шаха
+        /// </summary>
         public void ResetShahSituation()
         {
-            // reset shah 
             shahsituation = false;
         }
 

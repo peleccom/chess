@@ -5,6 +5,9 @@ using System.Text;
 
 namespace mychess
 {
+    /// <summary>
+    /// Представляет собой шахматную доску
+    /// </summary>
     public class ChessField
     {
         private MovePolitics horizontalmovepolitics = new HorizontalMovePolitics();
@@ -29,14 +32,14 @@ namespace mychess
             }
         }
 
-                public MovePolitics DiagMovePolitics
+        public MovePolitics DiagMovePolitics
         {
             get{
             return diagmovepolitics;
             }
         }
 
-                public MovePolitics KnightMovePolitics
+        public MovePolitics KnightMovePolitics
         {
             get{
             return knightmovepolitics;
@@ -71,6 +74,11 @@ namespace mychess
 
         }
 
+        /// <summary>
+        ///  Получить фигуру в позиции pos
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
         public Figure GetFigureAt(Position pos)
         {
             try
@@ -82,11 +90,40 @@ namespace mychess
             }
         }
 
-        public bool isDangerPosition(Side enemyside, Position pos)
+        /// <summary>
+        ///  Установить фигуру позиции pos
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="fig"></param>
+        private void SetFigureAt(Position pos, Figure fig)
+        {
+            try
+            {
+                field[pos.GetX() - 1, pos.GetY() - 1] = fig;
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        /// <summary>
+        /// Проверяет находится ли позиция под ударом
+        /// </summary>
+        /// <param name="enemyside"></param>
+        /// <param name="pos"></param>
+        /// <param name="originalpos"></param>
+        /// <returns></returns>
+        public bool isDangerPosition(Side enemyside, Position pos,Position originalpos = null)
         {
             bool danger = false;
-            Player pl = (pl1.Side == enemyside) ? pl1 : pl2;
-            // To do
+            Figure oldfig = null;
+            if (originalpos != null)
+            {
+                oldfig = GetFigureAt(originalpos);
+                SetFigureAt(originalpos, null);
+            }
+            Player pl = this.SideToPlayer(enemyside);
             // iterate over alive figures
             foreach (Figure fig in pl.alivefigures)
                 if (fig.GetFigureType() == FigureTypes.King)
@@ -105,8 +142,16 @@ namespace mychess
                         break;
                     }
                 }
+            if (originalpos != null)
+                SetFigureAt(originalpos, oldfig);
             return danger;
         }
+
+        /// <summary>
+        /// Обработчик MoveEvent
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="args"></param>
         public void MoveFigureHandler(object source, MoveEventArgs args)
         {
             Figure target = GetFigureAt(args.newpos);
@@ -133,7 +178,11 @@ namespace mychess
             }
 
         }
-
+        
+        /// <summary>
+        /// Установить обработчик MoveEvent
+        /// </summary>
+        /// <param name="handler"></param> 
         public void SetFiguresMoveListener(MoveEventHandler handler)
         {
             foreach (Figure fig in pl1.alivefigures)
@@ -141,7 +190,11 @@ namespace mychess
             foreach (Figure fig in pl2.alivefigures)
                 fig.MoveEvent += handler;
         }
-
+        
+        /// <summary>
+        /// Установить обработчик KillEvent
+        /// </summary>
+        /// <param name="handler"></param>
         public void SetFiguresKillListener(KillEventHandler handler)
         {
             foreach (Figure fig in pl1.alivefigures)
@@ -149,7 +202,11 @@ namespace mychess
             foreach (Figure fig in pl2.alivefigures)
                 fig.KillEvent+= handler;
         }
-
+        
+        /// <summary>
+        /// Установить обработчик PawnSuperiousEvent
+        /// </summary>
+        /// <param name="handler"></param>
         public void SetPawnSuperiousListener(PawnSuperiorityHandler handler)
         {
             foreach (Figure fig in pl1.alivefigures)
@@ -159,25 +216,42 @@ namespace mychess
                 if (fig.GetFigureType() == FigureTypes.Pawn)
                     fig.PawnSuperiorityEvent += handler;
         }
-
-        public void SetKingShahHandler(KingShahHandler handler)
+        
+        /// <summary>
+        /// Установить обработчик KingShahEvent
+        /// </summary>
+        /// <param name="handler"></param>
+        public void SetKingShahListener(KingShahHandler handler)
         {
             pl1.King.KingShahEvent += handler;
             pl2.King.KingShahEvent += handler;
         }
 
-        public void SetKingStalemateHandler(KingStalemateHandler handler)
+        /// <summary>
+        /// Установить обработчик KingStalemateEvent
+        /// </summary>
+        /// <param name="handler"></param>
+        public void SetKingStalemateListener(KingStalemateHandler handler)
         {
             pl1.King.KingStalemateEvent += handler;
             pl2.King.KingStalemateEvent += handler;
         }
-        // Возвращает игрока заданного цвета
+
+        /// <summary>
+        /// Возвращает игрока заданного цвета
+        /// </summary>
+        /// <param name="side"></param>
+        /// <returns></returns>
         public Player SideToPlayer(Side side)
         {
             return (side == pl1.Side) ? pl1 : pl2;
         }
 
-
+        /// <summary>
+        ///  Находится ли король цвета под ударом
+        /// </summary>
+        /// <param name="side"></param>
+        /// <returns></returns>
         public bool isShahedKing(Side side)
         {
             return isDangerPosition(SideToPlayer(side).King.GetEnemySide(), SideToPlayer(side).King.Position);

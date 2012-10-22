@@ -51,8 +51,8 @@ namespace mychess
                     
             }
             cf.SetPawnSuperiousListener(PawnSuperiorityHandler);
-            cf.SetKingShahHandler(KingShahHandler);
-            cf.SetKingStalemateHandler(KingStalemateHandler);
+            cf.SetKingShahListener(KingShahHandler);
+            cf.SetKingStalemateListener(KingStalemateHandler);
             DrawField();
             form.ResumeLayout(false);
         }
