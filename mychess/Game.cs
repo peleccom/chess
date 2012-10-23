@@ -83,7 +83,7 @@ namespace mychess
                     moves = GetMoves(fig, attacks);
                     // Если король под шахом и возможных ходов нет то конец игры FIX IT
                     if (fig.GetFigureType() == FigureTypes.King & moves.Count == 0 & attacks.Count == 0)
-                        EndGame();
+                        EndGame(fig);
                     if (state == GameState.WaitBlack)
                         state = GameState.HighlightedBlack;
                     if (state == GameState.WaitWhite)
@@ -199,16 +199,18 @@ namespace mychess
         /// <summary>
         /// Конец игры
         /// </summary>
-        private void EndGame()
+        private void EndGame(Figure king)
         {
             //
             if (state == GameState.WaitBlack)
                 state = GameState.LoseBlack;
             if (state == GameState.WaitWhite)
                 state = GameState.LoseWhite;
+            king.Stalemate();
+            
         }
 
-        MyList<Position> GetAttacks(Figure fig)
+        public MyList<Position> GetAttacks(Figure fig)
         {
             MyList<Position> lattacks = new MyList<Position>();
             MyList<Position> attacks = new MyList<Position>();
@@ -220,7 +222,7 @@ namespace mychess
             return attacks;
         }
 
-        MyList<Position> GetMoves(Figure fig, MyList<Position> attacks)
+        public MyList<Position> GetMoves(Figure fig, MyList<Position> attacks)
         {
             MyList<Position> lmoves = new MyList<Position>();
             MyList<Position> moves = new MyList<Position>();

@@ -9,6 +9,7 @@ namespace mychess
     {
         string name;
         Side side;
+        ChessField chessfield = null;
         private bool shahsituation;
         private King king;
         private int win, lose;
@@ -61,6 +62,7 @@ namespace mychess
                     figure.MoveEvent += chessfield.MoveFigureHandler;
                     figure.KillEvent += KillFigureHandler;
                 }
+                this.chessfield = chessfield;
                 shahsituation = false;
         }
 
