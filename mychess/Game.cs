@@ -54,19 +54,9 @@ namespace mychess
         /// Получить текущее состояние игры
         /// </summary>
         /// <returns></returns>
-        public Side GetState()
+        public GameState GetState()
         {
-            Side s = Side.Black;
-            switch (state)
-            {
-                case GameState.WaitBlack:
-                    s = Side.Black;
-                    break;
-                case GameState.WaitWhite:
-                    s = Side.White;
-                    break;
-            }
-            return s;
+            return state;
         }
 
         /// <summary>

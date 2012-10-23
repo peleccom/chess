@@ -17,10 +17,7 @@ namespace mychess
             this.oldpos = oldpos;
             this. newpos = newpos;
     }
-
     }
-
-
     
     public abstract class Figure
     {
@@ -116,7 +113,6 @@ namespace mychess
         {
             OnKingStalemateEvent(); 
         }
-
         
         /// <summary>
         /// Возвращает список позиций которые бьет данная фигура
@@ -171,7 +167,7 @@ namespace mychess
         }
 
         public event PawnSuperiorityHandler PawnSuperiorityEvent;
-        public void OnPawnSuperiorityEvent() // событие при пересении пешкой поля
+        public void OnPawnSuperiorityEvent()
         {
            if (PawnSuperiorityEvent != null)
             {
@@ -180,7 +176,7 @@ namespace mychess
         }
 
         public event KillEventHandler KillEvent;
-        public void OnKillEvent() // событие при уничтожении фигуры
+        public void OnKillEvent()
         {
             if (MoveEvent != null)
             {
@@ -198,7 +194,7 @@ namespace mychess
         }
 
         public event KingStalemateHandler KingStalemateEvent;
-        public void OnKingStalemateEvent() // событие при уничтожении шахе
+        public void OnKingStalemateEvent()
         {
             if (KingStalemateEvent != null)
             {
@@ -227,7 +223,6 @@ namespace mychess
         {
             return GetEnemySide(this.Side);
         }
-
 
     }
 }

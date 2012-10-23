@@ -46,8 +46,6 @@ namespace mychess
             }
         }
 
-
-
         public ChessField(Player p1, Player p2)
         {
             field = new Figure[8, 8];
@@ -68,7 +66,6 @@ namespace mychess
             }
             foreach (Figure fig in p2.alivefigures)
             {
-
                 field[fig.Position.GetX() - 1, fig.Position.GetY() - 1] = fig;
             }
 
@@ -157,10 +154,10 @@ namespace mychess
             Figure target = GetFigureAt(args.newpos);
             if (target != null)
             {
-                // бъет другую фигуру
+                // бьет другую фигуру
                 target.Kill();
             }
-            // устанавивает новую позицию
+            // устанавливает новую позицию
             Figure fig = (Figure) source;
             field[args.oldpos.GetX() - 1, args.oldpos.GetY() - 1] = null;
             field[args.newpos.GetX() - 1, args.newpos.GetY() - 1] = fig;
