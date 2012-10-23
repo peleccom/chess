@@ -253,5 +253,63 @@ namespace mychess
         {
             return isDangerPosition(SideToPlayer(side).King.GetEnemySide(), SideToPlayer(side).King.Position);
         }
+
+        /// <summary>
+        /// Поменять пешку на фигуру заданного типа
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="figuretype"></param>
+        public Figure TransformPawn(Position pos, FigureTypes figuretype)
+        {
+            Figure fig;
+            Side side;
+            side = GetFigureAt(pos).Side;
+            Figure oldfig =SideToPlayer(side).alivefigures[SideToPlayer(side).alivefigures.IndexOf(GetFigureAt(pos))];
+            fig = CreateFigure(figuretype, pos, side);
+            SetFigureAt(pos, fig);
+            SideToPlayer(side).alivefigures.Remove(oldfig);
+            SideToPlayer(side).alivefigures.Add(fig);  
+            // надо восстановить старые обработчики для пешки
+            return fig;
+        }
+
+        /// <summary>
+        /// Создать фигуру заданного типа
+        /// </summary>
+        /// <param name="figtype">Тип фигуры</param>
+        /// <param name="pos">Позиция</param>
+        /// <returns></returns>
+        Figure CreateFigure(FigureTypes figtype, Position pos, Side side)
+        {
+            switch (figtype)
+            {
+                case FigureTypes.Bishop:
+                    {
+                        return new Bishop(pos, side, this);
+                    }
+                case FigureTypes.King:
+                    {
+                        return new King(pos, side, this);
+                    }
+                case FigureTypes.Knight:
+                    {
+                        return new Knight(pos, side, this);
+                    }
+                case FigureTypes.Pawn:
+                    {
+                        return new Pawn(pos, side, this);
+                    }
+                case FigureTypes.Queen:
+                    {
+                        return new Queen(pos, side, this);
+                    }
+                case FigureTypes.Rook:
+                    {
+                        return new Rook(pos, side, this);
+                    }
+            }
+            return null;
+        }
+
     }
 }
