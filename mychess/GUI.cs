@@ -10,30 +10,38 @@ namespace mychess
     public class GUI
     {
         private Button[,] buttons;
-        private Control ctrl;
+        private Control gbChessField;
+        private Label lTurn, lLost, lKilled, lWhite, lBlack;
+        private RichTextBox rtbLog;
         private Form form;
         Game game;
 
-        public GUI(Control ctrl, Form form)
+        public GUI(GroupBox gbChessField, Label lTurn, Label lLost, Label lKilled, Label lWhite, Label lBlack, RichTextBox rtbLog, Form form)
         {
-            this.ctrl = ctrl;
+            this.gbChessField = gbChessField;
+            this.lTurn = lTurn;
+            this.lLost = lLost;
+            this.lKilled = lKilled;
+            this.lWhite = lWhite;
+            this.lBlack = lBlack;
+            this.rtbLog = rtbLog;
             this.form = form;
             buttons = new Button[8, 8];
         }
     
         public void NewGame(Player p1, Player p2, ChessField cf, Game g)
         {
-
             form.SuspendLayout();
             game = g;
             Font font = new System.Drawing.Font("Arial Unicode MS", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             for (int i = 0; i < 8; i++)
                 for (int j = 0; j < 8; j++)
                 {
+                    int size = 70;
                     Button btn = new Button();
-                    btn.Parent = ctrl;
-                    btn.Height = 50;
-                    btn.Width = 50;
+                    btn.Parent = gbChessField;
+                    btn.Height = size;
+                    btn.Width = size;
                     btn.Font = font;
                     btn.BackgroundImageLayout = ImageLayout.Center;
                     btn.FlatStyle = FlatStyle.Flat;
@@ -42,16 +50,15 @@ namespace mychess
                         btn.BackColor = Color.Gray;
                     else
                         btn.BackColor = Color.White;
-                    btn.Left = 50 * i;
-                    btn.Top = 50 * (7 - j);
+                    btn.Left = size * i;
+                    btn.Top = size * (7 - j);
                     buttons[i, j] = btn;
                     btn.Click += Cell_Click;
-                    btn.Tag = (Object)(new Position(i + 1, j + 1));
-
-                    
+                    btn.Tag = (Object)(new Position(i + 1, j + 1));   
             }
+
             cf.SetPawnSuperiousListener(PawnSuperiorityHandler);
-            cf.SetKingShahHandler(KingShahHandler);
+            cf.SetKingCheckHandler(KingCheckHandler);
             cf.SetKingStalemateHandler(KingStalemateHandler);
             DrawField();
             form.ResumeLayout(false);
@@ -89,14 +96,14 @@ namespace mychess
                     {
                         foreach (Position move in moves)
                         {
-                            buttons[move.GetX() - 1, move.GetY() - 1].FlatAppearance.BorderSize = 4;
-                            buttons[move.GetX() - 1, move.GetY() - 1].FlatAppearance.BorderColor = Color.LightGreen;
+                            buttons[move.GetX() - 1, move.GetY() - 1].FlatAppearance.BorderSize = 2;
+                            buttons[move.GetX() - 1, move.GetY() - 1].FlatAppearance.BorderColor = Color.Green;
                         }
-                        buttons[pos.GetX() - 1, pos.GetY() - 1].FlatAppearance.BorderSize = 4;
-                        buttons[pos.GetX() - 1, pos.GetY() - 1].FlatAppearance.BorderColor = Color.LightGreen;
+                        buttons[pos.GetX() - 1, pos.GetY() - 1].FlatAppearance.BorderSize = 2;
+                        buttons[pos.GetX() - 1, pos.GetY() - 1].FlatAppearance.BorderColor = Color.Green;
                         foreach (Position move in attacks)
                         {
-                            buttons[move.GetX() - 1, move.GetY() - 1].FlatAppearance.BorderSize = 4;
+                            buttons[move.GetX() - 1, move.GetY() - 1].FlatAppearance.BorderSize = 2;
                             buttons[move.GetX() - 1, move.GetY() - 1].FlatAppearance.BorderColor = Color.Red;
                         }
                     }
@@ -122,10 +129,17 @@ namespace mychess
                         }
                     
             }
-            
-            //if (game.GetState() == Side.Black)
-            //else 
+
+                switch (game.GetState())
+                {
+                    case GameState.WaitBlack:
+                    case GameState.HighlightedBlack: lTurn.Text = "Ход чёрных"; break;
+                    case GameState.HighlightedWhite:
+                    case GameState.WaitWhite: lTurn.Text = "Ход белых"; break;
+                }
+
         }
+
         public void PositionChanged(Figure fig, Position newposition)
         {
             throw new System.NotImplementedException();
@@ -133,21 +147,27 @@ namespace mychess
 
         public void PawnSuperiorityHandler(object obj, EventArgs args){
             Figure fig = (Figure) obj;
-            MessageBox.Show(fig.Position.ToString()+"\nМеняем пешку на что-нибудь\n Тут надо бы диалог вставить выбора новой фигуры");
+            MessageBox.Show(fig.Position.ToString()+"\nСказку про Золушку читали, не?");
 
         }
 
-        public void KingShahHandler(object source, EventArgs args)
+        public void KingCheckHandler(object source, EventArgs args)
         {
             Figure fig = (Figure)source;
-            MessageBox.Show("Король цвета "+fig.Side+" под шахом. У вас проблемы");
+            if (fig.Side == Side.Black)
+            MessageBox.Show("Чёрный Король под шахом. Хьюстон, у нас проблема.");
+            else
+            MessageBox.Show("Белый Король под шахом. Хьюстон, у нас проблема.");
 
         }
         public void KingStalemateHandler(object source, EventArgs args)
         {
             Figure fig = (Figure)source;
-            MessageBox.Show(fig.Side + " Проиграли");
-
+            if (fig.Side == Side.Black)
+            MessageBox.Show("Тучи расступились, и с неба засветило яркое солнце. Поверженные чёрные фигуры тускло блестели...");
+            else
+            MessageBox.Show("Солнце скрылось за тучами, на поле боя пала тень. Поверженные белые фигуры пропали во мраке...");
         }
+
     }
 }

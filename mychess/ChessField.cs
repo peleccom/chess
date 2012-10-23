@@ -29,21 +29,19 @@ namespace mychess
             }
         }
 
-                public MovePolitics DiagMovePolitics
+        public MovePolitics DiagMovePolitics
         {
             get{
             return diagmovepolitics;
             }
         }
 
-                public MovePolitics KnightMovePolitics
+        public MovePolitics KnightMovePolitics
         {
             get{
             return knightmovepolitics;
             }
         }
-
-
 
         public ChessField(Player p1, Player p2)
         {
@@ -65,7 +63,6 @@ namespace mychess
             }
             foreach (Figure fig in p2.alivefigures)
             {
-
                 field[fig.Position.GetX() - 1, fig.Position.GetY() - 1] = fig;
             }
 
@@ -107,15 +104,16 @@ namespace mychess
                 }
             return danger;
         }
+
         public void MoveFigureHandler(object source, MoveEventArgs args)
         {
             Figure target = GetFigureAt(args.newpos);
             if (target != null)
             {
-                // бъет другую фигуру
+                // бьет другую фигуру
                 target.Kill();
             }
-            // устанавивает новую позицию
+            // устанавливает новую позицию
             Figure fig = (Figure) source;
             field[args.oldpos.GetX() - 1, args.oldpos.GetY() - 1] = null;
             field[args.newpos.GetX() - 1, args.newpos.GetY() - 1] = fig;
@@ -160,7 +158,7 @@ namespace mychess
                     fig.PawnSuperiorityEvent += handler;
         }
 
-        public void SetKingShahHandler(KingShahHandler handler)
+        public void SetKingCheckHandler(KingCheckHandler handler)
         {
             pl1.King.KingShahEvent += handler;
             pl2.King.KingShahEvent += handler;

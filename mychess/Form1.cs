@@ -19,7 +19,7 @@ namespace mychess
         
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            this.tsNewGame_Click(sender, e);
         }
 
         
@@ -38,10 +38,10 @@ namespace mychess
             //form2.Show();
             Player p1, p2;
             p1 = new Player("Игрок 1", Side.White);
-            p2 = new Player("Player2", Side.Black);
+            p2 = new Player("Игрок 2", Side.Black);
             Game gm = new Game(p1, p2);
             ChessField cf = gm.Field;
-            GUI gui = new GUI(gbChessField, this);
+            GUI gui = new GUI(gbChessField, lTurn, lLost, lKilled, lWhite, lBlack, rtbLog, this);
 
             gui.NewGame(p1, p2, cf, gm);
 

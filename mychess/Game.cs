@@ -50,19 +50,9 @@ namespace mychess
             }
         }
 
-        public Side GetState()
+        public GameState GetState()
         {
-            Side s = Side.Black;
-            switch (state)
-            {
-                case GameState.WaitBlack:
-                    s = Side.Black;
-                    break;
-                case GameState.WaitWhite:
-                    s = Side.White;
-                    break;
-            }
-            return s;
+            return state;
         }
         public bool Hightlight(Position pos, out MyList<Position> moves, out MyList<Position> attacks)
         {

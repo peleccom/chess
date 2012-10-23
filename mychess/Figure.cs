@@ -8,7 +8,7 @@ namespace mychess
     public delegate void KillEventHandler(object source, EventArgs args);
     public delegate void MoveEventHandler(object source, MoveEventArgs args);
     public delegate void PawnSuperiorityHandler(object source, EventArgs args);
-    public delegate void KingShahHandler(object source, EventArgs args);
+    public delegate void KingCheckHandler(object source, EventArgs args);
     public delegate void KingStalemateHandler(object source, EventArgs args);
     public class MoveEventArgs : EventArgs
     {
@@ -17,10 +17,7 @@ namespace mychess
             this.oldpos = oldpos;
             this. newpos = newpos;
     }
-
     }
-
-
     
     public abstract class Figure
     {
@@ -101,7 +98,6 @@ namespace mychess
             OnKingStalemateEvent(); 
         }
 
-        // 
         public virtual MyList<Position> GetAttacks()
         {
             return GetMoves();
@@ -133,12 +129,12 @@ namespace mychess
             MoveEventArgs arg = new MoveEventArgs(oldpos, newpos);
             if (MoveEvent != null)
             {
-
                 MoveEvent(this, arg);
             }
         }
+
         public event PawnSuperiorityHandler PawnSuperiorityEvent;
-        public void OnPawnSuperiorityEvent() // событие при пересении пешкой поля
+        public void OnPawnSuperiorityEvent()
         {
            if (PawnSuperiorityEvent != null)
             {
@@ -148,7 +144,7 @@ namespace mychess
         }
 
         public event KillEventHandler KillEvent;
-        public void OnKillEvent() // событие при уничтожении фигуры
+        public void OnKillEvent()
         {
             if (MoveEvent != null)
             {
@@ -156,8 +152,9 @@ namespace mychess
                 KillEvent(this, EventArgs.Empty);
             }
         }
-        public event KingShahHandler KingShahEvent;
-        public void OnKingShahEvent() // событие при уничтожении шахе
+
+        public event KingCheckHandler KingShahEvent;
+        public void OnKingShahEvent()
         {
             if (MoveEvent != null)
             {
@@ -167,7 +164,7 @@ namespace mychess
         }
 
         public event KingStalemateHandler KingStalemateEvent;
-        public void OnKingStalemateEvent() // событие при уничтожении шахе
+        public void OnKingStalemateEvent()
         {
             if (KingStalemateEvent != null)
             {
@@ -175,18 +172,19 @@ namespace mychess
                 KingStalemateEvent(this, EventArgs.Empty);
             }
         }
+
         public Side GetEnemySide(Side me)
         {
             if (me == Side.White)
                 return Side.Black;
             else return Side.White;
         }
+
         public Side GetEnemySide()
         {
             return GetEnemySide(this.Side);
 
         }
-
 
     }
 }
