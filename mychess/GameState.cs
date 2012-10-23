@@ -11,5 +11,7 @@ namespace mychess
         HighlightedWhite,
         WaitBlack,
         HighlightedBlack,
+        LoseWhite,
+        LoseBlack,
     }
 }

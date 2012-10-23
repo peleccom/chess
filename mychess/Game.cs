@@ -68,7 +68,6 @@ namespace mychess
         /// <returns></returns>
         public bool Hightlight(Position pos, out MyList<Position> moves, out MyList<Position> attacks)
         {
-            MyList<Position> lattacks, lmoves;
             moves = new MyList<Position>();
             attacks = new MyList<Position>();
             if (state != GameState.WaitWhite && state!= GameState.WaitBlack)
@@ -80,19 +79,15 @@ namespace mychess
                     (state == GameState.WaitWhite && fig.Side == Side.White))
                 {
                     // highlighting code
-                    lattacks = fig.GetAttacks();
-                    lmoves = fig.GetMoves();
-                    foreach (Position attack in lattacks) //для всех направлений удара проверям есть ли там фигура
-                        if (Field.GetFigureAt(attack) != null && Field.GetFigureAt(attack).Side != fig.Side 
-                                && Field.GetFigureAt(attack).GetFigureType() != FigureTypes.King)
-                            attacks.Add(attack);
-                    foreach (Position move in lmoves)
-                        if (!attacks.Contains(move) && Field.GetFigureAt(move) == null)
-                            moves.Add(move);
+                    attacks = GetAttacks(fig);
+                    moves = GetMoves(fig, attacks);
+                    // Если король под шахом и возможных ходов нет то конец игры FIX IT
+                    if (fig.GetFigureType() == FigureTypes.King & moves.Count == 0 & attacks.Count == 0)
+                        EndGame();
                     if (state == GameState.WaitBlack)
                         state = GameState.HighlightedBlack;
                     if (state == GameState.WaitWhite)
-                    state = GameState.HighlightedWhite;
+                        state = GameState.HighlightedWhite;
                     this.moves = moves;
                     this.attacks = attacks;
                     highlightedfigurepos = pos;
@@ -200,5 +195,42 @@ namespace mychess
             }
             return true;
         }
+
+        /// <summary>
+        /// Конец игры
+        /// </summary>
+        private void EndGame()
+        {
+            //
+            if (state == GameState.WaitBlack)
+                state = GameState.LoseBlack;
+            if (state == GameState.WaitWhite)
+                state = GameState.LoseWhite;
         }
+
+        MyList<Position> GetAttacks(Figure fig)
+        {
+            MyList<Position> lattacks = new MyList<Position>();
+            MyList<Position> attacks = new MyList<Position>();
+            lattacks = fig.GetAttacks();
+            foreach (Position attack in lattacks) //для всех направлений удара проверям есть ли там фигура
+                if (Field.GetFigureAt(attack) != null && Field.GetFigureAt(attack).Side != fig.Side
+                        && Field.GetFigureAt(attack).GetFigureType() != FigureTypes.King)
+                    attacks.Add(attack);
+            return attacks;
+        }
+
+        MyList<Position> GetMoves(Figure fig, MyList<Position> attacks)
+        {
+            MyList<Position> lmoves = new MyList<Position>();
+            MyList<Position> moves = new MyList<Position>();
+            lmoves = fig.GetMoves();
+            foreach (Position move in lmoves)
+                if (!attacks.Contains(move) && Field.GetFigureAt(move) == null)
+                    moves.Add(move);
+            return moves;
+
+        }
+    }
+
 }

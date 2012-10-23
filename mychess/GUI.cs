@@ -136,6 +136,7 @@ namespace mychess
                     case GameState.HighlightedBlack: lTurn.Text = "Ход чёрных"; break;
                     case GameState.HighlightedWhite:
                     case GameState.WaitWhite: lTurn.Text = "Ход белых"; break;
+                    default: lTurn.Text = "Состояние не определено"; break;
                 }
 
         }

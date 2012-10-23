@@ -269,7 +269,7 @@ namespace mychess
             SetFigureAt(pos, fig);
             SideToPlayer(side).alivefigures.Remove(oldfig);
             SideToPlayer(side).alivefigures.Add(fig);  
-            // надо восстановить старые обработчики для пешки
+            // надо восстановить старые обработчики для пешки FIX IT
             return fig;
         }
 
