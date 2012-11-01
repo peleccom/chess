@@ -226,8 +226,8 @@
   <data name="tsNewLanGame.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAPMAAADzCAYAAABT9iA/AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAOtwAA
-        DrcBHI9bQQAA/3lJREFUeF7s/QecXVd23om2LVm2LGue43seWzOSPZI1smWPniU5KFgtybLk7lZ3syPJ
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAOtgAA
+        DrYBzsi5pQAA/3lJREFUeF7s/QecXVd23om2LVm2LGue43seWzOSPZI1smWPniU5KFgtybLk7lZ3syPJ
         TkwgCSLnnHPOORCJyDlnoHIGCqhcqJxzRiFzzf/b5+yqg0IhkGzJajbA3+K5de+55967z/72t/L+W8a/
         L7z89xM/Av+rb+Lf+owj+JP+/T/jz//xvF1gfvnvJ38EHtnH9lKePgYfc4ufJT/5MwBS/jz8iJe/wV4C
         +TMuZp+HOfQSzH9D7uLzmOOvnHX5Ao9+kuUzgvmzjv/fhGn0Esx/E+7Cc1RATbSXYH7OYvMSzC/V7L9K
@@ -1964,8 +1964,8 @@
   <data name="tsGame.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAOtwAA
-        DrcBHI9bQQAABKpJREFUaEPtmksofUEcx13JIyLFQpRHkWcWUh6FvBaSR7KQhVCSDVkgj7CRkkhhgZWF
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAOtgAA
+        DrYBzsi5pQAABKpJREFUaEPtmksofUEcx13JIyLFQpRHkWcWUh6FvBaSR7KQhVCSDVkgj7CRkkhhgZWF
         PAp5FSuPUrL0SggbyWOpiObvd/rP6RzuPfM4M9eNO3VzNXN+8/v8vr+ZOTNzLeizuPylAsB/qbj8JVgl
         m53AvzwCToV/ucDOMSxV4KenJ3R1dSW1D5JxIWN4YWEBXl5QVVWVzf5WV1eVNvA5Pz8n+SWtXghwenq6
         ChMREfHN2c3NTbUegEtKSqQBkQwLAU5NTdUB1dXV6frFyuK/fn5+JL+k1QsBrqio0AED2MjICNrf30cx
@@ -1991,8 +1991,8 @@
   <data name="tsHelp.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAOtwAA
-        DrcBHI9bQQAAOstJREFUeF7tnQV0Vne29ulMO22/uTN1Nyi0SHHXAAmBBNdgCcHdnRKc4MEDIU7c3d3d
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAOtgAA
+        DrYBzsi5pQAAOstJREFUeF7tnQV0Vne29ulMO22/uTN1Nyi0SHHXAAmBBNdgCcHdnRKc4MEDIU7c3d3d
         3d2FUPc+37NPCNPb2+/OEChlvjXvWnud5I29Ob/zbPvv/3mfAh9d/vN4cs6AAPnP48k5A12enJfyn1ei
         eKv/nIYn6wz82wKpr69HamoqwsPD71tUVBTy8/PxxRdfPFln+QFezb8VkJ9//hlZWVlwcXGBq6srfHx8
         EBAQgKCgIMX8/f3h6ekJJycn5WvV1dUPcCqejG/9twFSWVmpQPDy8kJISIiiClFEamoK0tJSkcajfB4a

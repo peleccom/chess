@@ -16,12 +16,6 @@ namespace mychess
         View view;
         public Game(View view)
         {
-
-            this.player1 = new Player(view.GetUserName(Side.White), Side.White);
-            this.player2 = new Player(view.GetUserName(Side.Black), Side.Black);
-            //this.player1 = new Player("", Side.White);
-            //this.player2 = new Player("", Side.Black);
-            Field = new ChessField(player1, player2);
             this.view = view;
             view.ShowgbHUD(false);
         }
@@ -243,6 +237,11 @@ namespace mychess
         /// Новая игра
         /// </summary>
         public void NewGame(){
+            this.player1 = new Player(view.GetUserName(Side.White), Side.White);
+            this.player2 = new Player(view.GetUserName(Side.Black), Side.Black);
+            //this.player1 = new Player("", Side.White);
+            //this.player2 = new Player("", Side.Black);
+            Field = new ChessField(player1, player2);
             view.ShowgbChessField(true);
             view.ShowrtbLog(true);
             view.EnableDefeat(true);

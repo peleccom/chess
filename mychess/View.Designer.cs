@@ -137,6 +137,7 @@
             this.tsLoad.Name = "tsLoad";
             this.tsLoad.Size = new System.Drawing.Size(212, 22);
             this.tsLoad.Text = "Загрузить игру";
+            this.tsLoad.Click += new System.EventHandler(this.tsLoad_Click);
             // 
             // toolStripSeparator1
             // 

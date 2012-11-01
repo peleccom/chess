@@ -278,6 +278,21 @@ namespace mychess
             RulesForm form = new RulesForm();
             DialogResult result = form.ShowDialog();
         }
+
+        /// <summary>
+        /// Вызвать диалог выбора новой фигуры
+        /// </summary>
+        /// <returns></returns>
+        public FigureTypes SelectFigure()
+        {
+            ChooseFigureForm form = new ChooseFigureForm();
+            form.ShowDialog();
+            return form.GetFigureType();
+        }
+
+        private void tsLoad_Click(object sender, EventArgs e)
+        {
+        }
     }
 
 }

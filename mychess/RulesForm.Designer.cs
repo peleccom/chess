@@ -58,7 +58,11 @@
             this.ClientSize = new System.Drawing.Size(694, 445);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.button1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "RulesForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Правила игры";
             this.TopMost = true;
