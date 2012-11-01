@@ -13,12 +13,17 @@ namespace mychess
         private ChessField field;
         private MyList<Position> moves, attacks;
         Position highlightedfigurepos;
-
-        public Game(Player player1, Player player2)
+        View view;
+        public Game(View view)
         {
-            this.player1 = player1;
-            this.player2 = player2;
+
+            this.player1 = new Player(view.GetUserName(Side.White), Side.White);
+            this.player2 = new Player(view.GetUserName(Side.Black), Side.Black);
+            //this.player1 = new Player("", Side.White);
+            //this.player2 = new Player("", Side.Black);
             Field = new ChessField(player1, player2);
+            this.view = view;
+            view.ShowgbHUD(false);
         }
     
         public Player Player1
@@ -231,6 +236,86 @@ namespace mychess
                 if (!attacks.Contains(move) && Field.GetFigureAt(move) == null)
                     moves.Add(move);
             return moves;
+
+        }
+
+        /// <summary>
+        /// Новая игра
+        /// </summary>
+        public void NewGame(){
+            view.ShowgbChessField(true);
+            view.ShowrtbLog(true);
+            view.EnableDefeat(true);
+            view.EnableSave(true);
+            view.EnableUndo(true);
+            view.EnableNewGame(false);
+            view.EnableNewLanGame(false);
+            view.EnableLoad(false);
+            view.ShowgbHUD(true);
+            field.SetPawnSuperiousListener(view.PawnSuperiorityHandler);
+            field.SetKingShahListener(view.KingShahHandler);
+            field.SetKingStalemateListener(view.KingStalemateHandler);
+            view.DrawField();
+            view.SetWhiteName(player1.Name);
+            view.SetBlackName(player2.Name);
+        }
+
+        public void NewServerGame()
+        {
+
+        }
+
+        public void Close()
+        {
+            view.Close();
+        }
+
+        public void Cell_Click(Position pos)
+        {
+            MyList<Position> moves, attacks;
+            Figure fig = Field.GetFigureAt(pos);
+            if (!isHighlighted())
+            {
+                if (Hightlight(pos, out moves, out attacks))
+                {
+                    foreach (Position move in moves)
+                    {
+                        view.CellMove(move);
+                    }
+                    view.CellMove(pos);
+                    foreach (Position move in attacks)
+                    {
+                        view.CellAttack(move);
+                    }
+                }
+
+
+            }
+            else
+            {
+                if (isCorrectMove(pos))
+                {
+                    view.AddToLog(Field.GetFigureAt(highlightedfigurepos).GetImage() + " " + pos.ToString());
+                    Move(pos);
+                    view.DrawField();
+                }
+                // снять выделение
+                if (isHighlightedFigure(pos))
+                {
+                    MyList<Position> needunhighlight = Escape();
+                    foreach (Position unhpos in needunhighlight)
+                    {
+                        view.CellDefault(pos);
+                    }
+                }
+
+            }
+
+            view.SetTurnText();
+
+            view.WhiteCount(player1.GetCount());
+            view.BlackCount(player2.GetCount());
+
 
         }
     }

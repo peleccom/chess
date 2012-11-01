@@ -28,6 +28,16 @@ namespace mychess
             return y;
         }
 
+        public byte GetX0()
+        {
+            return (byte) (GetX()-1);
+        }
+
+        public byte GetY0()
+        {
+            return (byte) (GetY() - 1);
+        }
+
         public void SetPosition(Position pos)
         {
             if (x > 8 | x < 1 | y > 8 | y < 1)
