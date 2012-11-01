@@ -305,7 +305,7 @@ namespace mychess
                     MyList<Position> needunhighlight = Escape();
                     foreach (Position unhpos in needunhighlight)
                     {
-                        view.CellDefault(pos);
+                        view.CellDefault(unhpos);
                     }
                 }
 
