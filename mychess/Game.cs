@@ -317,6 +317,14 @@ namespace mychess
 
 
         }
+
+        public void ReplacePawn(Position pos)
+        {
+            FigureTypes figtype = view.SelectFigure();
+            Field.TransformPawn(pos, figtype);
+            view.DrawField();
+        }
+    
     }
 
 }

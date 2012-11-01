@@ -268,7 +268,9 @@ namespace mychess
             fig = CreateFigure(figuretype, pos, side);
             SetFigureAt(pos, fig);
             SideToPlayer(side).alivefigures.Remove(oldfig);
-            SideToPlayer(side).alivefigures.Add(fig);  
+            SideToPlayer(side).alivefigures.Add(fig);
+            fig.MoveEvent += MoveFigureHandler;
+            fig.KillEvent += SideToPlayer(side).KillFigureHandler;
             // надо восстановить старые обработчики для пешки FIX IT
             return fig;
         }

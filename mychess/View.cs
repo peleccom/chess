@@ -142,7 +142,7 @@ namespace mychess
         public void PawnSuperiorityHandler(object obj, EventArgs args)
         {
             Figure fig = (Figure)obj;
-            MessageBox.Show(fig.Position.ToString() + "\nСказку про Золушку читали, не?");
+            game.ReplacePawn(fig.Position);
 
         }
 
@@ -292,6 +292,11 @@ namespace mychess
 
         private void tsLoad_Click(object sender, EventArgs e)
         {
+        }
+
+        private void tsDefeat_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

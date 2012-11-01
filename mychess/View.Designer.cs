@@ -165,6 +165,7 @@
             this.tsDefeat.Name = "tsDefeat";
             this.tsDefeat.Size = new System.Drawing.Size(212, 22);
             this.tsDefeat.Text = "Сдаться";
+            this.tsDefeat.Click += new System.EventHandler(this.tsDefeat_Click);
             // 
             // toolStripSeparator2
             // 
