@@ -325,6 +325,17 @@ namespace mychess
         {
 
         }
+
+        public string GetServerAddress()
+        {
+            ServerAddressDialog form = new ServerAddressDialog();
+            DialogResult result = form.ShowDialog();
+            return form.GetAddress();
+        }
+
+        private void tsStats_Click(object sender, EventArgs e)
+        {
+        }
     }
 
 }

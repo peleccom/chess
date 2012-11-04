@@ -181,6 +181,7 @@
             this.tsStats.Name = "tsStats";
             this.tsStats.Size = new System.Drawing.Size(200, 22);
             this.tsStats.Text = "Статистика";
+            this.tsStats.Click += new System.EventHandler(this.tsStats_Click);
             // 
             // toolStripSeparator3
             // 
