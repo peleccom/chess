@@ -300,13 +300,12 @@ namespace mychess
             view.SetTurnText();
             // тут запуск потока
 
-            ServerThread serverthread = new ServerThread(view);
+            ServerThread serverthread = new ServerThread(view,this);
             Thread thread = new Thread(serverthread.Run);
             thread.Start();
             thread.IsBackground = true;
-            view.ShowServerBanner();
+           // view.ShowServerBanner();
             //thread.Join();
-            view.Message("hello");
         }
 
 
@@ -343,7 +342,7 @@ namespace mychess
             view.SetTurnText();
             // тут запуск потока
 
-            ClientThread clienthread = new ClientThread("127.0.0.1", 12000,this);
+            ClientThread clienthread = new ClientThread(view, this,"127.0.0.1", 12000);
             Thread thread = new Thread(clienthread.Run);
             thread.Start();
             thread.IsBackground = true;

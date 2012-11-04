@@ -9,7 +9,7 @@ using System.Net;
 namespace mychess
 {
     
-    class ClientThread
+    class ClientThread:BaseClientServer
     {
         private View view;
         private Game game;
@@ -29,12 +29,10 @@ namespace mychess
             {
                 TcpClient client = new TcpClient();
                 client.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 12000));
-
-                StreamWriter sw = new StreamWriter(client.GetStream());
-                sw.AutoFlush = true;
-                StreamReader sr = new StreamReader(client.GetStream());
-                sw.WriteLine(game.Player2.Name);
+                NetworkStream ns = client.GetStream();
+                WriteString(ns, game.Player2.Name);
                 client.Close();
+                ns.Close();
             }
             finally
             { 

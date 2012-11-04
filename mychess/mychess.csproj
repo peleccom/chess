@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseClientServer.cs" />
     <Compile Include="Bishop.cs" />
     <Compile Include="ChessField.cs" />
     <Compile Include="ClientThread.cs" />
