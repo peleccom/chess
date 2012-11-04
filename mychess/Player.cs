@@ -186,5 +186,16 @@ namespace mychess
             shahsituation = false;
         }
 
+        /// <summary>
+        /// Устанавливает новое значение счетчиков поражения и побед
+        /// </summary>
+        /// <param name="win"></param>
+        /// <param name="lose"></param>
+        public void SetStatistic(int win, int lose)
+        {
+            this.lose = lose;
+            this.win = win;
+        }
+
     }
 }
