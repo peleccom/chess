@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Bishop.cs" />
     <Compile Include="ChessField.cs" />
+    <Compile Include="ClientThread.cs" />
     <Compile Include="DiagMovePolitics.cs" />
     <Compile Include="Figure.cs" />
     <Compile Include="FigureTypes.cs" />
@@ -63,12 +64,14 @@
     <Compile Include="ChooseFigureForm.Designer.cs">
       <DependentUpon>ChooseFigureForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameType.cs" />
     <Compile Include="RulesForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="RulesForm.Designer.cs">
       <DependentUpon>RulesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ServerThread.cs" />
     <Compile Include="View.cs">
       <SubType>Form</SubType>
     </Compile>

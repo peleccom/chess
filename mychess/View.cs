@@ -134,35 +134,6 @@ namespace mychess
 
         }
 
-        private void создатьИгруToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        public void PawnSuperiorityHandler(object obj, EventArgs args)
-        {
-            Figure fig = (Figure)obj;
-            game.ReplacePawn(fig.Position);
-
-        }
-
-        public void KingShahHandler(object source, EventArgs args)
-        {
-            Figure fig = (Figure)source;
-            if (fig.Side == Side.Black)
-                MessageBox.Show("Чёрный Король под шахом. Хьюстон, у нас проблема.");
-            else
-                MessageBox.Show("Белый Король под шахом. Хьюстон, у нас проблема.");
-
-        }
-        public void KingStalemateHandler(object source, EventArgs args)
-        {
-            Figure fig = (Figure)source;
-            if (fig.Side == Side.Black)
-                MessageBox.Show("Тучи расступились, и с неба засветило яркое солнце. Поверженные чёрные фигуры тускло блестели...");
-            else
-                MessageBox.Show("Солнце скрылось за тучами, на поле боя пала тень. Поверженные белые фигуры пропали во мраке...");
-        }
 
         public void EnableNewGame(bool enable)
         {
@@ -252,6 +223,8 @@ namespace mychess
                 case GameState.HighlightedBlack: lTurn.Text = "Ход чёрных"; break;
                 case GameState.HighlightedWhite:
                 case GameState.WaitWhite: lTurn.Text = "Ход белых"; break;
+                case GameState.LoseBlack: lTurn.Text = "Черные проиграли"; break;
+                case GameState.LoseWhite: lTurn.Text = "Белые проиграли"; break;
                 default: lTurn.Text = "Состояние не определено"; break;
             }
 
@@ -296,7 +269,42 @@ namespace mychess
 
         private void tsDefeat_Click(object sender, EventArgs e)
         {
+            game.Defeat();
+        }
 
+        public void ClearLog()
+        {
+            rtbLog.Clear();
+        }
+
+        public void ShahWarning(Side side)
+        {
+            if (side == Side.Black)
+                MessageBox.Show("Чёрный Король под шахом. Хьюстон, у нас проблема.");
+            else
+                MessageBox.Show("Белый Король под шахом. Хьюстон, у нас проблема.");
+        }
+
+        public void StalemateWarning(Side side)
+        {
+            if (side == Side.Black)
+                MessageBox.Show("Тучи расступились, и с неба засветило яркое солнце. Поверженные чёрные фигуры тускло блестели...");
+            else
+                MessageBox.Show("Солнце скрылось за тучами, на поле боя пала тень. Поверженные белые фигуры пропали во мраке...");
+        }
+
+        public void Message(string s){
+            MessageBox.Show(s);
+        }
+
+        private void tsNewServerGame_Click(object sender, EventArgs e)
+        {
+            game.NewServerGame();
+        }
+
+        private void tsNewClientGame_Click(object sender, EventArgs e)
+        {
+            game.NewClientGame();
         }
     }
 

@@ -13,7 +13,7 @@
   <Class Name="mychess.Figure">
     <Position X="6" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAEAIAAEAAgQAgAISAAIAUAAAAAgAAAgQCAAAgAAA=</HashCode>
+      <HashCode>BAAAEAIAAEAAgQAgAISAAIAUCEAgAgCAAgQCABEggAA=</HashCode>
       <FileName>Figure.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -52,7 +52,7 @@
   <Class Name="mychess.King">
     <Position X="10" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAQAEAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>King.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -82,14 +82,14 @@
   <Class Name="mychess.Player">
     <Position X="0.5" Y="9" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgQAQAAAAUAAwEIAAMAAAAQAAAAEAAAAAAgAQIAAAAA=</HashCode>
+      <HashCode>AgQAQAIAAUAgwEIAIMAAAAQAAAAEAAAAAAgCQIAAAAQ=</HashCode>
       <FileName>Player.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="mychess.Game">
     <Position X="3.75" Y="9" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>wACAAEAAAIAAAAEAwCAAAAAAQIAAAAAEEABAQAAAgAA=</HashCode>
+      <HashCode>4ACCEEAAAIABgAEAwCQAQAAARoAAAIAUEQBAQICQgAA=</HashCode>
       <FileName>Game.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -100,7 +100,7 @@
   <Class Name="mychess.ChessField">
     <Position X="6.5" Y="9" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACAAAgAAAAAQAAgAAAAACAAAAYBAAAIAAAERAAAAAg=</HashCode>
+      <HashCode>EACAAAmAAAAAQACgAACAACAAAAYAARAIACAFRgCAAAg=</HashCode>
       <FileName>ChessField.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -111,13 +111,6 @@
       <FileName>DiagMovePolitics.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="mychess.GUI">
-    <Position X="0.5" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>IAAAAAAAAAAAAAAQIAAAAAAABAADAAAIAAAAAAAAAAA=</HashCode>
-      <FileName>GUI.cs</FileName>
-    </TypeIdentifier>
   </Class>
   <Class Name="mychess.KnightMovePolitics">
     <Position X="20.25" Y="2.75" Width="1.5" />
@@ -143,6 +136,13 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
+  <Class Name="mychess.ServerThread">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAQAAAAAAAAI=</HashCode>
+      <FileName>ServerThread.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Interface Name="mychess.MovePolitics">
     <Position X="14.75" Y="0.75" Width="1.5" />
     <TypeIdentifier>
@@ -167,8 +167,15 @@
   <Enum Name="mychess.GameState">
     <Position X="8.5" Y="9" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAABAAAAACAAAAAAAEAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <HashCode>AAAAAAAABAAAAACAAEAAABEAAAAAAAAAAAAAAAAAACA=</HashCode>
       <FileName>GameState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="mychess.GameType">
+    <Position X="2.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAABAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>GameType.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />

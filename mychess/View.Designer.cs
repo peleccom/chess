@@ -33,8 +33,8 @@
             this.tsGame = new System.Windows.Forms.ToolStripMenuItem();
             this.tsNewGame = new System.Windows.Forms.ToolStripMenuItem();
             this.tsNewLanGame = new System.Windows.Forms.ToolStripMenuItem();
-            this.создатьИгруToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.подключитьсяКИгреToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsNewServerGame = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsNewClientGame = new System.Windows.Forms.ToolStripMenuItem();
             this.tsLoad = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsUndo = new System.Windows.Forms.ToolStripMenuItem();
@@ -112,25 +112,26 @@
             // tsNewLanGame
             // 
             this.tsNewLanGame.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.создатьИгруToolStripMenuItem,
-            this.подключитьсяКИгреToolStripMenuItem});
+            this.tsNewServerGame,
+            this.tsNewClientGame});
             this.tsNewLanGame.Image = ((System.Drawing.Image)(resources.GetObject("tsNewLanGame.Image")));
             this.tsNewLanGame.Name = "tsNewLanGame";
             this.tsNewLanGame.Size = new System.Drawing.Size(212, 22);
             this.tsNewLanGame.Text = "Новая игра по сети";
             // 
-            // создатьИгруToolStripMenuItem
+            // tsNewServerGame
             // 
-            this.создатьИгруToolStripMenuItem.Name = "создатьИгруToolStripMenuItem";
-            this.создатьИгруToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
-            this.создатьИгруToolStripMenuItem.Text = "Создать игру";
-            this.создатьИгруToolStripMenuItem.Click += new System.EventHandler(this.создатьИгруToolStripMenuItem_Click);
+            this.tsNewServerGame.Name = "tsNewServerGame";
+            this.tsNewServerGame.Size = new System.Drawing.Size(224, 22);
+            this.tsNewServerGame.Text = "Создать игру";
+            this.tsNewServerGame.Click += new System.EventHandler(this.tsNewServerGame_Click);
             // 
-            // подключитьсяКИгреToolStripMenuItem
+            // tsNewClientGame
             // 
-            this.подключитьсяКИгреToolStripMenuItem.Name = "подключитьсяКИгреToolStripMenuItem";
-            this.подключитьсяКИгреToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
-            this.подключитьсяКИгреToolStripMenuItem.Text = "Подключиться к игре";
+            this.tsNewClientGame.Name = "tsNewClientGame";
+            this.tsNewClientGame.Size = new System.Drawing.Size(224, 22);
+            this.tsNewClientGame.Text = "Подключиться к игре";
+            this.tsNewClientGame.Click += new System.EventHandler(this.tsNewClientGame_Click);
             // 
             // tsLoad
             // 
@@ -150,6 +151,7 @@
             this.tsUndo.Name = "tsUndo";
             this.tsUndo.Size = new System.Drawing.Size(212, 22);
             this.tsUndo.Text = "Отменить ход";
+            this.tsUndo.Visible = false;
             // 
             // tsSave
             // 
@@ -224,7 +226,7 @@
             this.gbHUD.Controls.Add(this.rtbLog);
             this.gbHUD.Location = new System.Drawing.Point(666, 46);
             this.gbHUD.Name = "gbHUD";
-            this.gbHUD.Size = new System.Drawing.Size(236, 585);
+            this.gbHUD.Size = new System.Drawing.Size(251, 585);
             this.gbHUD.TabIndex = 31;
             this.gbHUD.TabStop = false;
             // 
@@ -233,7 +235,7 @@
             this.groupBox3.Controls.Add(this.lBlack);
             this.groupBox3.Location = new System.Drawing.Point(26, 177);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(185, 44);
+            this.groupBox3.Size = new System.Drawing.Size(204, 44);
             this.groupBox3.TabIndex = 34;
             this.groupBox3.TabStop = false;
             // 
@@ -253,7 +255,7 @@
             this.groupBox2.Controls.Add(this.lWhite);
             this.groupBox2.Location = new System.Drawing.Point(26, 127);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(185, 44);
+            this.groupBox2.Size = new System.Drawing.Size(204, 44);
             this.groupBox2.TabIndex = 33;
             this.groupBox2.TabStop = false;
             // 
@@ -277,7 +279,7 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(26, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(185, 109);
+            this.groupBox1.Size = new System.Drawing.Size(204, 109);
             this.groupBox1.TabIndex = 32;
             this.groupBox1.TabStop = false;
             // 
@@ -411,8 +413,8 @@
         public System.Windows.Forms.ToolStripMenuItem tsSave;
         public System.Windows.Forms.ToolStripMenuItem tsLoad;
         public System.Windows.Forms.ToolStripMenuItem tsExit;
-        private System.Windows.Forms.ToolStripMenuItem создатьИгруToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem подключитьсяКИгреToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsNewServerGame;
+        private System.Windows.Forms.ToolStripMenuItem tsNewClientGame;
         private System.Windows.Forms.GroupBox gbHUD;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label lBlack;

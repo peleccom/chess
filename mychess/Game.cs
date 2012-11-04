@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace mychess
 {
@@ -14,6 +15,7 @@ namespace mychess
         private MyList<Position> moves, attacks;
         Position highlightedfigurepos;
         View view;
+        GameType gametype;
         public Game(View view)
         {
             this.view = view;
@@ -237,11 +239,15 @@ namespace mychess
         /// Новая игра
         /// </summary>
         public void NewGame(){
+            gametype = GameType.LocalGame;
             this.player1 = new Player(view.GetUserName(Side.White), Side.White);
             this.player2 = new Player(view.GetUserName(Side.Black), Side.Black);
             //this.player1 = new Player("", Side.White);
             //this.player2 = new Player("", Side.Black);
+            state = GameState.WaitWhite;
             Field = new ChessField(player1, player2);
+
+            view.ClearLog();
             view.ShowgbChessField(true);
             view.ShowrtbLog(true);
             view.EnableDefeat(true);
@@ -251,16 +257,95 @@ namespace mychess
             view.EnableNewLanGame(false);
             view.EnableLoad(false);
             view.ShowgbHUD(true);
-            field.SetPawnSuperiousListener(view.PawnSuperiorityHandler);
-            field.SetKingShahListener(view.KingShahHandler);
-            field.SetKingStalemateListener(view.KingStalemateHandler);
+            field.SetPawnSuperiousListener(PawnSuperiorityHandler);
+            field.SetKingShahListener(KingShahHandler);
+            field.SetKingStalemateListener(KingStalemateHandler);
             view.DrawField();
             view.SetWhiteName(player1.Name);
             view.SetBlackName(player2.Name);
+            view.WhiteCount(player1.GetCount());
+            view.BlackCount(player2.GetCount());
+            view.SetTurnText();
         }
 
         public void NewServerGame()
         {
+            gametype = GameType.ServerGame;
+            this.player1 = new Player(view.GetUserName(Side.White), Side.White);
+            this.player2 = new Player(view.GetUserName(Side.Black), Side.Black);
+            //this.player1 = new Player("", Side.White);
+            //this.player2 = new Player("", Side.Black);
+            
+            state = GameState.WaitWhite;
+            Field = new ChessField(player1, player2);
+
+            view.ClearLog();
+            view.ShowgbChessField(true);
+            view.ShowrtbLog(true);
+            view.EnableDefeat(true);
+            view.EnableSave(true);
+            view.EnableUndo(true);
+            view.EnableNewGame(false);
+            view.EnableNewLanGame(false);
+            view.EnableLoad(false);
+            view.ShowgbHUD(true);
+            field.SetPawnSuperiousListener(PawnSuperiorityHandler);
+            field.SetKingShahListener(KingShahHandler);
+            field.SetKingStalemateListener(KingStalemateHandler);
+            view.DrawField();
+            view.SetWhiteName(player1.Name);
+            view.SetBlackName(player2.Name);
+            view.WhiteCount(player1.GetCount());
+            view.BlackCount(player2.GetCount());
+            view.SetTurnText();
+            // тут запуск потока
+
+            ServerThread serverthread = new ServerThread(view);
+            Thread thread = new Thread(serverthread.Run);
+            thread.Start();
+            //thread.Join();
+            view.Message("hello");
+        }
+
+
+        public void NewClientGame()
+        {
+            gametype = GameType.ClientGame;
+
+            this.player1 = new Player(view.GetUserName(Side.White), Side.White);
+            this.player2 = new Player(view.GetUserName(Side.Black), Side.Black);
+            //this.player1 = new Player("", Side.White);
+            //this.player2 = new Player("", Side.Black);
+
+            state = GameState.WaitWhite;
+            Field = new ChessField(player1, player2);
+
+            view.ClearLog();
+            view.ShowgbChessField(true);
+            view.ShowrtbLog(true);
+            view.EnableDefeat(true);
+            view.EnableSave(true);
+            view.EnableUndo(true);
+            view.EnableNewGame(false);
+            view.EnableNewLanGame(false);
+            view.EnableLoad(false);
+            view.ShowgbHUD(true);
+            field.SetPawnSuperiousListener(PawnSuperiorityHandler);
+            field.SetKingShahListener(KingShahHandler);
+            field.SetKingStalemateListener(KingStalemateHandler);
+            view.DrawField();
+            view.SetWhiteName(player1.Name);
+            view.SetBlackName(player2.Name);
+            view.WhiteCount(player1.GetCount());
+            view.BlackCount(player2.GetCount());
+            view.SetTurnText();
+            // тут запуск потока
+
+            ClientThread clienthread = new ClientThread("127.0.0.1", 12000,this);
+            Thread thread = new Thread(clienthread.Run);
+            thread.Start();
+            //thread.Join();
+            view.Message("hello");
 
         }
 
@@ -324,7 +409,64 @@ namespace mychess
             Field.TransformPawn(pos, figtype);
             view.DrawField();
         }
-    
+
+        public void Defeat()
+        {
+            // чей сейчас ход тот и проиграл
+            Side side = GetTurnOwner();
+
+            EndGame(Field.SideToPlayer(side).King);
+        }
+
+        public Side GetTurnOwner()
+        {
+
+            switch (state)
+            {
+                case GameState.HighlightedBlack:
+                case GameState.WaitBlack:
+                    return Side.Black;
+
+                case GameState.HighlightedWhite:
+                case GameState.WaitWhite:
+                    return Side.White;
+                default:
+                    return Side.Black;
+
+            }
+        }
+
+        private void PawnSuperiorityHandler(object obj, EventArgs args)
+        {
+            Figure fig = (Figure)obj;
+            ReplacePawn(fig.Position);
+        }
+
+        private void KingShahHandler(object source, EventArgs args)
+        {
+            Figure fig = (Figure)source;
+            view.ShahWarning(fig.Side);
+
+        }
+        private void KingStalemateHandler(object source, EventArgs args)
+        {
+            Figure fig = (Figure)source;
+            view.StalemateWarning(fig.Side);
+            foreach (Player pl in new Player[] { player1, player2 })
+                if (pl.Side == fig.Side)
+                    pl.Lose();
+                else
+                    pl.Win();
+            view.SetTurnText();
+            view.EnableDefeat(false);
+            view.EnableLoad(true);
+            view.EnableNewGame(true);
+            view.EnableNewLanGame(true);
+            view.EnableSave(false);
+            view.EnableUndo(false);
+
+        }
+
     }
 
 }
