@@ -186,19 +186,13 @@ namespace mychess
 
         public string GetUserName(Side side)
         {
-            string scolor;
-            if (side == Side.Black)
-                scolor = "черного";
-            else
-                scolor = "белого";
-            Form1 form = new Form1(scolor);
+            Form1 form = new Form1(side);
             DialogResult result = form.ShowDialog();
             if (result == DialogResult.OK)
                 return form.GetName();
-            else if (side == Side.White)
-                return "Белый игрок";
             else
-                return "Черный игрок";
+                // если не нажата OK оставить предыдущего игрока
+                return null;
         }
 
         public void WhiteCount(int count)
@@ -322,6 +316,11 @@ namespace mychess
         public void HideServerBanner()
         {
             serverbannerform.Close();
+        }
+
+        private void tsGame_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

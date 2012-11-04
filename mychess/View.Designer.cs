@@ -99,6 +99,7 @@
             this.tsGame.Name = "tsGame";
             this.tsGame.Size = new System.Drawing.Size(66, 20);
             this.tsGame.Text = "Игра";
+            this.tsGame.Click += new System.EventHandler(this.tsGame_Click);
             // 
             // tsNewGame
             // 

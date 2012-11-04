@@ -11,9 +11,17 @@ namespace mychess
 {
     public partial class Form1 : Form
     {
-        public Form1(string scolor,string s = "")
+        private Side side;
+
+        public Form1(Side side,string s = "")
         {
             InitializeComponent();
+            string scolor;
+            this.side = side;
+            if (side == Side.Black)
+                scolor = "черного";
+            else
+                scolor = "белого";
             label4.Text = String.Format("имя {0} игрока:", scolor);
             textBox1.Text = s;
         }
@@ -28,7 +36,15 @@ namespace mychess
             if (textBox1.Text != "")
                 return textBox1.Text;
             else
-                return "Неизвестный";
+                if (side == Side.White)
+                    return "Белый игрок";
+                else
+                    return "Черный игрок";
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

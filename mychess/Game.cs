@@ -235,13 +235,35 @@ namespace mychess
 
         }
 
+
+        /// <summary>
+        /// Создает нового игрока или использует статистику старого если username == null
+        /// </summary>
+        private Player CreateUser(string username, Side side,Player player)
+        {
+            if (username == null && player != null && player.Side == side)
+                return player;
+            else
+            {
+                if (username == null)
+                {
+                    if (side == Side.White)
+                        username = "Белый игрок";
+                    else
+                        username = "Черный игрок";
+                }
+                return new Player(username, side);
+            }
+        }
+
         /// <summary>
         /// Новая игра
         /// </summary>
         public void NewGame(){
             gametype = GameType.LocalGame;
-            this.player1 = new Player(view.GetUserName(Side.White), Side.White);
-            this.player2 = new Player(view.GetUserName(Side.Black), Side.Black);
+            string username;
+            this.player1 = CreateUser(view.GetUserName(Side.White), Side.White, player1);
+            this.player2 = CreateUser(view.GetUserName(Side.Black), Side.Black, player2);
             //this.player1 = new Player("", Side.White);
             //this.player2 = new Player("", Side.Black);
             state = GameState.WaitWhite;
@@ -271,8 +293,8 @@ namespace mychess
         public void NewServerGame()
         {
             gametype = GameType.ServerGame;
-            this.player1 = new Player(view.GetUserName(Side.White), Side.White);
-            this.player2 = new Player(view.GetUserName(Side.Black), Side.Black);
+            this.player1 = CreateUser(view.GetUserName(Side.White), Side.White, player1);
+            this.player2 = new Player("", Side.Black);
             //this.player1 = new Player("", Side.White);
             //this.player2 = new Player("", Side.Black);
             
@@ -313,8 +335,8 @@ namespace mychess
         {
             gametype = GameType.ClientGame;
 
-            this.player1 = new Player(view.GetUserName(Side.White), Side.White);
-            this.player2 = new Player(view.GetUserName(Side.Black), Side.Black);
+            this.player1 = new Player("", Side.White);
+            this.player2 = CreateUser(view.GetUserName(Side.Black), Side.Black, player2);
             //this.player1 = new Player("", Side.White);
             //this.player2 = new Player("", Side.Black);
 
