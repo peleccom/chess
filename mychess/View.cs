@@ -13,6 +13,7 @@ namespace mychess
     {
         private Button[,] buttons;
         private Game game;
+        private ServerBannerForm serverbannerform;
 
 
         public View()
@@ -305,6 +306,22 @@ namespace mychess
         private void tsNewClientGame_Click(object sender, EventArgs e)
         {
             game.NewClientGame();
+        }
+
+        private void lTurn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        public void ShowServerBanner()
+        {
+            serverbannerform =new  ServerBannerForm();
+            serverbannerform.ShowDialog();
+        }
+
+        public void HideServerBanner()
+        {
+            serverbannerform.Close();
         }
     }
 

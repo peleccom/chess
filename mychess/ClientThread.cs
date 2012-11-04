@@ -11,10 +11,11 @@ namespace mychess
     
     class ClientThread
     {
+        private View view;
         private Game game;
         private int port;
         private string server;
-        public ClientThread(string server, int port, Game game)
+        public ClientThread(View view,Game game, string server, int port)
         {
             this.port = port;
             this.server = server;

@@ -5,6 +5,7 @@ using System.Text;
 
 namespace mychess
 {
+    [Serializable]
     public class Position
     {
         private byte x;

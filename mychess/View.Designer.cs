@@ -105,7 +105,7 @@
             this.tsNewGame.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.tsNewGame.Image = ((System.Drawing.Image)(resources.GetObject("tsNewGame.Image")));
             this.tsNewGame.Name = "tsNewGame";
-            this.tsNewGame.Size = new System.Drawing.Size(212, 22);
+            this.tsNewGame.Size = new System.Drawing.Size(200, 22);
             this.tsNewGame.Text = "Новая игра";
             this.tsNewGame.Click += new System.EventHandler(this.tsNewGame_Click);
             // 
@@ -116,40 +116,40 @@
             this.tsNewClientGame});
             this.tsNewLanGame.Image = ((System.Drawing.Image)(resources.GetObject("tsNewLanGame.Image")));
             this.tsNewLanGame.Name = "tsNewLanGame";
-            this.tsNewLanGame.Size = new System.Drawing.Size(212, 22);
+            this.tsNewLanGame.Size = new System.Drawing.Size(200, 22);
             this.tsNewLanGame.Text = "Новая игра по сети";
             // 
             // tsNewServerGame
             // 
             this.tsNewServerGame.Name = "tsNewServerGame";
-            this.tsNewServerGame.Size = new System.Drawing.Size(224, 22);
+            this.tsNewServerGame.Size = new System.Drawing.Size(212, 22);
             this.tsNewServerGame.Text = "Создать игру";
             this.tsNewServerGame.Click += new System.EventHandler(this.tsNewServerGame_Click);
             // 
             // tsNewClientGame
             // 
             this.tsNewClientGame.Name = "tsNewClientGame";
-            this.tsNewClientGame.Size = new System.Drawing.Size(224, 22);
+            this.tsNewClientGame.Size = new System.Drawing.Size(212, 22);
             this.tsNewClientGame.Text = "Подключиться к игре";
             this.tsNewClientGame.Click += new System.EventHandler(this.tsNewClientGame_Click);
             // 
             // tsLoad
             // 
             this.tsLoad.Name = "tsLoad";
-            this.tsLoad.Size = new System.Drawing.Size(212, 22);
+            this.tsLoad.Size = new System.Drawing.Size(200, 22);
             this.tsLoad.Text = "Загрузить игру";
             this.tsLoad.Click += new System.EventHandler(this.tsLoad_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(209, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(197, 6);
             // 
             // tsUndo
             // 
             this.tsUndo.Enabled = false;
             this.tsUndo.Name = "tsUndo";
-            this.tsUndo.Size = new System.Drawing.Size(212, 22);
+            this.tsUndo.Size = new System.Drawing.Size(200, 22);
             this.tsUndo.Text = "Отменить ход";
             this.tsUndo.Visible = false;
             // 
@@ -157,7 +157,7 @@
             // 
             this.tsSave.Enabled = false;
             this.tsSave.Name = "tsSave";
-            this.tsSave.Size = new System.Drawing.Size(212, 22);
+            this.tsSave.Size = new System.Drawing.Size(200, 22);
             this.tsSave.Text = "Сохранить игру";
             // 
             // tsDefeat
@@ -165,31 +165,31 @@
             this.tsDefeat.Enabled = false;
             this.tsDefeat.Image = ((System.Drawing.Image)(resources.GetObject("tsDefeat.Image")));
             this.tsDefeat.Name = "tsDefeat";
-            this.tsDefeat.Size = new System.Drawing.Size(212, 22);
+            this.tsDefeat.Size = new System.Drawing.Size(200, 22);
             this.tsDefeat.Text = "Сдаться";
             this.tsDefeat.Click += new System.EventHandler(this.tsDefeat_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(209, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(197, 6);
             // 
             // tsStats
             // 
             this.tsStats.Image = ((System.Drawing.Image)(resources.GetObject("tsStats.Image")));
             this.tsStats.Name = "tsStats";
-            this.tsStats.Size = new System.Drawing.Size(212, 22);
+            this.tsStats.Size = new System.Drawing.Size(200, 22);
             this.tsStats.Text = "Статистика";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(209, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(197, 6);
             // 
             // tsExit
             // 
             this.tsExit.Name = "tsExit";
-            this.tsExit.Size = new System.Drawing.Size(212, 22);
+            this.tsExit.Size = new System.Drawing.Size(200, 22);
             this.tsExit.Text = "Выход";
             this.tsExit.Click += new System.EventHandler(this.tsExit_Click);
             // 
@@ -207,14 +207,14 @@
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(170, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(158, 22);
             this.toolStripMenuItem2.Text = "Правила";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(170, 22);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(158, 22);
             this.toolStripMenuItem4.Text = "О программе";
             this.toolStripMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
             // 
@@ -303,6 +303,7 @@
             this.lTurn.Size = new System.Drawing.Size(115, 23);
             this.lTurn.TabIndex = 27;
             this.lTurn.Text = "Ход белых";
+            this.lTurn.Click += new System.EventHandler(this.lTurn_Click);
             // 
             // lBlackCount
             // 

@@ -303,6 +303,8 @@ namespace mychess
             ServerThread serverthread = new ServerThread(view);
             Thread thread = new Thread(serverthread.Run);
             thread.Start();
+            thread.IsBackground = true;
+            view.ShowServerBanner();
             //thread.Join();
             view.Message("hello");
         }
@@ -344,8 +346,9 @@ namespace mychess
             ClientThread clienthread = new ClientThread("127.0.0.1", 12000,this);
             Thread thread = new Thread(clienthread.Run);
             thread.Start();
+            thread.IsBackground = true;
             //thread.Join();
-            view.Message("hello");
+            
 
         }
 

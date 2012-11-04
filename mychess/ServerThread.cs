@@ -11,12 +11,15 @@ namespace mychess
     public class ServerThread
     {
 
-        private int port = 12000;
+        private int port;
         private View view;
+        private Game game;
 
-        public ServerThread(View view)
+        public ServerThread(View view, Game game, int port=12000)
         {
             this.view = view;
+            this.game = game;
+            this.port = port;
         }
 
         public void Run()
@@ -36,6 +39,8 @@ namespace mychess
                     StreamWriter sw = new StreamWriter(client.GetStream());
                     sw.AutoFlush = true;
                     view.Message(sr.ReadLine());
+                    sw.Close();
+                    sr.Close();
                     client.Close();
                 }
             }

@@ -71,6 +71,12 @@
     <Compile Include="RulesForm.Designer.cs">
       <DependentUpon>RulesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ServerBannerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ServerBannerForm.Designer.cs">
+      <DependentUpon>ServerBannerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ServerThread.cs" />
     <Compile Include="View.cs">
       <SubType>Form</SubType>
@@ -110,6 +116,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RulesForm.resx">
       <DependentUpon>RulesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ServerBannerForm.resx">
+      <DependentUpon>ServerBannerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View.resx">
       <DependentUpon>View.cs</DependentUpon>
