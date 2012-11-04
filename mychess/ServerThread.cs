@@ -32,6 +32,7 @@ namespace mychess
                 TcpClient client = listener.AcceptTcpClient();
                 NetworkStream ns = client.GetStream();
                 string s = ReadString(ns);
+                view.HideServerBanner();
                 view.Message(s);
                 ns.Close();
                 client.Close();

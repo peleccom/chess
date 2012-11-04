@@ -326,7 +326,7 @@ namespace mychess
             Thread thread = new Thread(serverthread.Run);
             thread.Start();
             thread.IsBackground = true;
-           // view.ShowServerBanner();
+            view.ShowServerBanner();
             //thread.Join();
         }
 

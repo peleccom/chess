@@ -14,7 +14,7 @@ namespace mychess
         private Button[,] buttons;
         private Game game;
         private ServerBannerForm serverbannerform;
-
+        delegate void CloseFormDelegate();
 
         public View()
         {
@@ -315,6 +315,9 @@ namespace mychess
 
         public void HideServerBanner()
         {
+            if (serverbannerform.InvokeRequired)
+                Invoke(new CloseFormDelegate(() => serverbannerform.Close()));
+            else
             serverbannerform.Close();
         }
 
