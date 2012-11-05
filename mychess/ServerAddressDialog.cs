@@ -14,11 +14,15 @@ namespace mychess
         public ServerAddressDialog()
         {
             InitializeComponent();
+            textBox1.Text = "127";
+            textBox2.Text = "0";
+            textBox3.Text = "0";
+            textBox4.Text = "1";
         }
 
         public string GetAddress()
         {
-            return maskedTextBox1.Text;
+            return String.Format("{0}.{1}.{2}.{3}", textBox1.Text, textBox2.Text, textBox3.Text, textBox4.Text);
         }
 
         private void button1_Click(object sender, EventArgs e)

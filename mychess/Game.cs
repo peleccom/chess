@@ -364,7 +364,7 @@ namespace mychess
             view.SetTurnText();
             // тут запуск потока
 
-            ClientThread clienthread = new ClientThread(view, this,"127.0.0.1", 12000);
+            ClientThread clienthread = new ClientThread(view, this, view.GetServerAddress(), 12000);
             Thread thread = new Thread(clienthread.Run);
             thread.Start();
             thread.IsBackground = true;

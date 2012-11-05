@@ -17,6 +17,7 @@ namespace mychess
         private string server;
         public ClientThread(View view,Game game, string server, int port)
         {
+            this.view = view;
             this.port = port;
             this.server = server;
             this.game = game;
@@ -27,8 +28,9 @@ namespace mychess
         public void Run(){
             try
             {
+                view.Message(server);
                 TcpClient client = new TcpClient();
-                client.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 12000));
+                client.Connect(new IPEndPoint(IPAddress.Parse(server), 12000));
                 NetworkStream ns = client.GetStream();
                 WriteString(ns, game.Player2.Name);
                 client.Close();
