@@ -300,8 +300,18 @@ namespace mychess
             
             state = GameState.WaitWhite;
             Field = new ChessField(player1, player2);
+            field.SetPawnSuperiousListener(PawnSuperiorityHandler);
+            field.SetKingShahListener(KingShahHandler);
+            field.SetKingStalemateListener(KingStalemateHandler);
 
             view.ClearLog();
+            ServerThread serverthread = new ServerThread(view, this);
+            Thread thread = new Thread(serverthread.Run);
+            thread.Start();
+            thread.IsBackground = true;
+            view.ShowServerBanner();
+            //thread.Join();
+
             view.ShowgbChessField(true);
             view.ShowrtbLog(true);
             view.EnableDefeat(true);
@@ -311,23 +321,12 @@ namespace mychess
             view.EnableNewLanGame(false);
             view.EnableLoad(false);
             view.ShowgbHUD(true);
-            field.SetPawnSuperiousListener(PawnSuperiorityHandler);
-            field.SetKingShahListener(KingShahHandler);
-            field.SetKingStalemateListener(KingStalemateHandler);
             view.DrawField();
             view.SetWhiteName(player1.Name);
             view.SetBlackName(player2.Name);
             view.WhiteCount(player1.GetCount());
             view.BlackCount(player2.GetCount());
             view.SetTurnText();
-            // тут запуск потока
-
-            ServerThread serverthread = new ServerThread(view,this);
-            Thread thread = new Thread(serverthread.Run);
-            thread.Start();
-            thread.IsBackground = true;
-            view.ShowServerBanner();
-            //thread.Join();
         }
 
 
@@ -342,6 +341,16 @@ namespace mychess
 
             state = GameState.WaitWhite;
             Field = new ChessField(player1, player2);
+            field.SetPawnSuperiousListener(PawnSuperiorityHandler);
+            field.SetKingShahListener(KingShahHandler);
+            field.SetKingStalemateListener(KingStalemateHandler);
+
+            ClientThread clienthread = new ClientThread(view, this, view.GetServerAddress(), 12000);
+            Thread thread = new Thread(clienthread.Run);
+            thread.Start();
+            thread.IsBackground = true;
+            //thread.Join();
+
 
             view.ClearLog();
             view.ShowgbChessField(true);
@@ -353,22 +362,12 @@ namespace mychess
             view.EnableNewLanGame(false);
             view.EnableLoad(false);
             view.ShowgbHUD(true);
-            field.SetPawnSuperiousListener(PawnSuperiorityHandler);
-            field.SetKingShahListener(KingShahHandler);
-            field.SetKingStalemateListener(KingStalemateHandler);
             view.DrawField();
             view.SetWhiteName(player1.Name);
             view.SetBlackName(player2.Name);
             view.WhiteCount(player1.GetCount());
             view.BlackCount(player2.GetCount());
             view.SetTurnText();
-            // тут запуск потока
-
-            ClientThread clienthread = new ClientThread(view, this, view.GetServerAddress(), 12000);
-            Thread thread = new Thread(clienthread.Run);
-            thread.Start();
-            thread.IsBackground = true;
-            //thread.Join();
             
 
         }

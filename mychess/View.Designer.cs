@@ -364,6 +364,7 @@
             this.gbChessField.TabIndex = 32;
             this.gbChessField.TabStop = false;
             this.gbChessField.Visible = false;
+            this.gbChessField.Enter += new System.EventHandler(this.gbChessField_Enter_2);
             // 
             // View
             // 
@@ -382,7 +383,6 @@
             this.Name = "View";
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Text = "Power Chess";
-            this.TopMost = true;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

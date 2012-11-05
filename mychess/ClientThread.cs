@@ -26,15 +26,28 @@ namespace mychess
 
 
         public void Run(){
+            Player player = game.Player2;
             try
             {
-                view.Message(server);
                 TcpClient client = new TcpClient();
                 client.Connect(new IPEndPoint(IPAddress.Parse(server), 12000));
                 NetworkStream ns = client.GetStream();
-                WriteString(ns, game.Player2.Name);
+                WriteString(ns, player.Name);
+                WriteInt(ns, player.GetWin());
+                WriteInt(ns, player.GetLose());
+                // get first player
+                player = game.Player1;
+                string playername = ReadString(ns);
+                int lose, win;
+                win = ReadInt(ns);
+                lose = ReadInt(ns);
+                player.Name = playername;
+                player.SetStatistic(win, lose);
                 client.Close();
                 ns.Close();
+            }
+            catch (Exception e) {
+                view.Message(e.Message);
             }
             finally
             { 

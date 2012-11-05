@@ -25,17 +25,31 @@ namespace mychess
         public void Run()
         {
             TcpListener listener = null;
+            Player player = game.Player2;
             try
             {
                 listener = new TcpListener(IPAddress.Any, 12000);
                 listener.Start(1);
                 TcpClient client = listener.AcceptTcpClient();
                 NetworkStream ns = client.GetStream();
-                string s = ReadString(ns);
+                string playername = ReadString(ns);
+                int lose, win;
+                win = ReadInt(ns);
+                lose = ReadInt(ns);
+                player.Name = playername;
+                player.SetStatistic(win, lose);
+                // send player info
+                player = game.Player1;
+                WriteString(ns, player.Name);
+                WriteInt(ns, player.GetWin());
+                WriteInt(ns, player.GetLose());
                 view.HideServerBanner();
-                view.Message(s);
                 ns.Close();
                 client.Close();
+            }
+            catch (Exception e)
+            {
+                view.Message(e.Message);
             }
             finally
             {

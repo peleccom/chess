@@ -67,7 +67,6 @@
             this.Name = "ChooseFigureForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Выберите фигуру на замену";
-            this.TopMost = true;
             this.ResumeLayout(false);
 
         }

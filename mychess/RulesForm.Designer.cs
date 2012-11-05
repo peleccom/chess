@@ -65,7 +65,6 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Правила игры";
-            this.TopMost = true;
             this.ResumeLayout(false);
 
         }

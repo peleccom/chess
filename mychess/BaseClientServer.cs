@@ -28,5 +28,19 @@ namespace mychess
             ns.Write(BitConverter.GetBytes(len), 0, 4);
             ns.Write(buffer, 0, len);
         }
+
+        protected void WriteInt(NetworkStream ns, int n)
+        {
+            byte[] buffer;
+            buffer = BitConverter.GetBytes(n);
+            ns.Write(buffer, 0, 4);
+        }
+
+        protected int ReadInt(NetworkStream ns)
+        {
+            byte []buffer = new byte[4];
+            ns.Read(buffer, 0, 4);
+            return BitConverter.ToInt32(buffer, 0);
+        }
     }
 }
