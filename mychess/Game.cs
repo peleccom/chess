@@ -344,15 +344,15 @@ namespace mychess
             field.SetPawnSuperiousListener(PawnSuperiorityHandler);
             field.SetKingShahListener(KingShahHandler);
             field.SetKingStalemateListener(KingStalemateHandler);
-
+            view.ClearLog();
             ClientThread clienthread = new ClientThread(view, this, view.GetServerAddress(), 12000);
             Thread thread = new Thread(clienthread.Run);
             thread.Start();
             thread.IsBackground = true;
             //thread.Join();
+        }
 
-
-            view.ClearLog();
+        public void ClientGameView(){
             view.ShowgbChessField(true);
             view.ShowrtbLog(true);
             view.EnableDefeat(true);
@@ -368,8 +368,6 @@ namespace mychess
             view.WhiteCount(player1.GetCount());
             view.BlackCount(player2.GetCount());
             view.SetTurnText();
-            
-
         }
 
         public void Close()

@@ -30,8 +30,9 @@ namespace mychess
             try
             {
                 TcpClient client = new TcpClient();
-                client.Connect(new IPEndPoint(IPAddress.Parse(server), 12000));
+                client.Connect(new IPEndPoint(IPAddress.Parse(server), port));
                 NetworkStream ns = client.GetStream();
+                view.AddToLog(String.Format("Подключен к серверу {0}:{1}", server, port));
                 WriteString(ns, player.Name);
                 WriteInt(ns, player.GetWin());
                 WriteInt(ns, player.GetLose());
@@ -43,6 +44,7 @@ namespace mychess
                 lose = ReadInt(ns);
                 player.Name = playername;
                 player.SetStatistic(win, lose);
+                view.Invoke(new Action(() => game.ClientGameView()));
                 client.Close();
                 ns.Close();
             }

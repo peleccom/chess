@@ -31,6 +31,7 @@ namespace mychess
                 listener = new TcpListener(IPAddress.Any, 12000);
                 listener.Start(1);
                 TcpClient client = listener.AcceptTcpClient();
+                view.AddToLog(String.Format("Подключен клиент {0}", client.Client.RemoteEndPoint.ToString()));
                 NetworkStream ns = client.GetStream();
                 string playername = ReadString(ns);
                 int lose, win;

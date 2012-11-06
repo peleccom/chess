@@ -207,7 +207,11 @@ namespace mychess
 
         public void AddToLog(string message)
         {
-            rtbLog.AppendText(message + "\n");
+            if (rtbLog.InvokeRequired)
+                Invoke(new Action(() => rtbLog.AppendText(message + "\n")));
+            else
+                rtbLog.AppendText(message + "\n");
+            
         }
 
         public void SetTurnText()
@@ -316,7 +320,7 @@ namespace mychess
         public void HideServerBanner()
         {
             if (serverbannerform.InvokeRequired)
-                Invoke(new CloseFormDelegate(() => serverbannerform.Close()));
+                Invoke(new Action(() => serverbannerform.Close()));
             else
             serverbannerform.Close();
         }
