@@ -52,34 +52,28 @@ namespace mychess
                 view.Invoke(new Action(() => game.ClientGameView()));
                 while (docycle)
                 {
-                    if (game.GetState() == GameState.HighlightedBlack || game.GetState() == GameState.WaitBlack)
-                    {
-                        lock (lockobj)
-                        {
-                            Monitor.Wait(lockobj);
-                            if (newmove)
-                            {
-                                //view.Message("New move detected");
-                                SendMove(ns, view, game);
-                            }
-                        }
-                    }
-                    else
-                    if (game.GetState() == GameState.WaitWhite)
-                    {
+                    if (ns.DataAvailable)
+                    {// command
                         command = ReadString(ns);
                         switch (command)
                         {
                             case commov:
                                 {
-                                    //view.Message(command);
                                     GetMove(ns, view, game);
                                     break;
                                 }
-                            case comend:{
-                            docycle =false;
-                                break;
-                            }
+                            case comend:
+                                {
+                                    docycle = false;
+                                    break;
+                                }
+                        }
+                    }
+                    lock (lockobj)
+                    {
+                        if (newmove)
+                        {
+                            SendMove(ns, view, game);
                         }
                     }
                 Thread.Sleep(100);

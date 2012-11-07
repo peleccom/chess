@@ -50,20 +50,8 @@ namespace mychess
 
                 while (docycle)
                 {
-                    if (game.GetState() == GameState.HighlightedWhite || game.GetState() == GameState.WaitWhite){
-                        lock (lockobj)
-                        {
-                            Monitor.Wait(lockobj);
-                            if (newmove)
-                            {
-                                //view.Message("New move detected");
-                                SendMove(ns, view, game);
-                            }
-                        }
-                        }
-                    else
-                    if (game.GetState() == GameState.WaitBlack)
-                    {
+                    if (ns.DataAvailable)
+                    {// command
                         command = ReadString(ns);
                         switch (command)
                         {
@@ -72,10 +60,18 @@ namespace mychess
                                     GetMove(ns, view, game);
                                     break;
                                 }
-                            case comend: {
-                                docycle = false;
-                                break;
-                            }
+                            case comend:
+                                {
+                                    docycle = false;
+                                    break;
+                                }
+                        }
+                    }
+                    lock (lockobj)
+                    {
+                        if (newmove)
+                        {
+                            SendMove(ns, view, game);
                         }
                     }
                     Thread.Sleep(100);

@@ -65,7 +65,6 @@ namespace mychess
                 newmove = true;
                 this.from = from;
                 this.to = to;
-                Monitor.Pulse(lockobj);
             }
         }
 

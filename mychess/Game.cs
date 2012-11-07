@@ -92,8 +92,8 @@ namespace mychess
                     attacks = GetAttacks(fig);
                     moves = GetMoves(fig, attacks);
                     // Если король под шахом и возможных ходов нет то конец игры FIX IT
-                    if (fig.GetFigureType() == FigureTypes.King & moves.Count == 0 & attacks.Count == 0)
-                        EndGame(fig);
+                    //if (fig.GetFigureType() == FigureTypes.King & moves.Count == 0 & attacks.Count == 0)
+                    //    EndGame(fig);
                     if (state == GameState.WaitBlack)
                         state = GameState.HighlightedBlack;
                     if (state == GameState.WaitWhite)
@@ -186,7 +186,7 @@ namespace mychess
                 return false;
             if (!isCorrectMove(pos))
                 return false;
-
+              
             if (moves.Contains(pos) || attacks.Contains(pos))
             {
 
@@ -221,10 +221,6 @@ namespace mychess
         private void EndGame(Figure king)
         {
             //
-            if (state == GameState.WaitBlack)
-                state = GameState.LoseBlack;
-            if (state == GameState.WaitWhite)
-                state = GameState.LoseWhite;
             king.Stalemate();
             
         }
@@ -493,6 +489,10 @@ namespace mychess
         }
         private void KingStalemateHandler(object source, EventArgs args)
         {
+            if (state == GameState.WaitBlack ||  state == GameState.HighlightedBlack)
+                state = GameState.LoseBlack;
+            if (state == GameState.WaitWhite || state == GameState.HighlightedWhite)
+                state = GameState.LoseWhite;
             Figure fig = (Figure)source;
             view.StalemateWarning(fig.Side);
             foreach (Player pl in new Player[] { player1, player2 })
