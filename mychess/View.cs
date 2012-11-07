@@ -341,6 +341,15 @@ namespace mychess
 
         private void tsStats_Click(object sender, EventArgs e)
         {
+            ShowStatistic();
+        }
+
+        public void ShowStatistic() {
+            if (game.Player1 != null && game.Player2 != null)
+            {
+                StatisticForm form = new StatisticForm(game.Player1, game.Player2);
+                form.ShowDialog();
+            }
         }
     }
 
