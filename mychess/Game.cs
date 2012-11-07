@@ -12,10 +12,19 @@ namespace mychess
         private Player player2;
         private GameState state;
         private ChessField field;
+        private ServerThread serverthread;
+        private ClientThread clientthread;
         private MyList<Position> moves, attacks;
         Position highlightedfigurepos;
         View view;
         GameType gametype;
+        public GameType GameType
+        {
+            get
+            {
+                return gametype;
+            }
+        }
         public Game(View view)
         {
             this.view = view;
@@ -181,6 +190,15 @@ namespace mychess
             if (moves.Contains(pos) || attacks.Contains(pos))
             {
 
+                if (gametype == GameType.ServerGame && state == GameState.HighlightedWhite)
+                {
+                    serverthread.NewMove(highlightedfigurepos, pos);
+                }
+
+                if (gametype == GameType.ClientGame && state == GameState.HighlightedBlack)
+                {
+                    clientthread.NewMove(highlightedfigurepos, pos);
+                }
                 Figure fig = Field.GetFigureAt(highlightedfigurepos);
                 fig.SetPosition(pos);
             }
@@ -261,7 +279,6 @@ namespace mychess
         /// </summary>
         public void NewGame(){
             gametype = GameType.LocalGame;
-            string username;
             this.player1 = CreateUser(view.GetUserName(Side.White), Side.White, player1);
             this.player2 = CreateUser(view.GetUserName(Side.Black), Side.Black, player2);
             //this.player1 = new Player("", Side.White);
@@ -305,7 +322,7 @@ namespace mychess
             field.SetKingStalemateListener(KingStalemateHandler);
 
             view.ClearLog();
-            ServerThread serverthread = new ServerThread(view, this);
+            serverthread = new ServerThread(view, this);
             Thread thread = new Thread(serverthread.Run);
             thread.Start();
             thread.IsBackground = true;
@@ -345,8 +362,8 @@ namespace mychess
             field.SetKingShahListener(KingShahHandler);
             field.SetKingStalemateListener(KingStalemateHandler);
             view.ClearLog();
-            ClientThread clienthread = new ClientThread(view, this, view.GetServerAddress(), 12000);
-            Thread thread = new Thread(clienthread.Run);
+            clientthread = new ClientThread(view, this, view.GetServerAddress(), 12000);
+            Thread thread = new Thread(clientthread.Run);
             thread.Start();
             thread.IsBackground = true;
             //thread.Join();
@@ -426,7 +443,12 @@ namespace mychess
 
         public void ReplacePawn(Position pos)
         {
-            FigureTypes figtype = view.SelectFigure();
+            Figure fig = Field.GetFigureAt(pos);
+            FigureTypes figtype;
+            if (GameType != GameType.LocalGame)
+                figtype = FigureTypes.Queen;
+            else
+                figtype = view.SelectFigure();
             Field.TransformPawn(pos, figtype);
             view.DrawField();
         }
@@ -486,6 +508,15 @@ namespace mychess
             view.EnableSave(false);
             view.EnableUndo(false);
 
+        }
+
+        public bool isRemoteJob()
+        {
+            if ((GameType == GameType.ClientGame && GetState() == GameState.WaitWhite) ||
+            (GameType == GameType.ServerGame && GetState() == GameState.WaitBlack))
+                return true;
+            else
+                return false;
         }
 
     }

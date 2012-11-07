@@ -3,11 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Net.Sockets;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Forms;
+using System.Threading;
 
 namespace mychess
 {
     public class BaseClientServer
     {
+
+        protected bool newmove;
+        Position from;
+        Position to;
+        protected const string commov = "Move";
+        protected const string comend = "End";
+        protected object lockobj = new object();
+        protected BaseClientServer(){
+            newmove = false;
+        }
+
         protected string ReadString(NetworkStream ns)
         {
             byte[] buffer = new byte[4];
@@ -41,6 +55,41 @@ namespace mychess
             byte []buffer = new byte[4];
             ns.Read(buffer, 0, 4);
             return BitConverter.ToInt32(buffer, 0);
+        }
+
+        public void NewMove(Position from, Position to)
+        {
+            //MessageBox.Show("new move");
+            lock (lockobj)
+            {
+                newmove = true;
+                this.from = from;
+                this.to = to;
+                Monitor.Pulse(lockobj);
+            }
+        }
+
+        public void GetMove(NetworkStream ns, View view, Game game )
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            Position from = (Position)formatter.Deserialize(ns);
+            Position to = (Position)formatter.Deserialize(ns);
+            // view 
+            view.Invoke(new Action(
+                () => { game.Cell_Click(from); Thread.Sleep(100); game.Cell_Click(to); }));
+        }
+
+        public void SendMove(NetworkStream ns, View view, Game game)
+        {
+            //MessageBox.Show("Send move");
+            lock (from)
+            {
+                WriteString(ns, commov);
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(ns, from);
+                formatter.Serialize(ns, to); 
+                newmove = false;
+            }
         }
     }
 }

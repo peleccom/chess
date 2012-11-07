@@ -5,6 +5,7 @@ using System.Text;
 using System.Net.Sockets;
 using System.IO;
 using System.Net;
+using System.Threading;
 
 namespace mychess
 {
@@ -26,12 +27,16 @@ namespace mychess
 
 
         public void Run(){
+            TcpClient client = null;
+            NetworkStream ns = null;
             Player player = game.Player2;
+            string command;
+            bool docycle =true;
             try
             {
-                TcpClient client = new TcpClient();
+                client = new TcpClient();
                 client.Connect(new IPEndPoint(IPAddress.Parse(server), port));
-                NetworkStream ns = client.GetStream();
+                ns = client.GetStream();
                 view.AddToLog(String.Format("Подключен к серверу {0}:{1}", server, port));
                 WriteString(ns, player.Name);
                 WriteInt(ns, player.GetWin());
@@ -45,18 +50,55 @@ namespace mychess
                 player.Name = playername;
                 player.SetStatistic(win, lose);
                 view.Invoke(new Action(() => game.ClientGameView()));
-                client.Close();
-                ns.Close();
+                while (docycle)
+                {
+                    if (game.GetState() == GameState.HighlightedBlack || game.GetState() == GameState.WaitBlack)
+                    {
+                        lock (lockobj)
+                        {
+                            Monitor.Wait(lockobj);
+                            if (newmove)
+                            {
+                                //view.Message("New move detected");
+                                SendMove(ns, view, game);
+                            }
+                        }
+                    }
+                    else
+                    if (game.GetState() == GameState.WaitWhite)
+                    {
+                        command = ReadString(ns);
+                        switch (command)
+                        {
+                            case commov:
+                                {
+                                    //view.Message(command);
+                                    GetMove(ns, view, game);
+                                    break;
+                                }
+                            case comend:{
+                            docycle =false;
+                                break;
+                            }
+                        }
+                    }
+                Thread.Sleep(100);
+                }
+
+                    
             }
             catch (Exception e) {
                 view.Message(e.Message);
             }
             finally
-            { 
+            {
+                if (ns != null)
+                    ns.Close();
+                if (client != null)
+                    client.Close();
             }
 
-            //Console.ReadKey();
-
         }
+
     }
 }

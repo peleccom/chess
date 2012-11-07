@@ -26,6 +26,8 @@ namespace mychess
         {
             TcpListener listener = null;
             Player player = game.Player2;
+            string command;
+            bool docycle = true;
             try
             {
                 listener = new TcpListener(IPAddress.Any, 12000);
@@ -45,6 +47,39 @@ namespace mychess
                 WriteInt(ns, player.GetWin());
                 WriteInt(ns, player.GetLose());
                 view.HideServerBanner();
+
+                while (docycle)
+                {
+                    if (game.GetState() == GameState.HighlightedWhite || game.GetState() == GameState.WaitWhite){
+                        lock (lockobj)
+                        {
+                            Monitor.Wait(lockobj);
+                            if (newmove)
+                            {
+                                //view.Message("New move detected");
+                                SendMove(ns, view, game);
+                            }
+                        }
+                        }
+                    else
+                    if (game.GetState() == GameState.WaitBlack)
+                    {
+                        command = ReadString(ns);
+                        switch (command)
+                        {
+                            case commov:
+                                {
+                                    GetMove(ns, view, game);
+                                    break;
+                                }
+                            case comend: {
+                                docycle = false;
+                                break;
+                            }
+                        }
+                    }
+                    Thread.Sleep(100);
+                }
                 ns.Close();
                 client.Close();
             }
@@ -59,6 +94,7 @@ namespace mychess
                     // Остановим его
                     listener.Stop();
                 }
+                view.Message("ended");
             }
         }
     }

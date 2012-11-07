@@ -75,6 +75,8 @@ namespace mychess
 
         private void Cell_Click(object sender, EventArgs e)
         {
+            if (game.isRemoteJob())
+                return;
             Button btn = (Button)sender;
             Position pos = (Position)btn.Tag;
             game.Cell_Click(pos);
@@ -99,7 +101,7 @@ namespace mychess
         {
             Button btn = buttons[pos.GetX0(), pos.GetY0()];
             btn.FlatAppearance.BorderSize = 0;
-            btn.FlatAppearance.BorderColor = Color.Green;
+            btn.FlatAppearance.BorderColor = Color.White;
         }
 
 
