@@ -67,6 +67,11 @@ namespace mychess
                                     docycle = false;
                                     break;
                                 }
+                            case comdef:
+                                {
+                                    GetDefeat(ns, view, game);
+                                    break;
+                                }
                         }
                     }
                     lock (lockobj)
@@ -74,6 +79,10 @@ namespace mychess
                         if (newmove)
                         {
                             SendMove(ns, view, game);
+                        }
+                        if (hasdefeat)
+                        {
+                            SendDefeat(ns, defeatside);
                         }
                     }
                 Thread.Sleep(100);

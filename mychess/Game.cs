@@ -218,7 +218,7 @@ namespace mychess
         /// <summary>
         /// Конец игры
         /// </summary>
-        private void EndGame(Figure king)
+        public void EndGame(Figure king)
         {
             //
             king.Stalemate();
@@ -451,8 +451,29 @@ namespace mychess
 
         public void Defeat()
         {
-            // чей сейчас ход тот и проиграл
-            Side side = GetTurnOwner();
+            Side side; 
+            // если локальная игра чей сейчас ход тот и проиграл
+            switch (GameType)
+            {
+                case GameType.LocalGame:
+                    {
+                        side = GetTurnOwner();
+                        break;
+                    }
+                case GameType.ServerGame:
+                    {
+                        side = Side.White;
+                        serverthread.NewDefeat(side);
+                        break;
+                    }
+                case GameType.ClientGame:
+                    {
+                        side = Side.Black;
+                        clientthread.NewDefeat(side);
+                        break;
+                    }
+                default: { side = Side.White; break; }
+            }
 
             EndGame(Field.SideToPlayer(side).King);
         }
@@ -489,11 +510,11 @@ namespace mychess
         }
         private void KingStalemateHandler(object source, EventArgs args)
         {
-            if (state == GameState.WaitBlack ||  state == GameState.HighlightedBlack)
-                state = GameState.LoseBlack;
-            if (state == GameState.WaitWhite || state == GameState.HighlightedWhite)
-                state = GameState.LoseWhite;
             Figure fig = (Figure)source;
+            if (fig.Side == Side.Black)
+                state = GameState.LoseBlack;
+            else
+                state = GameState.LoseWhite;
             view.StalemateWarning(fig.Side);
             foreach (Player pl in new Player[] { player1, player2 })
                 if (pl.Side == fig.Side)

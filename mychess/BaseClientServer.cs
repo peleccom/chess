@@ -13,13 +13,17 @@ namespace mychess
     {
 
         protected bool newmove;
+        protected bool hasdefeat;
+        protected Side defeatside;
         Position from;
         Position to;
         protected const string commov = "Move";
         protected const string comend = "End";
+        protected const string comdef = "Defeat";
         protected object lockobj = new object();
         protected BaseClientServer(){
             newmove = false;
+            hasdefeat = false;
         }
 
         protected string ReadString(NetworkStream ns)
@@ -89,6 +93,31 @@ namespace mychess
                 formatter.Serialize(ns, to); 
                 newmove = false;
             }
+        }
+        public void NewDefeat(Side side)
+        {
+            lock (lockobj)
+            {
+                hasdefeat = true;
+                defeatside = side;
+            }
+
+        }
+
+        protected void SendDefeat(NetworkStream ns,Side side)
+        {
+            hasdefeat = false;
+            WriteString(ns, comdef);
+            BinaryFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(ns, side);
+        }
+
+        protected void GetDefeat(NetworkStream ns, View view, Game game)
+        {
+
+            BinaryFormatter formatter = new BinaryFormatter();
+            Side side = (Side)formatter.Deserialize(ns);
+            game.EndGame(game.Field.SideToPlayer(side).King);
         }
     }
 }
