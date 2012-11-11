@@ -14,6 +14,7 @@ namespace mychess
         private int port;
         private View view;
         private Game game;
+        public TcpListener listener = null;
 
         public ServerThread(View view, Game game, int port=12000)
         {
@@ -24,7 +25,6 @@ namespace mychess
 
         public void Run()
         {
-            TcpListener listener = null;
             Player player = game.Player2;
             string command;
             bool docycle = true;
@@ -99,7 +99,6 @@ namespace mychess
                     // Остановим его
                     listener.Stop();
                 }
-                view.Message("ended");
             }
         }
     }

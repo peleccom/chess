@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace mychess
 {
@@ -12,8 +13,9 @@ namespace mychess
         private Player player2;
         private GameState state;
         private ChessField field;
-        private ServerThread serverthread;
-        private ClientThread clientthread;
+        private ServerThread server;
+        private ClientThread client;
+        private Thread clientthread, serverthread;
         private MyList<Position> moves, attacks;
         Position highlightedfigurepos;
         View view;
@@ -192,12 +194,12 @@ namespace mychess
 
                 if (gametype == GameType.ServerGame && state == GameState.HighlightedWhite)
                 {
-                    serverthread.NewMove(highlightedfigurepos, pos);
+                    server.NewMove(highlightedfigurepos, pos);
                 }
 
                 if (gametype == GameType.ClientGame && state == GameState.HighlightedBlack)
                 {
-                    clientthread.NewMove(highlightedfigurepos, pos);
+                    client.NewMove(highlightedfigurepos, pos);
                 }
                 Figure fig = Field.GetFigureAt(highlightedfigurepos);
                 fig.SetPosition(pos);
@@ -318,11 +320,18 @@ namespace mychess
             field.SetKingStalemateListener(KingStalemateHandler);
 
             view.ClearLog();
-            serverthread = new ServerThread(view, this);
-            Thread thread = new Thread(serverthread.Run);
+            server = new ServerThread(view, this);
+            Thread thread = new Thread(server.Run);
             thread.Start();
             thread.IsBackground = true;
-            view.ShowServerBanner();
+            DialogResult dialogresult = view.ShowServerBanner();
+            
+            if (dialogresult == DialogResult.Abort)
+                {
+                    server.listener.Stop();
+                    thread.Abort();
+                    return;
+                }
             //thread.Join();
 
             view.ShowgbChessField(true);
@@ -358,8 +367,8 @@ namespace mychess
             field.SetKingShahListener(KingShahHandler);
             field.SetKingStalemateListener(KingStalemateHandler);
             view.ClearLog();
-            clientthread = new ClientThread(view, this, view.GetServerAddress(), 12000);
-            Thread thread = new Thread(clientthread.Run);
+            client = new ClientThread(view, this, view.GetServerAddress(), 12000);
+            Thread thread = new Thread(client.Run);
             thread.Start();
             thread.IsBackground = true;
             //thread.Join();
@@ -463,13 +472,13 @@ namespace mychess
                 case GameType.ServerGame:
                     {
                         side = Side.White;
-                        serverthread.NewDefeat(side);
+                        server.NewDefeat(side);
                         break;
                     }
                 case GameType.ClientGame:
                     {
                         side = Side.Black;
-                        clientthread.NewDefeat(side);
+                        client.NewDefeat(side);
                         break;
                     }
                 default: { side = Side.White; break; }

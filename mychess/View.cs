@@ -313,10 +313,11 @@ namespace mychess
 
         }
 
-        public void ShowServerBanner()
+        public DialogResult ShowServerBanner()
         {
             serverbannerform =new  ServerBannerForm();
-            serverbannerform.ShowDialog();
+            DialogResult dialogresult = serverbannerform.ShowDialog();
+            return dialogresult;
         }
 
         public void HideServerBanner()
