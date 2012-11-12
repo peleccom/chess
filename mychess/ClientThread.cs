@@ -87,6 +87,11 @@ namespace mychess
                             docycle = false;
                         }
 
+                        if (hasclosed)
+                        {
+                            docycle = false;
+                        }
+
                     }
                 Thread.Sleep(100);
                 }

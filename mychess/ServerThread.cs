@@ -84,6 +84,10 @@ namespace mychess
                             SendDefeat(ns, defeatside);
                             docycle = false;
                         }
+                        if (hasclosed)
+                        {
+                            docycle = false;
+                        }
                     }
                     Thread.Sleep(100);
                 }

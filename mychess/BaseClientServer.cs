@@ -15,6 +15,7 @@ namespace mychess
         protected bool newmove;
         protected bool hasdefeat;
         protected Side defeatside;
+        protected bool hasclosed;
         Position from;
         Position to;
         protected const string commov = "Move";
@@ -24,6 +25,7 @@ namespace mychess
         protected BaseClientServer(){
             newmove = false;
             hasdefeat = false;
+            hasclosed = false;
         }
 
         protected string ReadString(NetworkStream ns)
@@ -120,6 +122,14 @@ namespace mychess
 
             view.Invoke(new Action(
             () =>{game.EndGame(game.Field.SideToPlayer(side).King);}));
+        }
+
+        public void Close()
+        {
+            lock (lockobj)
+            {
+                hasclosed = true;
+            }
         }
     }
 }

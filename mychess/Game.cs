@@ -291,7 +291,16 @@ namespace mychess
         {
             //
             king.Stalemate();
-            
+
+            if (gametype == GameType.ServerGame && state == GameState.HighlightedWhite)
+            {
+                server.Close();
+            }
+
+            if (gametype == GameType.ClientGame && state == GameState.HighlightedBlack)
+            {
+                client.Close();
+            }
         }
 
         public MyList<Position> GetAttacks(Figure fig)
