@@ -66,6 +66,7 @@
       <DependentUpon>ChooseFigureForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GameType.cs" />
+    <Compile Include="InvalidPositionException.cs" />
     <Compile Include="RulesForm.cs">
       <SubType>Form</SubType>
     </Compile>

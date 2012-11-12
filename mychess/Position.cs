@@ -14,7 +14,7 @@ namespace mychess
         public Position(int x, int y)
         {
             if (x>8 | x <1 | y>8 | y<1)
-                throw new ArgumentException();
+                throw new InvalidPositionException();
             this.x =(byte) x;
             this.y =(byte) y;
         }

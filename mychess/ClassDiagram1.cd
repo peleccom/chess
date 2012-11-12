@@ -13,7 +13,7 @@
   <Class Name="mychess.Figure">
     <Position X="6" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAAAEAIAAEAAgQAgAISAAIAUCEAgAgCAAgQCABEggAA=</HashCode>
+      <HashCode>BAAAEAIAAEAAgQEgAISAAIAUCEAgAgCCAgQCABEggAA=</HashCode>
       <FileName>Figure.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -52,7 +52,7 @@
   <Class Name="mychess.King">
     <Position X="10" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAQAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAwAEAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>King.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -82,14 +82,14 @@
   <Class Name="mychess.Player">
     <Position X="0.5" Y="9" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgQAQAIAAUAgwEIAIMAAAAQAAAAEAAAAAAgCQIAAAAQ=</HashCode>
+      <HashCode>AgQAQAIAAUAgwEIAIMAAAAQAAAAEAAAAAAoCQIAAAAQ=</HashCode>
       <FileName>Player.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="mychess.Game">
     <Position X="3.75" Y="9" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>4ACCEEAAAIABgAEAwCQAQAAARoAAAIAUEQBAQICQgAA=</HashCode>
+      <HashCode>4ACCEEAAAcABoAEAwCQAQAEBRoAAAIAUEQBARICQgAI=</HashCode>
       <FileName>Game.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -139,8 +139,15 @@
   <Class Name="mychess.ServerThread">
     <Position X="0.5" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAQAAAAAAAAI=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAgIAQAAAAAAAAI=</HashCode>
       <FileName>ServerThread.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="mychess.InvalidPositionException">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InvalidPositionException.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="mychess.MovePolitics">
