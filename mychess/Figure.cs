@@ -26,12 +26,14 @@ namespace mychess
         protected MovePolitics[] movepolitics;
         protected /*readonly*/ FigureTypes FigureType;
         protected ChessField chessfield;
+        private bool hasmoved;
 
         public Figure(Position pos, Side side, ChessField chessfield)
         {
             this.pos = pos;
             this.Side = side;
             this.chessfield = chessfield;
+            hasmoved = false;
         }
 
         /// <summary>
@@ -84,6 +86,7 @@ namespace mychess
         {
             Position oldpos = Position;
             Position = pos;
+            hasmoved = true;
             OnMoveEvent(oldpos, pos);
             //chessfield.PositionChanged(this, pos);
             if (this.GetFigureType() == FigureTypes.Pawn)
@@ -222,6 +225,11 @@ namespace mychess
         public Side GetEnemySide()
         {
             return GetEnemySide(this.Side);
+        }
+
+        public bool ismoved()
+        {
+            return hasmoved;
         }
 
     }
