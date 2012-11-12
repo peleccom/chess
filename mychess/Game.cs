@@ -399,7 +399,7 @@ namespace mychess
 
         public void Cell_Click(Position pos)
         {
-            MyList<Position> moves, attacks;
+            MyList<Position> moves, attacks,castling;
             Figure fig = Field.GetFigureAt(pos);
             if (!isHighlighted())
             {
@@ -413,6 +413,14 @@ namespace mychess
                     foreach (Position move in attacks)
                     {
                         view.CellAttack(move);
+                    }
+                    if (fig.GetFigureType() == FigureTypes.King)
+                    {
+                        castling = (fig as King).GetCastling();
+                        foreach (Position castle in castling)
+                        {
+                            view.CellCastling(castle);
+                        }
                     }
                 }
 
