@@ -70,6 +70,7 @@ namespace mychess
                             case comdef:
                                 {
                                     GetDefeat(ns, view, game);
+                                    docycle = false;
                                     break;
                                 }
                         }
@@ -83,7 +84,9 @@ namespace mychess
                         if (hasdefeat)
                         {
                             SendDefeat(ns, defeatside);
+                            docycle = false;
                         }
+
                     }
                 Thread.Sleep(100);
                 }
