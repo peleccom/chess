@@ -175,6 +175,17 @@ namespace mychess
                 return false;
         }
 
+
+        public bool isCorrectCastling(Position pos)
+        {
+            if (!isHighlighted())
+                return false;
+            if (castlings.Contains(pos))
+                return true;
+            else
+                return false;
+        }
+
         /// <summary>
         /// Является ли фигура той которая инициировала выделение?
         /// </summary>
@@ -225,6 +236,53 @@ namespace mychess
             }
             return true;
         }
+
+        public bool Castle(Position pos)
+        {
+            if (!isHighlighted())
+                return false;
+            if (!isCorrectCastling(pos))
+                return false;
+
+            if (gametype == GameType.ServerGame && state == GameState.HighlightedWhite)
+            {
+                server.NewMove(highlightedfigurepos, pos);
+            }
+
+            if (gametype == GameType.ClientGame && state == GameState.HighlightedBlack)
+            {
+                client.NewMove(highlightedfigurepos, pos);
+            }
+            Figure fig = Field.GetFigureAt(highlightedfigurepos);
+            Figure rook = Field.GetFigureAt(pos);
+            if (pos.GetX() == 1)
+            {
+                // длинная рокировка
+                int y = pos.GetY();
+                fig.SetPosition(new Position(pos.GetX() + 2, y));
+                rook.SetPosition(new Position(pos.GetX() + 3, y));
+            }
+            if (pos.GetX() == 8)
+            {
+                // короткая рокировка
+                int y = pos.GetY();
+                fig.SetPosition(new Position(pos.GetX() - 1, y));
+                rook.SetPosition(new Position(pos.GetX() - 2, y));
+            }
+
+            switch (state)
+            {
+                case GameState.HighlightedBlack:
+                    state = GameState.WaitWhite;
+                    break;
+                case GameState.HighlightedWhite:
+                    state = GameState.WaitBlack;
+                    break;
+            }
+            return true;
+        }
+
+
 
         /// <summary>
         /// Конец игры
@@ -437,6 +495,13 @@ namespace mychess
                 {
                     view.AddToLog(Field.GetFigureAt(highlightedfigurepos).GetImage() + " " + pos.ToString());
                     Move(pos);
+                    view.DrawField();
+                }
+
+                if (isCorrectCastling(pos))
+                {
+                    view.AddToLog(Field.GetFigureAt(highlightedfigurepos).GetImage() + " Рокировка " + pos.ToString());
+                    Castle(pos);
                     view.DrawField();
                 }
                 // снять выделение
