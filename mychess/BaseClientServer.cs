@@ -117,7 +117,9 @@ namespace mychess
 
             BinaryFormatter formatter = new BinaryFormatter();
             Side side = (Side)formatter.Deserialize(ns);
-            game.EndGame(game.Field.SideToPlayer(side).King);
+
+            view.Invoke(new Action(
+            () =>{game.EndGame(game.Field.SideToPlayer(side).King);}));
         }
     }
 }
