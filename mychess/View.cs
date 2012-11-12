@@ -105,6 +105,13 @@ namespace mychess
             btn.FlatAppearance.BorderColor = Color.White;
         }
 
+        public void CellCastling(Position pos)
+        {
+            Button btn = buttons[pos.GetX0(), pos.GetY0()];
+            btn.FlatAppearance.BorderSize = 2;
+            btn.FlatAppearance.BorderColor = Color.Yellow;
+        }
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
