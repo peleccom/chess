@@ -65,6 +65,7 @@ namespace mychess
                     btn = buttons[i, j];
                     btn.FlatStyle = FlatStyle.Flat;
                     btn.FlatAppearance.BorderSize = 0;
+                    btn.FlatAppearance.BorderColor = Color.White;
                     figure = game.Field.GetFigureAt((Position)btn.Tag);
                     if (figure != null)
                         btn.Text = figure.GetImage();
