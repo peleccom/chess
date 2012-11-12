@@ -493,7 +493,7 @@ namespace mychess
             {
                 if (isCorrectMove(pos))
                 {
-                    view.AddToLog(Field.GetFigureAt(highlightedfigurepos).GetImage() + " " + pos.ToString());
+                    view.AddToLog(Field.GetFigureAt(highlightedfigurepos).GetImage() + " " + highlightedfigurepos.ToString() + "-" + pos.ToString());
                     Move(pos);
                     view.DrawField();
                 }
