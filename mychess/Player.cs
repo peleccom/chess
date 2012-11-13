@@ -10,6 +10,7 @@ namespace mychess
         string name;
         Side side;
         ChessField chessfield = null;
+        private Figure lastmoved;
         private bool shahsituation;
         private King king;
         private int win, lose;

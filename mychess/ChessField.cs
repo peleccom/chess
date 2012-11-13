@@ -15,6 +15,7 @@ namespace mychess
         private MovePolitics diagmovepolitics = new DiagMovePolitics();
         private MovePolitics knightmovepolitics = new KnightMovePolitics();
         private Player pl1, pl2;
+        private Figure blacklastmoved, whitelastmoved;
         private Figure[,] field;
 
 
@@ -49,7 +50,8 @@ namespace mychess
         public ChessField(Player p1, Player p2)
         {
             field = new Figure[8, 8];
-            
+            blacklastmoved = null;
+            whitelastmoved = null;
             p1.alivefigures.Clear();
             p2.alivefigures.Clear();
             p1.deadfigures.Clear();
@@ -159,6 +161,10 @@ namespace mychess
             }
             // устанавливает новую позицию
             Figure fig = (Figure) source;
+            if (fig.Side == Side.Black)
+                blacklastmoved = fig;
+            else
+                whitelastmoved = fig;
             field[args.oldpos.GetX() - 1, args.oldpos.GetY() - 1] = null;
             field[args.newpos.GetX() - 1, args.newpos.GetY() - 1] = fig;
             // шах
@@ -311,6 +317,19 @@ namespace mychess
                     }
             }
             return null;
+        }
+
+        /// <summary>
+        /// Последняя ходившая фигура игрока
+        /// </summary>
+        /// <param name="side"></param>
+        /// <returns></returns>
+        public Figure GetlastMoved(Side side)
+        {
+            if (side == Side.Black)
+                return blacklastmoved;
+            else
+                return whitelastmoved;
         }
 
     }
