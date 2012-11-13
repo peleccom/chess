@@ -537,12 +537,24 @@ namespace mychess
         {
             Figure fig = Field.GetFigureAt(pos);
             FigureTypes figtype;
-            if (GameType != GameType.LocalGame)
+            if (isRemoteJob())
                 figtype = FigureTypes.Queen;
             else
-                figtype = view.SelectFigure();
+            {
+            figtype = view.SelectFigure();
             Field.TransformPawn(pos, figtype);
+            if (GameType != GameType.LocalGame)
+                switch (GameType)
+                {
+                    case GameType.ClientGame:
+                        client.NewSuperiority(figtype, pos);
+                        break;
+                    case GameType.ServerGame:
+                        server.NewSuperiority(figtype, pos);
+                        break;
+                }
             view.DrawField();
+            }
         }
 
         public void Defeat()
@@ -630,7 +642,9 @@ namespace mychess
         public bool isRemoteJob()
         {
             if ((GameType == GameType.ClientGame && GetState() == GameState.WaitWhite) ||
-            (GameType == GameType.ServerGame && GetState() == GameState.WaitBlack))
+            (GameType == GameType.ServerGame && GetState() == GameState.WaitBlack)||
+             (GameType == GameType.ClientGame && GetState() == GameState.HighlightedWhite) 
+            || (GameType == GameType.ServerGame && GetState() == GameState.HighlightedBlack) )
                 return true;
             else
                 return false;

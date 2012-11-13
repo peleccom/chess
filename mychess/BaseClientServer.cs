@@ -16,16 +16,21 @@ namespace mychess
         protected bool hasdefeat;
         protected Side defeatside;
         protected bool hasclosed;
+        protected bool hassuperiority;
         Position from;
         Position to;
+        protected FigureTypes superiorityfigtype;
+        protected Position superioritypos;
         protected const string commov = "Move";
         protected const string comend = "End";
         protected const string comdef = "Defeat";
+        protected const string comsuperiority = "Superiority";
         protected object lockobj = new object();
         protected BaseClientServer(){
             newmove = false;
             hasdefeat = false;
             hasclosed = false;
+            hassuperiority = false;
         }
 
         protected string ReadString(NetworkStream ns)
@@ -106,12 +111,43 @@ namespace mychess
 
         }
 
+
+        public void NewSuperiority(FigureTypes figtype, Position pos)
+        {
+            lock (lockobj)
+            {
+                hassuperiority = true;
+                superiorityfigtype = figtype;
+                superioritypos = pos;
+            }
+
+        }
+
         protected void SendDefeat(NetworkStream ns,Side side)
         {
             hasdefeat = false;
             WriteString(ns, comdef);
             BinaryFormatter formatter = new BinaryFormatter();
             formatter.Serialize(ns, side);
+        }
+
+        protected void SendSuperiority(NetworkStream ns, FigureTypes figtype,Position pos)
+        {
+            hassuperiority = false;
+            WriteString(ns, comsuperiority);
+            BinaryFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(ns, figtype);
+            formatter.Serialize(ns, pos);
+        }
+
+        protected void GetSuperiority(NetworkStream ns, View view, Game game)
+        {
+
+            BinaryFormatter formatter = new BinaryFormatter();
+            FigureTypes figtype = (FigureTypes)formatter.Deserialize(ns);
+            Position pos = (Position)formatter.Deserialize(ns);
+            view.Invoke(new Action(
+            () => { game.Field.TransformPawn(pos, figtype); view.DrawField(); }));
         }
 
         protected void GetDefeat(NetworkStream ns, View view, Game game)

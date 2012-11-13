@@ -71,6 +71,11 @@ namespace mychess
                                     docycle = false;
                                     break;
                                 }
+                            case comsuperiority:
+                                {
+                                    GetSuperiority(ns, view, game);
+                                    break;
+                                }
                         }
                     }
                     lock (lockobj)
@@ -83,6 +88,10 @@ namespace mychess
                         {
                             SendDefeat(ns, defeatside);
                             docycle = false;
+                        }
+                        if (hassuperiority)
+                        {
+                            SendSuperiority(ns, superiorityfigtype, superioritypos);
                         }
                         if (hasclosed)
                         {
