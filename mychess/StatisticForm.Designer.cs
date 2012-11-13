@@ -33,11 +33,11 @@
             this.lName1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.lPlayed1 = new System.Windows.Forms.Label();
-            this.lWin1 = new System.Windows.Forms.Label();
             this.lLose1 = new System.Windows.Forms.Label();
+            this.lWin1 = new System.Windows.Forms.Label();
+            this.lPlayed1 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lLose2 = new System.Windows.Forms.Label();
             this.lWin2 = new System.Windows.Forms.Label();
@@ -106,32 +106,14 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Белый игрок";
             // 
-            // label3
+            // lLose1
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(20, 65);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(39, 13);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Побед";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(20, 90);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(65, 13);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "Поражений";
-            // 
-            // lPlayed1
-            // 
-            this.lPlayed1.AutoSize = true;
-            this.lPlayed1.Location = new System.Drawing.Point(123, 40);
-            this.lPlayed1.Name = "lPlayed1";
-            this.lPlayed1.Size = new System.Drawing.Size(61, 13);
-            this.lPlayed1.TabIndex = 7;
-            this.lPlayed1.Text = "\"Сыграно\"";
+            this.lLose1.AutoSize = true;
+            this.lLose1.Location = new System.Drawing.Point(123, 90);
+            this.lLose1.Name = "lLose1";
+            this.lLose1.Size = new System.Drawing.Size(75, 13);
+            this.lLose1.TabIndex = 9;
+            this.lLose1.Text = "\"Поражений\"";
             // 
             // lWin1
             // 
@@ -142,14 +124,32 @@
             this.lWin1.TabIndex = 8;
             this.lWin1.Text = "\"Побед\"";
             // 
-            // lLose1
+            // lPlayed1
             // 
-            this.lLose1.AutoSize = true;
-            this.lLose1.Location = new System.Drawing.Point(123, 90);
-            this.lLose1.Name = "lLose1";
-            this.lLose1.Size = new System.Drawing.Size(75, 13);
-            this.lLose1.TabIndex = 9;
-            this.lLose1.Text = "\"Поражений\"";
+            this.lPlayed1.AutoSize = true;
+            this.lPlayed1.Location = new System.Drawing.Point(123, 40);
+            this.lPlayed1.Name = "lPlayed1";
+            this.lPlayed1.Size = new System.Drawing.Size(61, 13);
+            this.lPlayed1.TabIndex = 7;
+            this.lPlayed1.Text = "\"Сыграно\"";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(20, 90);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(65, 13);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Поражений";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(20, 65);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(39, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Побед";
             // 
             // groupBox2
             // 
@@ -166,7 +166,7 @@
             this.groupBox2.Size = new System.Drawing.Size(229, 116);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Белый игрок";
+            this.groupBox2.Text = "Черный игрок";
             // 
             // lLose2
             // 
