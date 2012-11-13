@@ -24,6 +24,38 @@ namespace mychess
             return l;
             
         }
+
+        /// <summary>
+        /// Вернет список бьющихся фигур на проходе
+        /// </summary>
+        /// <returns></returns>
+        public MyList<Position> GetInMoveAttacks()
+        {
+            int delta = (Side == Side.Black) ? +1 : -1;
+            Position pos;
+            Side oppside  = (this.Side == Side.Black)? Side.White:Side.Black;
+            Figure fig;
+            MyList<Position> moves = new MyList<Position>();
+            foreach (Position attack in GetAttacks())
+            {
+                try{
+                    pos = new Position(attack.GetX(), attack.GetY() + delta);
+                    fig = chessfield.GetFigureAt(pos);
+                    if (fig != null && fig.GetFigureType() == FigureTypes.Pawn &&
+                        fig.Side == oppside &&
+                        chessfield.GetlastMoved(oppside) == fig)
+                        moves.Add(pos);
+                    {
+                       
+                    }
+
+                }
+                catch {}
+              
+            }
+            return moves;
+        }
+
         public override string GetImage()
         {
             if (Side == Side.Black)
