@@ -147,6 +147,21 @@ namespace mychess
         }
 
         /// <summary>
+        /// Убить фигуру и убрать с поля
+        /// </summary>
+        /// <param name="target"></param>
+        public void Kill(Figure target)
+        {
+            if (target != null)
+            {
+                // бьет другую фигуру
+                target.Kill();
+                SetFigureAt(target.Position, null);
+            }
+        }
+
+
+        /// <summary>
         /// Обработчик MoveEvent
         /// </summary>
         /// <param name="source"></param>
@@ -154,19 +169,15 @@ namespace mychess
         public void MoveFigureHandler(object source, MoveEventArgs args)
         {
             Figure target = GetFigureAt(args.newpos);
-            if (target != null)
-            {
-                // бьет другую фигуру
-                target.Kill();
-            }
+            Kill(target);
             // устанавливает новую позицию
             Figure fig = (Figure) source;
             if (fig.Side == Side.Black)
                 blacklastmoved = fig;
             else
                 whitelastmoved = fig;
-            field[args.oldpos.GetX() - 1, args.oldpos.GetY() - 1] = null;
-            field[args.newpos.GetX() - 1, args.newpos.GetY() - 1] = fig;
+            SetFigureAt(args.newpos, fig);
+            SetFigureAt(args.oldpos, null);
             // шах
             if (isShahedKing(fig.GetEnemySide()))
                 SideToPlayer(fig.GetEnemySide()).ShahAlert();

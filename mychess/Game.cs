@@ -16,7 +16,7 @@ namespace mychess
         private ServerThread server;
         private ClientThread client;
         private Thread clientthread, serverthread;
-        private MyList<Position> moves, attacks, castlings ;
+        private MyList<Position> moves, attacks, castlings, inmoveattacks ;
         Position highlightedfigurepos;
         View view;
         GameType gametype;
@@ -78,11 +78,13 @@ namespace mychess
         /// <param name="moves"></param>
         /// <param name="attacks"></param>
         /// <returns></returns>
-        public bool Hightlight(Position pos, out MyList<Position> moves, out MyList<Position> attacks, out MyList<Position> castlings)
+        public bool Hightlight(Position pos, out MyList<Position> moves, out MyList<Position> attacks,
+            out MyList<Position> castlings, out MyList<Position> inmoveattacks)
         {
             moves = new MyList<Position>();
             attacks = new MyList<Position>();
             castlings = new MyList<Position>();
+            inmoveattacks = new MyList<Position>();
             if (state != GameState.WaitWhite && state!= GameState.WaitBlack)
                 return false;
             Figure fig = Field.GetFigureAt(pos);
@@ -99,6 +101,10 @@ namespace mychess
                     {
                         castlings = (fig as King).GetCastling();
                     }
+                    if (fig.GetFigureType() == FigureTypes.Pawn)
+                    {
+                        inmoveattacks = (fig as Pawn).GetInMoveAttacks();
+                    }
                     // Если король под шахом и возможных ходов нет то конец игры FIX IT
                     //if (fig.GetFigureType() == FigureTypes.King & moves.Count == 0 & attacks.Count == 0)
                     //    EndGame(fig);
@@ -109,6 +115,7 @@ namespace mychess
                     this.moves = moves;
                     this.attacks = attacks;
                     this.castlings = castlings;
+                    this.inmoveattacks = inmoveattacks;
                     highlightedfigurepos = pos;
                     return true;
                 }
@@ -141,9 +148,11 @@ namespace mychess
             movs.AddRange(attacks);
             movs.AddRange(castlings);
             movs.Add(highlightedfigurepos);
+            movs.AddRange(inmoveattacks);
             moves = null;
             attacks = null;
             castlings = null;
+            inmoveattacks = null;
             return movs;
             
         }
@@ -181,6 +190,16 @@ namespace mychess
             if (!isHighlighted())
                 return false;
             if (castlings.Contains(pos))
+                return true;
+            else
+                return false;
+        }
+
+        public bool isCorrectInMoveAttack(Position pos)
+        {
+            if (!isHighlighted())
+                return false;
+            if (inmoveattacks.Contains(pos))
                 return true;
             else
                 return false;
@@ -282,7 +301,42 @@ namespace mychess
             return true;
         }
 
+        public bool InMoveAttack(Position pos)
+        {
+            if (!isHighlighted())
+                return false;
+            if (!isCorrectInMoveAttack(pos))
+                return false;
+            if (inmoveattacks.Contains(pos))
+            {
 
+                if (gametype == GameType.ServerGame && state == GameState.HighlightedWhite)
+                {
+                    server.NewMove(highlightedfigurepos, pos);
+                }
+
+                if (gametype == GameType.ClientGame && state == GameState.HighlightedBlack)
+                {
+                    client.NewMove(highlightedfigurepos, pos);
+                }
+                Figure fig = Field.GetFigureAt(highlightedfigurepos);
+                int delta = (fig.Side == Side.Black) ? +1 : -1;
+                fig.SetPosition(new Position(pos.GetX(), pos.GetY()-delta));
+                Figure killedfig = Field.GetFigureAt(pos);
+                Field.Kill(killedfig);
+            }
+
+            switch (state)
+            {
+                case GameState.HighlightedBlack:
+                    state = GameState.WaitWhite;
+                    break;
+                case GameState.HighlightedWhite:
+                    state = GameState.WaitBlack;
+                    break;
+            }
+            return true;
+        }
 
         /// <summary>
         /// Конец игры
@@ -475,11 +529,11 @@ namespace mychess
 
         public void Cell_Click(Position pos)
         {
-            MyList<Position> moves, attacks,castling;
+            MyList<Position> moves, attacks,castling, inmoveattacks;
             Figure fig = Field.GetFigureAt(pos);
             if (!isHighlighted())
             {
-                if (Hightlight(pos, out moves, out attacks, out castlings))
+                if (Hightlight(pos, out moves, out attacks, out castlings, out inmoveattacks))
                 {
                     foreach (Position move in moves)
                     {
@@ -493,6 +547,10 @@ namespace mychess
                     foreach (Position castle in castlings)
                     {
                         view.CellCastling(castle);
+                    }
+                    foreach (Position attack in inmoveattacks)
+                    {
+                        view.CellAttack(attack);
                     }
                 }
 
@@ -513,6 +571,14 @@ namespace mychess
                     Castle(pos);
                     view.DrawField();
                 }
+
+                if (isCorrectInMoveAttack(pos))
+                {
+                    view.AddToLog(Field.GetFigureAt(highlightedfigurepos).GetImage() + " " + highlightedfigurepos.ToString() + "-" + pos.ToString());
+                    InMoveAttack(pos);
+                    view.DrawField();
+                }
+
                 // снять выделение
                 if (isHighlightedFigure(pos))
                 {
