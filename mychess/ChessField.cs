@@ -64,11 +64,11 @@ namespace mychess
 
             foreach (Figure fig in p1.alivefigures)
             {
-                field[fig.Position.GetX() - 1, fig.Position.GetY() - 1] = fig;
+                SetFigureAt(fig.Position, fig);
             }
             foreach (Figure fig in p2.alivefigures)
             {
-                field[fig.Position.GetX() - 1, fig.Position.GetY() - 1] = fig;
+                SetFigureAt(fig.Position, fig);
             }
 
         }
@@ -98,7 +98,7 @@ namespace mychess
         {
             try
             {
-                field[pos.GetX() - 1, pos.GetY() - 1] = fig;
+                field[pos.GetX0(), pos.GetY0()] = fig;
             }
             catch
             {
