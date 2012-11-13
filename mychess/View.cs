@@ -157,7 +157,7 @@ namespace mychess
         }
         public void EnableSave(bool enable)
         {
-            tsSave.Enabled = enable;
+            //tsSave.Enabled = enable;
         }
 
         public void EnableUndo(bool enable)
@@ -171,7 +171,7 @@ namespace mychess
 
         public void EnableLoad(bool enable)
         {
-            tsLoad.Enabled = enable;
+           //
         }
 
         public void ShowgbChessField(bool enable)
