@@ -35,10 +35,8 @@
             this.tsNewLanGame = new System.Windows.Forms.ToolStripMenuItem();
             this.tsNewServerGame = new System.Windows.Forms.ToolStripMenuItem();
             this.tsNewClientGame = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsLoad = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsUndo = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsSave = new System.Windows.Forms.ToolStripMenuItem();
             this.tsDefeat = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsStats = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,10 +83,8 @@
             this.tsGame.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsNewGame,
             this.tsNewLanGame,
-            this.tsLoad,
             this.toolStripSeparator1,
             this.tsUndo,
-            this.tsSave,
             this.tsDefeat,
             this.toolStripSeparator2,
             this.tsStats,
@@ -134,13 +130,6 @@
             this.tsNewClientGame.Text = "Подключиться к игре";
             this.tsNewClientGame.Click += new System.EventHandler(this.tsNewClientGame_Click);
             // 
-            // tsLoad
-            // 
-            this.tsLoad.Name = "tsLoad";
-            this.tsLoad.Size = new System.Drawing.Size(200, 22);
-            this.tsLoad.Text = "Загрузить игру";
-            this.tsLoad.Click += new System.EventHandler(this.tsLoad_Click);
-            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -153,13 +142,6 @@
             this.tsUndo.Size = new System.Drawing.Size(200, 22);
             this.tsUndo.Text = "Отменить ход";
             this.tsUndo.Visible = false;
-            // 
-            // tsSave
-            // 
-            this.tsSave.Enabled = false;
-            this.tsSave.Name = "tsSave";
-            this.tsSave.Size = new System.Drawing.Size(200, 22);
-            this.tsSave.Text = "Сохранить игру";
             // 
             // tsDefeat
             // 
@@ -412,8 +394,6 @@
         public System.Windows.Forms.ToolStripMenuItem tsNewLanGame;
         public System.Windows.Forms.ToolStripMenuItem tsStats;
         public System.Windows.Forms.ToolStripMenuItem tsUndo;
-        public System.Windows.Forms.ToolStripMenuItem tsSave;
-        public System.Windows.Forms.ToolStripMenuItem tsLoad;
         public System.Windows.Forms.ToolStripMenuItem tsExit;
         private System.Windows.Forms.ToolStripMenuItem tsNewServerGame;
         private System.Windows.Forms.ToolStripMenuItem tsNewClientGame;
