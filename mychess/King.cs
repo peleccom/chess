@@ -21,7 +21,7 @@ namespace mychess
         {
             MyList<Position> moves = base.GetMoves();
            MyList<Position> newmoves = new MyList<Position>();
-           Side oppositeside  = (this.Side == Side.Black)? Side.White:Side.Black;
+           Side oppositeside = GetEnemySide();
             foreach (Position pos in moves)
                 if (!chessfield.isDangerPosition(oppositeside, pos,Position))
                 // Fix situation of cyclic checking of two kings 
@@ -36,7 +36,7 @@ namespace mychess
             int x = Position.GetX();
             if (ismoved())
                 return castling;
-            Side oppside = (this.Side == Side.Black)?Side.White:Side.Black;
+            Side oppside = GetEnemySide();
             int ypos = (this.Side == Side.White) ? 1 : 8;
             if (chessfield.isDangerPosition(oppside, Position))
                 return castling;

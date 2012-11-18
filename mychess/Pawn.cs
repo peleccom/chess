@@ -33,7 +33,7 @@ namespace mychess
         {
             int delta = (Side == Side.Black) ? +1 : -1;
             Position pos;
-            Side oppside  = (this.Side == Side.Black)? Side.White:Side.Black;
+            Side oppside = GetEnemySide();
             Figure fig;
             MyList<Position> moves = new MyList<Position>();
             foreach (Position attack in GetAttacks())
