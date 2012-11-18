@@ -33,32 +33,35 @@ namespace mychess
         {
             MyList<Position> castling = new MyList<Position>();
             Figure fig;
+            int x = Position.GetX();
             if (ismoved())
                 return castling;
             Side oppside = (this.Side == Side.Black)?Side.White:Side.Black;
+            int ypos = (this.Side == Side.White) ? 1 : 8;
             if (chessfield.isDangerPosition(oppside, Position))
                 return castling;
-            if (Side == Side.White)
-            {
-                fig = chessfield.GetFigureAt(new Position(1, 1));
-                if (fig != null && !chessfield.isDangerPosition(oppside, fig.Position) && !fig.ismoved() && chessfield.GetFigureAt(new Position(2, 1)) == null && chessfield.GetFigureAt(new Position(3, 1)) == null
-                    && chessfield.GetFigureAt(new Position(4, 1)) == null)
-                    castling.Add(fig.Position);
-                fig = chessfield.GetFigureAt(new Position(8, 1));
-                if (fig != null && !chessfield.isDangerPosition(oppside, fig.Position) && !fig.ismoved() && chessfield.GetFigureAt(new Position(7, 1)) == null && chessfield.GetFigureAt(new Position(6, 1)) == null)
-                    castling.Add(fig.Position);
 
-            }
-            else
-            {
-                fig = chessfield.GetFigureAt(new Position(1, 8));
-                if (fig != null && !chessfield.isDangerPosition(oppside, fig.Position) && !fig.ismoved() && chessfield.GetFigureAt(new Position(2, 8)) == null && chessfield.GetFigureAt(new Position(3, 8)) == null
-                    && chessfield.GetFigureAt(new Position(4, 8)) == null)
+            fig = chessfield.GetFigureAt(new Position(1, ypos));
+            if (fig != null &&
+                !chessfield.isDangerPosition(oppside, new Position(x-1,ypos))    &&
+                !chessfield.isDangerPosition(oppside, new Position(x - 2, ypos)) &&
+                !chessfield.isDangerPosition(oppside, new Position(x - 3, ypos)) &&
+                !chessfield.isDangerPosition(oppside, new Position(x, ypos)) &&
+                !fig.ismoved() &&
+                chessfield.GetFigureAt(new Position(2, ypos)) == null &&
+                chessfield.GetFigureAt(new Position(3, ypos)) == null &&
+                chessfield.GetFigureAt(new Position(4, ypos)) == null)
+                                castling.Add(fig.Position);
+
+             fig = chessfield.GetFigureAt(new Position(8, ypos));
+             if (fig != null &&
+                 !chessfield.isDangerPosition(oppside, new Position(x + 1, ypos)) &&
+                 !chessfield.isDangerPosition(oppside, new Position(x + 2, ypos)) &&
+                 !chessfield.isDangerPosition(oppside, new Position(x, ypos)) &&
+                 !fig.ismoved() &&
+                 chessfield.GetFigureAt(new Position(7, ypos)) == null &&
+                 chessfield.GetFigureAt(new Position(6, ypos)) == null)
                     castling.Add(fig.Position);
-                fig = chessfield.GetFigureAt(new Position(8, 8));
-                if (fig != null && !chessfield.isDangerPosition(oppside, fig.Position) && !fig.ismoved() && chessfield.GetFigureAt(new Position(7, 8)) == null && chessfield.GetFigureAt(new Position(6, 8)) == null)
-                    castling.Add(fig.Position);
-            }
             return castling;
 
         }
