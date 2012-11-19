@@ -15,6 +15,7 @@ namespace mychess
         private ChessField field;
         private ServerThread server;
         private ClientThread client;
+        bool blockmove =false; // блокировка хода до выбора новой фигуры пешки
         private Thread clientthread, serverthread;
         private MyList<Position> moves, attacks, castlings, inmoveattacks ;
         Position highlightedfigurepos;
@@ -243,15 +244,17 @@ namespace mychess
                 Figure fig = Field.GetFigureAt(highlightedfigurepos);
                 fig.SetPosition(pos);
             }
-
-            switch (state)
+            if (!blockmove)
             {
-                case GameState.HighlightedBlack:
-                    state = GameState.WaitWhite;
-                    break;
-                case GameState.HighlightedWhite:
-                    state = GameState.WaitBlack;
-                    break;
+                switch (state)
+                {
+                    case GameState.HighlightedBlack:
+                        state = GameState.WaitWhite;
+                        break;
+                    case GameState.HighlightedWhite:
+                        state = GameState.WaitBlack;
+                        break;
+                }
             }
             return true;
         }
@@ -529,7 +532,7 @@ namespace mychess
 
         public void Cell_Click(Position pos)
         {
-            MyList<Position> moves, attacks,castling, inmoveattacks;
+            MyList<Position> moves, attacks,castlings, inmoveattacks;
             Figure fig = Field.GetFigureAt(pos);
             if (!isHighlighted())
             {
@@ -604,23 +607,29 @@ namespace mychess
             Figure fig = Field.GetFigureAt(pos);
             FigureTypes figtype;
             if (isRemoteJob())
+            {
                 figtype = FigureTypes.Queen;
+                blockmove = true;
+            }
             else
             {
-            figtype = view.SelectFigure();
-            Field.TransformPawn(pos, figtype);
-            if (GameType != GameType.LocalGame)
-                switch (GameType)
+                blockmove = false;
+                figtype = view.SelectFigure();
+                Field.TransformPawn(pos, figtype);
+                if (GameType != GameType.LocalGame)
                 {
-                    case GameType.ClientGame:
-                        client.NewSuperiority(figtype, pos);
-                        break;
-                    case GameType.ServerGame:
-                        server.NewSuperiority(figtype, pos);
-                        break;
+                    switch (GameType)
+                    {
+                        case GameType.ClientGame:
+                            client.NewSuperiority(figtype, pos);
+                            break;
+                        case GameType.ServerGame:
+                            server.NewSuperiority(figtype, pos);
+                            break;
+                    }
                 }
-            view.DrawField();
-            Field.ShahCheck(Field.GetFigureAt(pos));
+                view.DrawField();
+                Field.ShahCheck(Field.GetFigureAt(pos));
             }
         }
 
@@ -717,6 +726,20 @@ namespace mychess
                 return false;
         }
 
+        public void DirectStateCycle()
+        {
+            blockmove = false;
+            switch (state)
+            {
+                case GameState.HighlightedBlack:
+                    state = GameState.WaitWhite;
+                    break;
+                case GameState.HighlightedWhite:
+                    state = GameState.WaitBlack;
+                    break;
+            }
+            
+        }
     }
 
 }

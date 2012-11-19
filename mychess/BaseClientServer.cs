@@ -148,10 +148,14 @@ namespace mychess
             Position pos = (Position)formatter.Deserialize(ns);
             view.Invoke(new Action(
                 () => 
-                { 
+                {
+                    game.DirectStateCycle();
                     game.Field.TransformPawn(pos, figtype); 
                     view.DrawField();
-                    game.Field.ShahCheck(game.Field.GetFigureAt(pos)); 
+                    game.Field.ShahCheck(game.Field.GetFigureAt(pos));
+                    view.SetTurnText();
+                    view.WhiteCount(game.Player1.GetCount());
+                    view.BlackCount(game.Player2.GetCount());
                  }));
         }
 
