@@ -147,7 +147,12 @@ namespace mychess
             FigureTypes figtype = (FigureTypes)formatter.Deserialize(ns);
             Position pos = (Position)formatter.Deserialize(ns);
             view.Invoke(new Action(
-            () => { game.Field.TransformPawn(pos, figtype); view.DrawField(); }));
+                () => 
+                { 
+                    game.Field.TransformPawn(pos, figtype); 
+                    view.DrawField();
+                    game.Field.ShahCheck(game.Field.GetFigureAt(pos)); 
+                 }));
         }
 
         protected void GetDefeat(NetworkStream ns, View view, Game game)

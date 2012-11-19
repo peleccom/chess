@@ -178,19 +178,7 @@ namespace mychess
                 whitelastmoved = fig;
             SetFigureAt(args.newpos, fig);
             SetFigureAt(args.oldpos, null);
-            // шах
-            if (isShahedKing(fig.GetEnemySide()))
-                SideToPlayer(fig.GetEnemySide()).ShahAlert();
-
-            else
-            {
-                SideToPlayer(fig.GetEnemySide()).ResetShahSituation();
-                if (isShahedKing(fig.Side))
-                    SideToPlayer(fig.Side).ShahAlert();
-                else
-                    SideToPlayer(fig.Side).ResetShahSituation();
-            }
-
+            ShahCheck(fig);
         }
         
         /// <summary>
@@ -343,5 +331,22 @@ namespace mychess
                 return whitelastmoved;
         }
 
+
+        public void ShahCheck(Figure fig)
+        {
+            // шах
+            if (isShahedKing(fig.GetEnemySide()))
+                SideToPlayer(fig.GetEnemySide()).ShahAlert();
+
+            else
+            {
+                SideToPlayer(fig.GetEnemySide()).ResetShahSituation();
+                if (isShahedKing(fig.Side))
+                    SideToPlayer(fig.Side).ShahAlert();
+                else
+                    SideToPlayer(fig.Side).ResetShahSituation();
+            }
+
+        }
     }
 }

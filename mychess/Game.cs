@@ -620,6 +620,7 @@ namespace mychess
                         break;
                 }
             view.DrawField();
+            Field.ShahCheck(Field.GetFigureAt(pos));
             }
         }
 
