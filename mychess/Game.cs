@@ -698,6 +698,9 @@ namespace mychess
         {
             Figure fig = (Figure)source;
             view.ShahWarning(fig.Side);
+            if (!HasAnyMoves(fig.Side))
+                EndGame(fig);
+            
 
         }
         private void KingStalemateHandler(object source, EventArgs args)
@@ -747,6 +750,38 @@ namespace mychess
                     break;
             }
             
+        }
+        /// <summary>
+        /// Вызывается во время шаха и проверяет есть ли доступные ходы
+        /// </summary>
+        /// <param name="side"></param>
+        /// <returns></returns>
+        public bool HasAnyMoves(Side side) 
+        {
+            Player player = Field.SideToPlayer(side);
+            foreach (Figure fig in player.alivefigures)
+            {
+                // for any alive figure check moves
+                MyList<Position> moves, attacks, inmoveattacks;
+                Position pos = fig.Position;
+                    // highlighting code
+                attacks = GetAttacks(fig);
+                moves = GetMoves(fig, attacks);
+                foreach (Position move in attacks)
+                    if (!Field.IsBadMove(pos, move, side))
+                        return true;
+                foreach (Position move in moves)
+                    if (!Field.IsBadMove(pos, move, side))
+                        return true;
+                if (fig.GetFigureType() == FigureTypes.Pawn)
+                    {
+                        inmoveattacks = (fig as Pawn).GetInMoveAttacks();
+                        foreach (Position move in inmoveattacks)
+                            if (!Field.IsBadMove(pos, move, fig.Side))
+                                return true;
+                    }
+            }
+            return false;
         }
     }
 
