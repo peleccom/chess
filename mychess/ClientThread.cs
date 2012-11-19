@@ -30,8 +30,6 @@ namespace mychess
             TcpClient client = null;
             NetworkStream ns = null;
             Player player = game.Player2;
-            string command;
-            bool docycle =true;
             try
             {
                 client = new TcpClient();
@@ -50,61 +48,7 @@ namespace mychess
                 player.Name = playername;
                 player.SetStatistic(win, lose);
                 view.Invoke(new Action(() => game.ClientGameView()));
-                while (docycle)
-                {
-                    if (ns.DataAvailable)
-                    {// command
-                        command = ReadString(ns);
-                        switch (command)
-                        {
-                            case commov:
-                                {
-                                    GetMove(ns, view, game);
-                                    break;
-                                }
-                            case comend:
-                                {
-                                    docycle = false;
-                                    break;
-                                }
-                            case comdef:
-                                {
-                                    GetDefeat(ns, view, game);
-                                    docycle = false;
-                                    break;
-                                }
-                            case comsuperiority:
-                                {
-                                    GetSuperiority(ns, view, game);
-                                    break;
-                                }
-                        }
-                    }
-                    lock (lockobj)
-                    {
-                        if (newmove)
-                        {
-                            SendMove(ns, view, game);
-                        }
-                        if (hasdefeat)
-                        {
-                            SendDefeat(ns, defeatside);
-                            docycle = false;
-                        }
-                        if (hassuperiority)
-                        {
-                            SendSuperiority(ns, superiorityfigtype, superioritypos);
-                        }
-                        if (hasclosed)
-                        {
-                            docycle = false;
-                        }
-
-                    }
-                Thread.Sleep(100);
-                }
-
-                    
+                CommandLoop(ns, view, game);                    
             }
             catch (Exception e) {
                 view.Message(e.Message);

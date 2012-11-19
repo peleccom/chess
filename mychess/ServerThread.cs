@@ -26,15 +26,15 @@ namespace mychess
         public void Run()
         {
             Player player = game.Player2;
-            string command;
-            bool docycle = true;
+            NetworkStream ns = null;
+            TcpClient client = null;
             try
             {
                 listener = new TcpListener(IPAddress.Any, 12000);
                 listener.Start(1);
-                TcpClient client = listener.AcceptTcpClient();
+                client = listener.AcceptTcpClient();
                 view.AddToLog(String.Format("Подключен клиент {0}", client.Client.RemoteEndPoint.ToString()));
-                NetworkStream ns = client.GetStream();
+                ns = client.GetStream();
                 string playername = ReadString(ns);
                 int lose, win;
                 win = ReadInt(ns);
@@ -46,61 +46,8 @@ namespace mychess
                 WriteString(ns, player.Name);
                 WriteInt(ns, player.GetWin());
                 WriteInt(ns, player.GetLose());
-                view.HideServerBanner();
-
-                while (docycle)
-                {
-                    if (ns.DataAvailable)
-                    {// command
-                        command = ReadString(ns);
-                        switch (command)
-                        {
-                            case commov:
-                                {
-                                    GetMove(ns, view, game);
-                                    break;
-                                }
-                            case comend:
-                                {
-                                    docycle = false;
-                                    break;
-                                }
-                            case comdef:
-                                {
-                                    GetDefeat(ns, view, game);
-                                    docycle = false;
-                                    break;
-                                }
-                            case comsuperiority:
-                                {
-                                    GetSuperiority(ns, view, game);
-                                    break;
-                                }
-                        }
-                    }
-                    lock (lockobj)
-                    {
-                        if (newmove)
-                        {
-                            SendMove(ns, view, game);
-                        }
-                        if (hasdefeat)
-                        {
-                            SendDefeat(ns, defeatside);
-                            docycle = false;
-                        }
-                        if (hassuperiority)
-                        {
-                            SendSuperiority(ns, superiorityfigtype, superioritypos);
-                        }
-                        if (hasclosed)
-                        {
-                            docycle = false;
-                        }
-                    }
-                    Thread.Sleep(100);
-                }
-                ns.Close();
+                view.HideServerBanner();        
+                CommandLoop(ns, view, game);
                 client.Close();
             }
             catch (Exception e)
@@ -109,6 +56,10 @@ namespace mychess
             }
             finally
             {
+                if (ns != null)
+                    ns.Close();
+                if (client != null)
+                    client.Close();
                 if (listener != null)
                 {
                     // Остановим его

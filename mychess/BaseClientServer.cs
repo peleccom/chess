@@ -33,6 +33,64 @@ namespace mychess
             hassuperiority = false;
         }
 
+        protected void CommandLoop(NetworkStream ns, View view, Game game)
+        {
+            bool docycle = true;
+            string command;
+            while (docycle)
+            {
+                if (ns.DataAvailable)
+                {// command
+                    command = ReadString(ns);
+                    switch (command)
+                    {
+                        case commov:
+                            {
+                                GetMove(ns, view, game);
+                                break;
+                            }
+                        case comend:
+                            {
+                                docycle = false;
+                                break;
+                            }
+                        case comdef:
+                            {
+                                GetDefeat(ns, view, game);
+                                docycle = false;
+                                break;
+                            }
+                        case comsuperiority:
+                            {
+                                GetSuperiority(ns, view, game);
+                                break;
+                            }
+                    }
+                }
+                lock (lockobj)
+                {
+                    if (newmove)
+                    {
+                        SendMove(ns, view, game);
+                    }
+                    if (hasdefeat)
+                    {
+                        SendDefeat(ns, defeatside);
+                        docycle = false;
+                    }
+                    if (hassuperiority)
+                    {
+                        SendSuperiority(ns, superiorityfigtype, superioritypos);
+                    }
+                    if (hasclosed)
+                    {
+                        docycle = false;
+                    }
+                }
+                Thread.Sleep(100);
+            }
+        }
+
         protected string ReadString(NetworkStream ns)
         {
             byte[] buffer = new byte[4];
