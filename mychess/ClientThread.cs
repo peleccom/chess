@@ -35,7 +35,7 @@ namespace mychess
                 client = new TcpClient();
                 client.Connect(new IPEndPoint(IPAddress.Parse(server), port));
                 ns = client.GetStream();
-                view.AddToLog(String.Format("Подключен к серверу {0}:{1}", server, port));
+                view.AddToLog(String.Format("Подключен к серверу {0}:{1}\nИграем за черных", server, port));
                 WriteString(ns, player.Name);
                 WriteInt(ns, player.GetWin());
                 WriteInt(ns, player.GetLose());
