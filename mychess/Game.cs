@@ -16,7 +16,6 @@ namespace mychess
         private ServerThread server;
         private ClientThread client;
         bool blockmove =false; // блокировка хода до выбора новой фигуры пешки
-        private Thread clientthread, serverthread;
         private MyList<Position> moves, attacks, castlings, inmoveattacks ;
         Position highlightedfigurepos;
         View view;
@@ -86,6 +85,7 @@ namespace mychess
             attacks = new MyList<Position>();
             castlings = new MyList<Position>();
             inmoveattacks = new MyList<Position>();
+            MyList<Position> moves0, attacks0, inmoveattacks0;
             if (state != GameState.WaitWhite && state!= GameState.WaitBlack)
                 return false;
             Figure fig = Field.GetFigureAt(pos);
@@ -95,16 +95,24 @@ namespace mychess
                     (state == GameState.WaitWhite && fig.Side == Side.White))
                 {
                     // highlighting code
-                    attacks = GetAttacks(fig);
-                    moves = GetMoves(fig, attacks);
-
+                    attacks0 = GetAttacks(fig);
+                    moves0 = GetMoves(fig, attacks0);
+                    foreach (Position move in attacks0)
+                        if (!Field.IsBadMove(pos, move, fig.Side))
+                            attacks.Add(move);
+                    foreach (Position move in moves0)
+                        if (!Field.IsBadMove(pos, move, fig.Side))
+                            moves.Add(move);
                     if (fig.GetFigureType() == FigureTypes.King)
                     {
                         castlings = (fig as King).GetCastling();
                     }
                     if (fig.GetFigureType() == FigureTypes.Pawn)
                     {
-                        inmoveattacks = (fig as Pawn).GetInMoveAttacks();
+                        inmoveattacks0 = (fig as Pawn).GetInMoveAttacks();
+                        foreach (Position move in inmoveattacks0)
+                            if (!Field.IsBadMove(pos, move, fig.Side))
+                                inmoveattacks.Add(move);
                     }
                     // Если король под шахом и возможных ходов нет то конец игры FIX IT
                     //if (fig.GetFigureType() == FigureTypes.King & moves.Count == 0 & attacks.Count == 0)

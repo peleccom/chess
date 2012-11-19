@@ -21,29 +21,33 @@ namespace mychess
 
         public MovePolitics HorizontalMovePolitics
         {
-            get{
-            return horizontalmovepolitics;
+            get
+            {
+                return horizontalmovepolitics;
             }
         }
 
         public MovePolitics VerticalMovePolitics
         {
-            get{
-            return verticalmovepolitics;
+            get
+            {
+                return verticalmovepolitics;
             }
         }
 
         public MovePolitics DiagMovePolitics
         {
-            get{
-            return diagmovepolitics;
+            get
+            {
+                return diagmovepolitics;
             }
         }
 
         public MovePolitics KnightMovePolitics
         {
-            get{
-            return knightmovepolitics;
+            get
+            {
+                return knightmovepolitics;
             }
         }
 
@@ -84,7 +88,8 @@ namespace mychess
             {
                 return field[pos.GetX() - 1, pos.GetY() - 1];
             }
-            catch{
+            catch
+            {
                 return null;
             }
         }
@@ -113,7 +118,7 @@ namespace mychess
         /// <param name="pos"></param>
         /// <param name="originalpos"></param>
         /// <returns></returns>
-        public bool isDangerPosition(Side enemyside, Position pos,Position originalpos = null)
+        public bool isDangerPosition(Side enemyside, Position pos, Position originalpos = null, Figure disabledfigure=null )
         {
             bool danger = false;
             Figure oldfig = null;
@@ -123,8 +128,11 @@ namespace mychess
                 SetFigureAt(originalpos, null);
             }
             Player pl = this.SideToPlayer(enemyside);
-            // iterate over alive figures
+            // iterate over alive figures 
             foreach (Figure fig in pl.alivefigures)
+            {
+                if (disabledfigure != null && disabledfigure == fig)
+                    continue;
                 if (fig.GetFigureType() == FigureTypes.King)
                 {
                     if (((King)fig).GetMovesWithOutChecks().Contains(pos))
@@ -134,13 +142,14 @@ namespace mychess
                     }
                 }
                 else
-                { 
+                {
                     if (fig.GetAttacks().Contains(pos))
                     {
                         danger = true;
                         break;
                     }
                 }
+            }
             if (originalpos != null)
                 SetFigureAt(originalpos, oldfig);
             return danger;
@@ -171,7 +180,7 @@ namespace mychess
             Figure target = GetFigureAt(args.newpos);
             Kill(target);
             // устанавливает новую позицию
-            Figure fig = (Figure) source;
+            Figure fig = (Figure)source;
             if (fig.Side == Side.Black)
                 blacklastmoved = fig;
             else
@@ -180,7 +189,7 @@ namespace mychess
             SetFigureAt(args.oldpos, null);
             ShahCheck(fig);
         }
-        
+
         /// <summary>
         /// Установить обработчик MoveEvent
         /// </summary>
@@ -192,7 +201,7 @@ namespace mychess
             foreach (Figure fig in pl2.alivefigures)
                 fig.MoveEvent += handler;
         }
-        
+
         /// <summary>
         /// Установить обработчик KillEvent
         /// </summary>
@@ -202,9 +211,9 @@ namespace mychess
             foreach (Figure fig in pl1.alivefigures)
                 fig.KillEvent += handler;
             foreach (Figure fig in pl2.alivefigures)
-                fig.KillEvent+= handler;
+                fig.KillEvent += handler;
         }
-        
+
         /// <summary>
         /// Установить обработчик PawnSuperiousEvent
         /// </summary>
@@ -218,7 +227,7 @@ namespace mychess
                 if (fig.GetFigureType() == FigureTypes.Pawn)
                     fig.PawnSuperiorityEvent += handler;
         }
-        
+
         /// <summary>
         /// Установить обработчик KingShahEvent
         /// </summary>
@@ -254,9 +263,9 @@ namespace mychess
         /// </summary>
         /// <param name="side"></param>
         /// <returns></returns>
-        public bool isShahedKing(Side side)
+        public bool isShahedKing(Side side, Figure disabledfigure = null )
         {
-            return isDangerPosition(SideToPlayer(side).King.GetEnemySide(), SideToPlayer(side).King.Position);
+            return isDangerPosition(SideToPlayer(side).King.GetEnemySide(), SideToPlayer(side).King.Position, null,disabledfigure);
         }
 
         /// <summary>
@@ -269,7 +278,7 @@ namespace mychess
             Figure fig;
             Side side;
             side = GetFigureAt(pos).Side;
-            Figure oldfig =SideToPlayer(side).alivefigures[SideToPlayer(side).alivefigures.IndexOf(GetFigureAt(pos))];
+            Figure oldfig = SideToPlayer(side).alivefigures[SideToPlayer(side).alivefigures.IndexOf(GetFigureAt(pos))];
             fig = CreateFigure(figuretype, pos, side);
             SetFigureAt(pos, fig);
             SideToPlayer(side).alivefigures.Remove(oldfig);
@@ -347,6 +356,23 @@ namespace mychess
                     SideToPlayer(fig.Side).ResetShahSituation();
             }
 
+        }
+
+        /// <summary>
+        /// Проверит приведет ли ход к шаху
+        /// </summary>
+        public bool IsBadMove(Position frompos, Position topos, Side side)
+        {
+            Figure oldfig1, oldfig2;
+            bool flag;
+            oldfig1 = GetFigureAt(frompos);
+            oldfig2 = GetFigureAt(topos);
+            SetFigureAt(frompos, null);
+            SetFigureAt(topos, oldfig1);
+            flag = isShahedKing(side, oldfig2);
+            SetFigureAt(frompos, oldfig1);
+            SetFigureAt(topos, oldfig2);
+            return flag;
         }
     }
 }

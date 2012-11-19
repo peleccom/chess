@@ -198,5 +198,10 @@ namespace mychess
             this.win = win;
         }
 
+        public bool isShah()
+        {
+            return shahsituation;
+        }
+
     }
 }
