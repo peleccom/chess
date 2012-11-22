@@ -364,12 +364,24 @@ namespace mychess
         public bool IsBadMove(Position frompos, Position topos, Side side)
         {
             Figure oldfig1, oldfig2;
+            bool isKing;
             bool flag;
             oldfig1 = GetFigureAt(frompos);
             oldfig2 = GetFigureAt(topos);
+            // проверим не просчитываем ли мы ходы самого короля
+            if (oldfig1.GetFigureType() == FigureTypes.King)
+                isKing = true;
+            else
+                isKing = false;
             SetFigureAt(frompos, null);
             SetFigureAt(topos, oldfig1);
+            if (isKing)
+                // заменим короля
+                oldfig1.SetPositionNoCheck(topos);
             flag = isShahedKing(side, oldfig2);
+            if (isKing)
+                // поставим как было
+                oldfig1.SetPositionNoCheck(frompos);
             SetFigureAt(frompos, oldfig1);
             SetFigureAt(topos, oldfig2);
             return flag;

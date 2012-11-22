@@ -232,5 +232,11 @@ namespace mychess
             return hasmoved;
         }
 
+
+        public void SetPositionNoCheck(Position pos)
+        {
+            this.Position = pos;
+        }
+
     }
 }
